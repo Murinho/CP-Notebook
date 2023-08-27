@@ -1,35 +1,22 @@
 #include <bits/stdc++.h>
+#define ll long long
+#define nl '\n'
 
 using namespace std;
 
-string s,t;
-int n,m,dp[1000005],cont,tams,tamt;
-
-void preprocess(){
-    int i = 0, j = -1; dp[0] = -1;
-    while (i < tamt){
-        while (j>= 0 && (t[i] != t[j])){
-            j = dp[j];
+vector<int> kmp(string s){
+    int n = s.size();
+    vector<int> vs(n);
+ 
+    for(int i=1; i<n; i++){
+        int j = vs[i-1];
+        while(j!=0 && s[i] != s[j]){
+            j = vs[j-1];
         }
-        i++;
-        j++;
-        dp[i] = j;
+        if(s[i] == s[j]) j++;
+        vs[i] = j;
     }
-}
-
-void KMP (){
-    int i = 0, j = 0;
-    while (i<tams){
-        while (j>=0 && s[i] != t[j]){
-            j = dp[j];
-        }
-        i++;
-        j++;
-        if (j == tamt){
-            cont++;
-            j = dp[j];
-        }
-    }
+    return vs;
 }
 
 int main()
@@ -37,12 +24,17 @@ int main()
     cin.tie(0);
     cout.tie(0);
     ios_base::sync_with_stdio(false);
+    string s,t;
     getline(cin,s); //Base string
     getline(cin,t); //Substring target to look for:
-    tams = s.size();
-    tamt = t.size();
-    cont = 0;
-    preprocess();
-    KMP();
-    cout<<cont<<"\n";
+    ll tamt = t.size();
+    t += "#";
+    s = t + s;
+    vector <int> res = kmp(s);
+    ll ans = 0;
+    for (auto au : res){
+        if (au == tamt-1) ans++;
+    }
+    cout<<ans<<nl;
+    return 0;
 }
