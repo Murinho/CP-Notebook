@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #define ll long long
 #define pb push_back
+#define ld long double
 
 using namespace std;
 
@@ -25,6 +26,26 @@ ll turn(const Point &A, const Point &B, const Point &C){
     //-1: right.
     //0: in the line
 }
+
+struct P{
+    ld x,y;
+    void read(){ cin>>x>>y; }
+    P operator + (P b){ return P{x + b.x, y + b.y}; } //suma de puntos
+    P operator - (P b){ return P{x - b.x, y - b.y}; } //resta de puntos
+    P operator * (ld mul){ return P{x * mul, y * mul}; }
+    ld operator * (P b){ return (x*b.y) - (y*b.x); }
+    ld dot (P b){ return (x * b.x) + (y * b.y); } //producto punto
+    ld len(){ return sqrt((x*x) + (y*y)); } //longitud hipotenusa
+    P lenTo(ld to){ return *this * (to/len()); }
+    ld dist (P & b){ return (*this - b).len(); } //distancia entre 2 puntos.
+};
+
+struct Line2Point{
+    P one,two;
+    ld dist(P refPoint){
+        return abs((refPoint - one) * (refPoint - two)) / one.dist(two);
+    }
+};
 
 
 int main(){
