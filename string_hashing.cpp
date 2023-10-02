@@ -29,7 +29,7 @@ void clean(){
     hasht = ans = 0;
 }
 
-int main(){
+int main(){ //Note: to query the hashing of a substring it should be: r = start + length, l = r - length
     cin.tie(0);
     cout.tie(0);
     ios_base::sync_with_stdio(false);
