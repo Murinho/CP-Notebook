@@ -1,83 +1,69 @@
 #include <bits/stdc++.h>
-#define ll long long
-#define pb push_back
-
 using namespace std;
+ 
+#define int long long
+#define nl '\n'
+#define ll long long
+#define fast                                                                   \
+  ios_base::sync_with_stdio(false);                                            \
+  cin.tie(0);                                                                  \
+  cout.tie(0);
+#define X real()
+#define Y imag()
+#define pb push_back
+ 
+ll n,m;
 
-struct Point{ ll x,y; };
+struct Point {
+    int x, y;
+    Point operator +(const Point& b) const { return Point{x+b.x, y+b.y}; }
+    Point operator -(const Point& b) const { return Point{x-b.x, y-b.y}; }
+    ll operator *(const Point& b) const { return (ll) x * b.y - (ll) y * b.x; }
+    void operator +=(const Point& b) { x += b.x; y += b.y; }
+    void operator -=(const Point& b) { x -= b.x; y -= b.y; }
+    void operator *=(const int k) { x *= k; y *= k; }
 
-Point operator +(const Point &A, const Point &B){
-    return {A.x + B.x + A.y + B.y};
-}
-Point operator *(const Point &A, ll k){
-    return {A.x * k, A.y * k};
-}
-Point operator -(const Point &A, const Point &B){
-    return {A.x - B.x, A.y - B.y};
-}
-ll cross(const Point &A, const Point &B){
-    return ((A.x*B.y) - (A.y*B.x));
-}
-ll turn(const Point &A, const Point &B, const Point &C){
-    ll det = cross(B-A,C-A);
-    return (det > 0 ? 1 : (det < 0 ? -1 : 0));
-    //1: left.
-    //-1: right.
-    //0: in the line
-}
-
-bool onSegment(Point p, Point q, Point r)
-{
-    if (q.x <= max(p.x, r.x) && q.x >= min(p.x, r.x) &&
-        q.y <= max(p.y, r.y) && q.y >= min(p.y, r.y))
-       return true;
-  
-    return false;
-}
-
-bool doIntersect(Point p1, Point q1, Point p2, Point q2)
-{
-    // Find the four orientations needed for general and
-    // special cases
-    int o1 = turn(p1, q1, p2);
-    int o2 = turn(p1, q1, q2);
-    int o3 = turn(p2, q2, p1);
-    int o4 = turn(p2, q2, q1);
-  
-    // General case
-    if (o1 != o2 && o3 != o4)
-        return true;
-  
-    // Special Cases
-    // p1, q1 and p2 are collinear and p2 lies on segment p1q1
-    if (o1 == 0 && onSegment(p1, p2, q1)) return true;
-  
-    // p1, q1 and q2 are collinear and q2 lies on segment p1q1
-    if (o2 == 0 && onSegment(p1, q2, q1)) return true;
-  
-    // p2, q2 and p1 are collinear and p1 lies on segment p2q2
-    if (o3 == 0 && onSegment(p2, p1, q2)) return true;
-  
-     // p2, q2 and q1 are collinear and q1 lies on segment p2q2
-    if (o4 == 0 && onSegment(p2, q1, q2)) return true;
-  
-    return false; // Doesn't fall in any of the above cases
-}
-
-vector <Point> p;
-
-int main(){
-    cin.tie(0);
-    cout.tie(0);
-    ios_base::sync_with_stdio(false);
-    ll tc;
-    cin>>tc;
-    while(tc--){
-        p.resize(4);
-        for (int i = 0; i<4; i++){
-            cin>>p[i].x>>p[i].y;
-        }
-        if (doIntersect(p[0],p[1],p[2],p[3])) cout<<"YES\n";
-        else cout<<"NO\n";
+    ll cross(const Point& b, const Point& c) const {
+        return (b - *this) * (c - *this);
     }
+};
+
+vector <Point> P;
+ 
+string checkInside(Point point){
+    P[0] = point;
+    ll count = 0;
+    if (n < 3) return "OUTSIDE";
+    for (int i = 1; i<=n; i++){
+        int j = (i == n ? 1 : i+1);
+        if(P[i].x <= P[0].x && P[0].x < P[j].x && P[0].cross(P[i], P[j]) < 0)       count++;
+        else if(P[j].x <= P[0].x && P[0].x < P[i].x && P[0].cross(P[j], P[i]) < 0)  count++;
+        //check if point lies on the edge
+        if ((std::min(P[i].x,P[j].x) <= point.x && point.x <= std::max(P[i].x,P[j].x)) && (std::min(P[i].y,P[j].y) <= point.y && point.y <= std::max(P[i].y,P[j].y)) && point.cross(P[i],P[j]) == 0){
+            return "BOUNDARY";
+        }
+    }
+    if (count%2 == 1) return "INSIDE";
+    return "OUTSIDE";
+}
+ 
+ 
+signed main() {
+    fast;
+    cin >> n >> m;
+    P.resize(n+1);
+    for (int i = 1; i <=n; i++) {
+        int x, y;
+        cin >> x >> y;
+        P[i] = {x, y};
+    }
+    //How to tell if a point is inside a polygon or not given the polygon.
+    for (int i = 1; i<=m; i++){
+        ll x,y;
+        Point punto;
+        cin>>x>>y;
+        punto = {x,y};
+        cout<<checkInside(punto)<<nl;
+    }
+    return 0;
 }
