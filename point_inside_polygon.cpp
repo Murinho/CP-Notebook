@@ -1,113 +1,75 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-
+ 
+#define int long long
 #define nl '\n'
-#define P complex<ll>
+#define ll long long
+#define fast                                                                   \
+  ios_base::sync_with_stdio(false);                                            \
+  cin.tie(0);                                                                  \
+  cout.tie(0);
 #define X real()
 #define Y imag()
 #define pb push_back
-#define ll long long
+#define ld long double
+ 
+ll n,m;
 
-int colins = 0,points_amount = 0;
+struct Point {
+    ld x,y;
+    void read(){ cin>>x>>y; }
+    Point operator +(const Point& b) const { return Point{x+b.x, y+b.y}; } //suma de puntos
+    Point operator -(const Point& b) const { return Point{x-b.x, y-b.y}; } //resta de puntos
+    ld operator *(const Point& b) const { return (ll) x * b.y - (ll) y * b.x; }
+    Point operator * (ld mul){ return Point{x * mul, y * mul}; } //relocate point proportionally
+    void operator +=(const Point& b) { x += b.x; y += b.y; } 
+    void operator -=(const Point& b) { x -= b.x; y -= b.y; }
+    void operator *=(const int k) { x *= k; y *= k; }
+    ld len(){ return sqrt((x*x) + (y*y)); } //longitud hipotenusa
+    Point lenTo(ld to){ return (*this)*(to/len()); } 
+    ld dist (Point & b){ return (*this - b).len(); } //distancia entre 2 puntos.
 
-int cross(P &a, P &b, P &c) {
-    P u = c - b;
-    P v = a - b;
-    ll cp = (conj(u) * v).Y;
-    return (cp > 0) - (cp < 0);
-}
-
-vector<P> hull(vector<P> &v) {
-    vector<P> ans = {v[0]};
-    for (int i = 1; i < v.size(); i++) {
-        while (ans.size() > 1) {
-            P b = ans.back();
-            ans.pop_back();
-            P a = ans.back();
-            P c = v[i];
-            int res = cross(a,b,c);
-            if (res == -1) {
-                ans.push_back(b);
-                break;
-            }
-            if (res == 0) colins++;
-        }
-        ans.push_back(v[i]);
+    ld cross(const Point& b, const Point& c) const {
+        return (b - *this) * (c - *this);
     }
-    return ans;
-}
+};
 
-bool checkInside(P point, vector<P> polygon) {
-    int count = 0;
-    int n = polygon.size();
-    if (n < 3) return false;
-    //Edit this:
-    if (n == 3){
-        if (n + (points_amount - n - colins) < 4) return false;
-    }
-
-    for (int i = 0; i < n; i++) {
-        const P p1 = polygon[i];
-        const P p2 = polygon[(i + 1) % n];
-
-        // Check if the point lies on the edge of the polygon
-        if ((p1.Y == point.Y && p2.Y == point.Y) ||
-            (point.Y > std::min(p1.Y, p2.Y) && point.Y <= std::max(p1.Y, p2.Y))) {
-            double intersectX = p1.X + (point.Y - p1.Y) * (p2.X - p1.X) / (p2.Y - p1.Y);
-
-            if ((double)point.X <= intersectX)
-                count++;
+vector <Point> P;
+ 
+string checkInside(Point point){
+    P[0] = point;
+    ll count = 0;
+    if (n < 3) return "OUTSIDE";
+    for (int i = 1; i<=n; i++){
+        int j = (i == n ? 1 : i+1);
+        if(P[i].x <= P[0].x && P[0].x < P[j].x && P[0].cross(P[i], P[j]) < 0)       count++;
+        else if(P[j].x <= P[0].x && P[0].x < P[i].x && P[0].cross(P[j], P[i]) < 0)  count++;
+        //check if point lies on the edge
+        if ((std::min(P[i].x,P[j].x) <= point.x && point.x <= std::max(P[i].x,P[j].x)) && (std::min(P[i].y,P[j].y) <= point.y && point.y <= std::max(P[i].y,P[j].y)) && point.cross(P[i],P[j]) == 0){
+            return "BOUNDARY";
         }
     }
-    return (count&1);
+    if (count%2 == 1) return "INSIDE";
+    return "OUTSIDE";
 }
-
-
-signed main(){
-    ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-    
-    int n,m,ans = 0; 
-    cin >> n;
-    points_amount = n;
-    colins = 0;
-    vector<P> v;
-    for (int i = 0; i < n; i++) {
-        int x, y; 
+ 
+ 
+signed main() {
+    fast;
+    cin >> n >> m;
+    P.resize(n+1);
+    for (int i = 1; i <=n; i++) {
+        ld x, y;
         cin >> x >> y;
-        v.pb({x,y});
+        P[i] = {x, y};
     }
-    sort(v.begin(), v.end(), 
-         [] (const P &a, const P &b) {
-                return (a.X == b.X) ? (a.Y < b.Y) : (a.X < b.X);
-        });
-    vector<P> v1 = hull(v);
-
-    sort(v.begin(), v.end(),
-         [] (const P &a, const P &b) {
-                return (a.X == b.X) ? (a.Y > b.Y) : (a.X > b.X);
-        });
-    vector<P> v2 = hull(v);
-    for (int i = 1; i < v2.size(); i++) {
-        if (v2[i] == v1[0]) break;
-        v1.push_back(v2[i]);
-    }
-    /*
-    cout<<"Convex Hull is: "<<nl;
-    for (auto i : convhull) cout<<i.X<<" "<<i.Y<<nl;
-    cout<<"---------"<<nl; */
-    cin>>m;
-
     //How to tell if a point is inside a polygon or not given the polygon.
     for (int i = 1; i<=m; i++){
-        int x,y;
-        P punto;
+        ld x,y;
+        Point punto;
         cin>>x>>y;
         punto = {x,y};
-        if (checkInside(punto,v1)){
-            ans++;
-            //cout<<"Inside: "<<x<<" "<<y<<nl;
-        }
+        cout<<checkInside(punto)<<nl;
     }
-    cout<<ans<<nl;
     return 0;
 }
