@@ -1,75 +1,70 @@
 //Code tested with: https://cses.fi/problemset/task/2195/
 #include <bits/stdc++.h>
-using namespace std;
- 
-#define int long long
-#define nl '\n'
 #define ll long long
+#define nl '\n'
+#define pb push_back
 #define fast                                                                   \
   ios_base::sync_with_stdio(false);                                            \
   cin.tie(0);                                                                  \
   cout.tie(0);
-#define P complex<int>
-#define X real()
-#define Y imag()
- 
-int orientation(P a, P b, P c) {
-  double v = a.X * (b.Y - c.Y) + b.X * (c.Y - a.Y) + c.X * (a.Y - b.Y);
-  if (v < 0)
-    return -1; // clockwise
-  if (v > 0)
-    return +1; // counter-clockwise
-  return 0;
-}
- 
-vector<P> hull(vector<P> &v) {
-  vector<P> ans = {v[0]};
-  for (int i = 1; i < v.size(); i++) {
-    while (ans.size() > 1) {
-      P b = ans.back();
-      ans.pop_back();
-      P a = ans.back();
-      P c = v[i];
-      if (orientation(a, b, c) !=
-          1) { // si no es clockwise (que sea colineal o counter-clockwise).
-        ans.push_back(b);
-        break;
-      }
-    }
-    ans.push_back(v[i]);
-  }
-  return ans;
-}
- 
-signed main() {
-  fast;
- 
-  int n;
-  cin >> n;
-  vector<P> v(n);
-  for (int i = 0; i < n; i++) {
+
+using namespace std;
+
+const int maxN = 2e5+5;
+
+struct Point {
     int x, y;
-    cin >> x >> y;
-    v[i] = {x, y};
-  }
-  // Do Convex-Hull from the leftmost and bottommost point:
-  sort(v.begin(), v.end(), [](const P &a, const P &b) {
-    return (a.X == b.X) ? (a.Y < b.Y) : (a.X < b.X);
-  });
-  vector<P> v1 = hull(v);
+    void read(){ scanf("%d %d", &x, &y); }
+    Point operator +(const Point& b) const { return Point{x+b.x, y+b.y}; }
+    Point operator -(const Point& b) const { return Point{x-b.x, y-b.y}; }
+    ll operator *(const Point& b) const { return (ll) x * b.y - (ll) y * b.x; }
+    bool operator <(const Point& b) const { return x == b.x ? y < b.y : x < b.x; }
+    void operator +=(const Point& b) { x += b.x; y += b.y; }
+    void operator -=(const Point &b) { x -= b.x; y -= b.y; }
+    void operator *=(const int k) { x *= k; y *= k; }
+
+    ll cross(const Point& b, const Point& c) const {
+        return (b - *this) * (c - *this);
+    }
+};
+
+vector <Point> calculateHull(vector <Point> &P, int N){
+    if (N <= 2) return P;
+    vector<Point> hull;
+    int S = 0;
+    sort(P.begin(),P.end());
  
-  // Do Convex-Hull from the rightmost and topmost point:
-  sort(v.begin(), v.end(), [](const P &a, const P &b) {
-    return (a.X == b.X) ? (a.Y > b.Y) : (a.X > b.X);
-  });
-  vector<P> v2 = hull(v);
+    for(int t = 0; t < 2; t++){
+        for(int i = 0; i < N; i++){
+            while((int) hull.size()-S >= 2){
+                Point P1 = hull[hull.size()-2];
+                Point P2 = hull[hull.size()-1];
+                if(P1.cross(P2, P[i]) <= 0) break; //agregar <= si tambien se quieren incluir los colineales
+                hull.pop_back();
+            }
+            hull.push_back(P[i]);
+        }
+        hull.pop_back();
+        S = hull.size();
+        reverse(P.begin(),P.end());
+    }
  
-  for (int i = 1; i < v2.size(); i++) {
-    if (v2[i] == v1[0])
-      break;
-    v1.push_back(v2[i]);
-  }
-  cout << v1.size() << endl;
-  for (auto i : v1)
-    cout << i.X << " " << i.Y << nl;
+    return hull;
+}
+
+ 
+int main(){
+    int N, S;
+    vector <Point> P;
+    
+    S = 0;
+    cin>>N;
+    P.resize(N);
+    for(int i = 0; i < N; i++)
+        P[i].read();
+    
+    vector <Point> hull = calculateHull(P,N);
+    cout<<hull.size()<<nl;
+    for (Point h : hull) cout<<h.x<<" "<<h.y<<nl;
+    return 0;
 }
