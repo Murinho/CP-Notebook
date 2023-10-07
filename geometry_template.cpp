@@ -153,29 +153,3 @@ vector <double> ecuacionDeRecta(Point p1, Point p2){ //dados 2 puntos de una rec
     double c = -(a*p1.x) - (b*p1.y);
     return {a,b,c};
 }
- 
-int main(){
-    fast;
-    ll n;
-    vector <Point> p(2);
-    double r,ans;
-    cin>>p[0].y>>p[1].x>>r;
-    p[1].x = abs(p[1].x);
-    if (r >= p[1].x){
-        cout<<0<<nl;
-        return 0;
-    }
-    vector <double> coefs = ecuacionDeRecta(p[0],p[1]);
-    p = circleLineIntersection(coefs[0],coefs[1],coefs[2],r);
-    if (p.size() == 0){
-        cout<<-1<<nl;
-        return 0;
-    }
-    else if (p.size() == 1){
-        ans = p[0].calculateAngle();
-    }
-    else ans = min(p[0].calculateAngle(),p[1].calculateAngle());
-
-    cout<<fixed<<setprecision(9)<<ans<<nl;
-    return 0;
-}
