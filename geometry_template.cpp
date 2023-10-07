@@ -33,7 +33,7 @@ struct Point {
     ll cross(const Point& b, const Point& c) const { //Producto cruz
         ll cruz = (b - *this) * (c - *this);
         if (cruz < 0) return -1;
-        else if (cruz > 0) return 1;
+        if (cruz > 0) return +1;
         return 0;
     }
     ll determinant(const Point &b){ return (((*this).x) * b.y) - ((*this).y * b.x); } //determinante 2x2
@@ -120,6 +120,7 @@ ll Area(vector <Point> poly){ //Calculo de area de poligono
     return abs(ans);
 }
 
+
 vector <Point> circleLineIntersection(double a, double b, double c, double r){ 
 //Dados los coeficientes de la ecuacion de la recta y el radio del circulo con centro en el origen
     vector <Point> pts;
@@ -152,4 +153,25 @@ vector <double> ecuacionDeRecta(Point p1, Point p2){ //dados 2 puntos de una rec
     double b = p2.x-p1.x;
     double c = -(a*p1.x) - (b*p1.y);
     return {a,b,c};
+}
+
+string checkPointInsidePolygon(vector <Point> P, Point point, int n){ //checa si un punto dado esta DENTRO, FUERA o en FRONTERA con un poligono
+    P[0] = point;
+    ll count = 0;
+    if (n < 3) return "OUTSIDE";
+    for (int i = 1; i<=n; i++){
+        int j = (i == n ? 1 : i+1);
+        if(P[i].x <= P[0].x && P[0].x < P[j].x && P[0].cross(P[i], P[j]) < 0)       count++;
+        else if(P[j].x <= P[0].x && P[0].x < P[i].x && P[0].cross(P[j], P[i]) < 0)  count++;
+        
+        if ((min(P[i].x,P[j].x) <= point.x && point.x <= max(P[i].x,P[j].x)) && (min(P[i].y,P[j].y) <= point.y && point.y <= max(P[i].y,P[j].y)) && point.cross(P[i],P[j]) == 0){
+            return "BOUNDARY";
+        }
+    }
+    if (count%2 == 1) return "INSIDE";
+    return "OUTSIDE";
+}
+
+signed main() {
+    fast;
 }
