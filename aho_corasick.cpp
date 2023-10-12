@@ -23,7 +23,7 @@ ll que[MAXN];
 ll sz = 1;
 ll endlink[MAXN]; 
 vector<int> leaf[MAXN];  
-vector< int > tra[MAXN];
+vector <int> ans[MAXN];
 void add_str(string s, int id) {
     int v = 0;
     for(char c: s) {
@@ -56,18 +56,15 @@ void walk(string s) { // Dado un conjunto de patrones encuentra todas las coinci
             //x: indice de la palabra:
             //i: donde termina
             ll tami = a[x].size();
-            tra[i-tami+1].pb(i);
-        }
-            
+            ans[x].pb(i); //esta es mi respuesta, pusheo el indice donde termina
+        }  
     }
 }
  
  
-ll dp[5090];
  
 void init(int n){
     a.resize(n+1);
-    dp[0] = 1;
 }
  
 int main() {
@@ -85,11 +82,10 @@ int main() {
     }
     push_links();
     walk(s);
-    for (int i = 1; i<len; i++){
-        for (auto au : tra[i]){
-            dp[au] = (dp[au] + dp[i-1])%mod;
-        }
+    for (int i = 1; i<=n; i++){
+        cout<<a[i]<<" termina en: ";
+        for (auto au : ans[i]) cout<<au<<" ";
+        cout<<nl;
     }
-    cout<<dp[len-1]%mod<<nl;
     return 0;
 }
