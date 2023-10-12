@@ -1,15 +1,29 @@
 #include <bits/stdc++.h>
 #define ll long long
-#define pb push_back
 #define nl '\n'
+#define pb push_back
+#define ld long double
 #define rep(i,a,b) for(int i=(a);i<(b);i++)
-
+#define fast                                                                   \
+  ios_base::sync_with_stdio(false);                                            \
+  cin.tie(0);                                                                  \
+  cout.tie(0);
+#define PI 3.1415926535
+ 
 using namespace std;
-
-const int MAXN = 1e5 + 42;
+ 
+const ll mod = 1e9+7;
+ 
+const int MAXN = 1e6+10;
  
 map<char, int> to[MAXN];
-int link[MAXN], que[MAXN], sz = 1, endlink[MAXN]; vector<int> leaf[MAXN];  vector<int> ans[MAXN];
+vector <string> a; 
+int lnk[MAXN];
+ll que[MAXN];
+ll sz = 1;
+ll endlink[MAXN]; 
+vector<int> leaf[MAXN];  
+vector< int > tra[MAXN];
 void add_str(string s, int id) {
     int v = 0;
     for(char c: s) {
@@ -18,16 +32,16 @@ void add_str(string s, int id) {
     }
     leaf[v].push_back(id);
 }
- void push_links() {
+void push_links() {
     queue<int> q({0});
     while(!q.empty()) {
         int v = q.front(); q.pop();
-        for(auto [c,u] : to[v])
+        for(auto [c,u]: to[v])
         {
-            int j = link[v];
-            while(j && !to[j].count(c)) j=link[j];
-            if(to[j].count(c) && to[j][c]!=u) link[u] = to[j][c];
-            endlink[u] = leaf[link[u]].size()>0?link[u]:endlink[link[u]];
+            int j = lnk[v];
+            while(j && !to[j].count(c)) j=lnk[j];
+            if(to[j].count(c) && to[j][c]!=u) lnk[u] = to[j][c];
+            endlink[u] = leaf[lnk[u]].size()>0?lnk[u]:endlink[lnk[u]];
             q.push(u);
         }
     }
@@ -36,47 +50,46 @@ void walk(string s) { // Dado un conjunto de patrones encuentra todas las coinci
     int v=0;
     rep(i,0,s.size()) {
         char c=s[i];
-        while(v && !to[v].count(c)) v=link[v];
+        while(v && !to[v].count(c)) v=lnk[v];
         if(to[v].count(c)) v=to[v][c]; 
-        for(int u=v;u;u=endlink[u]) for(int x: leaf[u])
-            ans[x].push_back(i);
+        for(int u=v;u;u=endlink[u]) for(int x: leaf[u]){
+            //x: indice de la palabra:
+            //i: donde termina
+            ll tami = a[x].size();
+            tra[i-tami+1].pb(i);
+        }
+            
     }
 }
-
-string s;
-int n;
-vector <string> a;
-vector <int> b;
-const int inf = 1e9;
-
-void init(){
-    a.resize(MAXN);
-    b.resize(MAXN);
+ 
+ 
+ll dp[5090];
+ 
+void init(int n){
+    a.resize(n+1);
+    dp[0] = 1;
 }
-
-int main(){
-    cin.tie(0);
-    cout.tie(0);
-    ios_base::sync_with_stdio(false);
+ 
+int main() {
+    fast;
+    string s;
+    int n;
     cin>>s;
+    s = "$" + s;
+    ll len = s.size();
     cin>>n;
-    init();
-    for (int i = 0; i<n; i++){
-        cin>>b[i]>>a[i];
+    init(n);
+    for (int i = 1; i<=n; i++){
+        cin>>a[i];
         add_str(a[i],i);
     }
     push_links();
     walk(s);
-    for (int i = 0; i<n; i++){
-        int res = inf;
-        int sz = a[i].size();
-        for (int j = b[i]-1; j<ans[i].size(); j++){
-            int l = ans[i][j-b[i]+1];
-            int r = ans[i][j] + sz;
-            res = min(res,r-l);
+    for (int i = 1; i<len; i++){
+        for (auto au : tra[i]){
+            dp[au] = (dp[au] + dp[i-1])%mod;
         }
-        if (res == inf) cout<<-1<<nl;
-        else cout<<res<<nl;
     }
+    cout<<dp[len-1]%mod<<nl;
     return 0;
 }
