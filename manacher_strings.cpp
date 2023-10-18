@@ -1,98 +1,69 @@
+//Computes the longest palindrome.
 #include <bits/stdc++.h>
 
 #define ll long long
 #define pb push_back
 #define nl '\n'
 #define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false);
+#define fore(i,a,b) for(int i=a,ThxDem=b;i<ThxDem;++i)
 
 using namespace std;
 
-ll tc,n,m,k,best,pos,target,ind,cont;
-vector <ll> b;
-string s,ans;
+const ll MAXN = 1e6+5;
+int d1[MAXN];//d1[i] = max odd palindrome centered on i
+int d2[MAXN];//d2[i] = max even palindrome centered on i
 
-void init(){
-    best = 0;
-    pos = -1;
-    ans = "";
+//s  aabbaacaabbaa
+//d1 1111117111111
+//d2 0103010010301
+void manacher(string& s){
+	int l=0,r=-1,n=s.size();
+	fore(i,0,n){
+		int k=i>r?1:min(d1[l+r-i],r-i);
+		while(i+k<n&&i-k>=0&&s[i+k]==s[i-k])k++;
+		d1[i]=k--;
+		if(i+k>r)l=i-k,r=i+k;
+	}
+	l=0;r=-1;
+	fore(i,0,n){
+		int k=i>r?0:min(d2[l+r-i+1],r-i+1);k++;
+		while(i+k<=n&&i-k>=0&&s[i+k-1]==s[i-k])k++;
+		d2[i]=--k;
+		if(i+k-1>r)l=i-k,r=i+k-1;
+	}
 }
-
-void manacher(){
-    ll sz = s.size();
-    ll l = 1, r = 1;
-    b[0] = 1;
-    b[sz-1] = 1;
-    for (ll i = 1; i<sz-1; i++){
-        b[i] = max(0LL, min(r-i, b[l + (r-i)]));
-        while(s[i - b[i]] == s[i + b[i]]) b[i]++;
-        
-        if (i + b[i] > r){
-            l = i - b[i], r = i + b[i];
-        }
-    }
-}
-
 
 int main(){
     fast;
-    init();
-    string t;
-    cin>>t;
-    n = t.size();
-    s = "#";
-    for (int i = 0; i<n; i++){
-        s += t[i];
-        s += "#";
-    }
-    b.resize(s.size());
-    manacher();
-    
-    //for (auto au : b) cout<<au<<" ";
-    //cout<<nl; 
-
-    //Even positions denote odd palindromes.
-    //Odd positions denote even palindromes.
-    for (int i = 0; i<b.size(); i++){
-        if (i%2 == 0){ //this is a '#' (counting even length palindromes).
-            ll amou = (b[i]-1)/2;
-            ll len = amou*2;
-            if (best < len){
-                best = len;
-                pos = i;
-            }
-        }
-        else{ //this is an actual character (counting odd length palindromes).
-            ll amou = b[i]/2;
-            ll len = (amou*2)-1;
-            if (best < len){
-                best = len;
-                pos = i;
-            }
+    int best = 0;
+    bool even = false;
+    int pos = 0;
+    int stpos,tope;
+    string s,ans = "";
+    cin>>s;
+    manacher(s);
+	int r=0;
+    //Check odd palindromes.
+    fore(i,0,s.size()){
+        if (2*d1[i] - 1 > best){
+            best = 2*d1[i] - 1;
+            pos = i;
         }
     }
-    
-    if (pos%2 == 1){ //even palindrome as the longest one.
-        target = (b[pos]/2)-1;
-        ans = s[pos];
+    //Check even palindromes.
+    fore (i,0,s.size()){
+        if (2*d2[i] > best){
+            best = 2*d2[i];
+            pos = i;
+            even = true;
+        }
     }
-    else{ //odd palindrome as the longest one.
-        target = (b[pos]-1)/2;
-    }
+    if (!even) stpos = pos-d1[pos]+1; 
+    else stpos = pos-d2[pos];
 
-    ind = pos+1;
-    cont = 0;
-    string aux = "";
-    while(cont < target && ind < s.size()){
-        if (s[ind] != '#') aux += s[ind], cont++;
-        ind++;
-    }
-    ans += aux;
-    reverse(aux.begin(),aux.end());
-    string ress = aux;
-    ress += ans;
-    for (int i = 0; i<ress.size(); i++){
-        if (ress[i] != ' ') cout<<ress[i];
-    }
-    cout<<nl;
-    return 0;
+    tope = stpos+best-1;
+    
+    for (int i = stpos; i<=tope; i++) ans += s[i];
+    cout<<ans<<nl;
+	return 0;
 }
