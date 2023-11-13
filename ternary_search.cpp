@@ -13,6 +13,7 @@ double f(double x){
 }
  
 double ternary_search(double l, double r) { //use long doubles for more precision.
+                                            //to find the minimum of a function, invert the sign (-1) of the result of the objective function while evaluating in the while loop
     double eps = 1e-9;              //set the error limit here
     while (r - l > eps) {
         double m1 = l + (r - l) / 3;
