@@ -12,7 +12,7 @@ double f(double x){
     return x;
 }
  
-double ternary_search(double l, double r) {
+double ternary_search(double l, double r) { //use long doubles for more precision.
     double eps = 1e-9;              //set the error limit here
     while (r - l > eps) {
         double m1 = l + (r - l) / 3;
