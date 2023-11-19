@@ -42,39 +42,7 @@ struct Node{
         sort(ALL(v));
     }
     int get(int val_l, int val_r){ //nos interesa saber si al menos hay 1 elemento en el rango [val_l, val_r]
-        int sz = v.size();
-        if (val_r < v[0] || v[sz-1] < val_l) return 0;
-        //find the lower bound.
-        int l = 0;
-        int r = sz-1;
-        while(l < r){
-            int mid = (l+r)/2;
-            if (val_l <= v[mid]) r = mid;
-            else l = mid+1;
-
-            if (l+1 == r){
-                if (val_l <= v[l]) r = l;
-                break;
-            }
-
-        }
-        int lwb = r;
-        //find the upper bound.
-        l = 0;
-        r = sz-1;
-        while(l < r){
-            int mid = (l+r)/2;
-            if (v[mid] <= val_r) l = mid;
-            else r = mid-1;
-
-            if (l+1 == r){
-                if (v[r] <= val_r) l = r;
-                break;
-            }
-        }
-        int hgb = l;
-        if (hgb-lwb+1 > 0) return 1; 
-        return 0;
+        return lower_bound(ALL(v),val_l)!=upper_bound(ALL(v),val_r);
     }
 };
 
