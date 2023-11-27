@@ -33,7 +33,7 @@ int main()
     vector <int> res = kmp(s);
     ll ans = 0;
     for (auto au : res){
-        if (au == tamt-1) ans++;
+        if (au == tamt) ans++;
     }
     cout<<ans<<nl;
     return 0;
