@@ -27,6 +27,19 @@ void euler_totient(int n) { //Amount of coprime numbers (gcd(a,b) == 1) to each 
     }
 }
 
+int phiFunc(int a, int m) { //Amount of numbers 0 <= i < m such that gcd(a+i,m) == gcd(a,m)
+    ll y = m/__gcd(a,m);
+    ll ans = y;
+    for(ll i = 2; i*i<=m; i++){
+        if (y%i == 0){
+            ans -= ans/i;
+            while(y%i == 0) y /= i;
+        }
+    }
+    if (y>1) ans -= ans/y;
+    return ans;
+}
+
 
 int main(){
     int n;
