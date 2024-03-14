@@ -98,7 +98,7 @@ vector <Point> calculateHull(vector <Point> &P, int N){ //Calculo del Convex Hul
             while((int) hull.size()-S >= 2){
                 Point P1 = hull[hull.size()-2];
                 Point P2 = hull[hull.size()-1];
-                if(P1.cross(P2, P[i]) <= 0) break; //agregar (<=) si tambien se quieren incluir los puntos colineales
+                if(P1.cross(P2, P[i]) <= 0) break; //agregar (<=) si tambien se quieren incluir los puntos colineales sino solo (<)
                 hull.pop_back();
             }
             hull.push_back(P[i]);
@@ -170,6 +170,15 @@ string checkPointInsidePolygon(vector <Point> P, Point point, int n){ //checa si
     }
     if (count%2 == 1) return "INSIDE";
     return "OUTSIDE";
+}
+
+bool checkParallelism(Point p1, Point p2, Point p3, Point p4){ //(p1 -- p2) es una linea (p3 -- p4) es la otra linea.
+    double v1x = p2.x - p1.x;
+    double v1y = p2.y - p1.y;
+    double v2x = p4.x - p3.x;
+    double v2y = p4.y - p3.y;
+    double crossProd = (v1x*v2y) - (v1y*v2x);
+    return abs(crossProd) < EPS; //son paralelas si su producto cruz = 0.
 }
 
 signed main() {
