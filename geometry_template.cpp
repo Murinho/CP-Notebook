@@ -11,7 +11,8 @@
 
 using namespace std;
 
-const double EPS = 1e-6;
+const ld EPS = 1e-6;
+const ld pi = 3.1415926535;
 
 struct Point {
     double x, y; //cambiar tipo de dato de acuerdo al problema
@@ -27,9 +28,9 @@ struct Point {
         if (b.x == (*this).x && b.y == (*this).y) return true;
         return false;
     }
-    ld len(){ return sqrt((x*x) + (y*y)); } //longitud hipotenusa
+    ld magnitude(){ return sqrt((x*x) + (y*y)); } //longitud hipotenusa
     ld dot (const Point &b){ return (x * b.x) + (y * b.y); } //producto punto
-    ld dist (const Point & b){ return (*this - b).len(); } //distancia entre 2 puntos.
+    ld dist (const Point & b){ return (*this - b).magnitude(); } //distancia entre 2 puntos.
     ll cross(const Point& b, const Point& c) const { //Producto cruz
         ll cruz = (b - *this) * (c - *this);
         if (cruz < 0) return -1;
@@ -179,6 +180,21 @@ bool checkParallelism(Point p1, Point p2, Point p3, Point p4){ //(p1 -- p2) es u
     double v2y = p4.y - p3.y;
     double crossProd = (v1x*v2y) - (v1y*v2x);
     return abs(crossProd) < EPS; //son paralelas si su producto cruz = 0.
+}
+
+ld angleBetweenPoints(Point A, Point B, Point C) { //Angulo formado por los vectores AB, AC.
+    Point AB = {B.x - A.x, B.y - A.y};
+    Point AC = {C.x - A.x, C.y - A.y};
+
+    ld dot = AB.dot(AC);
+
+    ld mag_AB = AB.magnitude();
+    ld mag_AC = AC.magnitude();
+
+    ld angle_rad = acos(dot / (mag_AB * mag_AC));
+    ld angle_deg = angle_rad * 180.0 / pi;
+    
+    return angle_deg;
 }
 
 signed main() {
