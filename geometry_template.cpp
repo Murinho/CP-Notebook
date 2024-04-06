@@ -182,6 +182,14 @@ bool checkParallelism(Point p1, Point p2, Point p3, Point p4){ //(p1 -- p2) es u
     return abs(crossProd) < EPS; //son paralelas si su producto cruz = 0.
 }
 
+double volumeSphere(double rad){ 
+    return (4.0/3.0)*pi*rad*rad*rad;
+}
+ 
+double volumeCap(double h, double rad){ //parte de una esfera.
+    return pi*h*h*(rad-(h/3.0));
+}
+
 ld angleBetweenPoints(Point A, Point B, Point C) { //Angulo formado por los vectores AB, AC.
     Point AB = {B.x - A.x, B.y - A.y};
     Point AC = {C.x - A.x, C.y - A.y};
