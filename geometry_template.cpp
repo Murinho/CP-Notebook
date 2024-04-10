@@ -182,6 +182,15 @@ bool checkParallelism(Point p1, Point p2, Point p3, Point p4){ //(p1 -- p2) es u
     return abs(crossProd) < EPS; //son paralelas si su producto cruz = 0.
 }
 
+bool checkPerpendicular(Point p1, Point p2, Point p3, Point p4){ //(p1 -- p2) es una linea (p3 -- p4) es la otra linea.
+    double v1x = p2.x - p1.x;
+    double v1y = p2.y - p1.y;
+    double v2x = p4.x - p3.x;
+    double v2y = p4.y - p3.y;
+    double dotProduct = v1x * v2x + v1y * v2y;
+    return abs(dotProduct) < EPS;
+}
+
 double volumeSphere(double rad){ 
     return (4.0/3.0)*pi*rad*rad*rad;
 }
