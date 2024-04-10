@@ -205,6 +205,10 @@ ld angleBetweenPoints(Point A, Point B, Point C) { //Angulo formado por los vect
     return angle_deg;
 }
 
+ld degreesToRadians(ld degrees) {
+    return degrees * pi / 180.0;
+}
+
 signed main() {
     fast;
 }
