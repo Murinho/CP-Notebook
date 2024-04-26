@@ -89,6 +89,28 @@ poly multiply(poly& p1, poly& p2){
 	return res;
 }
 
+void getBigNumMulti(vector <ll> &c){
+    vector <char> r;
+    while(!c.empty()&&!c.back()) c.pop_back(); //quitar todos los 0 extras.
+	if(c.empty()){
+        cout<<0<<nl;
+        return;
+    }
+	ll x=0;
+    //Normalizar los coeficientes para representarlos como digitos.
+	fore(i,0,c.size()){
+		x+=c[i];
+        r.pb((char)(x%10) + '0');
+		x/=10;
+	}
+	while(x){ //carry que sobra.
+		r.pb((char)(x%10) + '0');
+		x/=10;
+	}
+	reverse(ALL(r));
+    fore(i,0,r.size()) cout<<r[i];
+    cout<<nl;
+}
 
 int main(){
     fast;
@@ -102,8 +124,12 @@ int main(){
 
         c = multiply(a,b);
 
+        //Resulting coefficients:
         fore(i,0,(2*n)+1) cout<<c[i]<<" ";
         cout<<nl;
+
+        //For multiplying 2 big numbers: (A and B are passed digit by digit):
+        //getBigNumMulti(c);
 	}
 	return 0;
 }
