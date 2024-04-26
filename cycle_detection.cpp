@@ -6,21 +6,15 @@
 
 using namespace std;
 
-ll tc,n,m,k,ans,best,x,y,spnode,cynum;
+ll tc,n,m,k,ans,best,x,y;
 vector < vector <ll> > cycles;
-vector < set <ll> > stadj;
-vector < set <ll> > stcy;
+vector < vector <ll> > adj;
 vector <ll> color,par;
-vector <ll> extra;
-bool flag;
 
 void init(){
-    cycles.clear(), cycles.resize(0);
-    stcy.clear(), stcy.resize(0);
-    color.clear(), color.resize(n+1);
-    par.clear(), par.resize(n+1);
-    stadj.clear(), stadj.resize(n+1);
-    flag = false;
+    color.resize(n+1);
+    par.resize(n+1);
+    adj.resize(n+1);
 }
 
 void dfs_cycle(int u, int p)
@@ -30,27 +24,24 @@ void dfs_cycle(int u, int p)
     }
     if (color[u] == 1) {
         vector<ll> v;
-        set <ll> st;
            
         int cur = p;
         v.push_back(cur);
-        st.insert(cur);
  
         while (cur != u) {
             cur = par[cur];
             v.push_back(cur);
-            st.insert(cur);
         }
+		//reverse(ALL(v)); //uncomment if graph is directed.
         cycles.pb(v);
-        stcy.pb(st);
         return;
     }
     par[u] = p;
  
     color[u] = 1;
  
-    for (int v : stadj[u]) {
-        if (v == par[u]) {
+    for (int v : adj[u]) {
+    	if (v == par[u]) { //remove IF graph is directed.
             continue;
         }
         dfs_cycle(v, u);
@@ -61,49 +52,21 @@ void dfs_cycle(int u, int p)
 
 int main(){
     fast;
-    cin>>tc;
-    while(tc--){
-        cin>>n>>m;
-        init();
-        for (int i = 1; i<=m; i++){
-            cin>>x>>y;
-            stadj[x].insert(y);
-            stadj[y].insert(x);
-        }
-        for (int i = 1; i<=n; i++) if (color[i] == 0) dfs_cycle(i,0);
-
-        //Print the cycles of the graph:
-        int cypos = -1;
-        for (auto cy : cycles){
-            if (flag) break;
-            cypos++;
-            for (auto node : cy){
-                extra.clear(), extra.resize(0);
-                for (auto signode : stadj[node]){
-                    if (!stcy[cypos].count(signode)){
-                        extra.pb(signode);
-                    }
-                    if (extra.size() >= 2) break;
-                }
-                if (extra.size() >= 2){
-                    flag = true;
-                    cynum = cypos;
-                    spnode = node;
-                    break;
-                }
-            }
-        }
-        if(!flag) cout<<"NO"<<nl;
-        else{
-            cout<<"YES"<<nl;
-            cout<<cycles[cynum].size() + 2 <<nl;
-            cycles[cynum].pb(cycles[cynum][0]);
-            for (int i = 1; i<cycles[cynum].size(); i++){
-                cout<<cycles[cynum][i-1]<<" "<<cycles[cynum][i]<<nl;
-            }
-            cout<<spnode<<" "<<extra[0]<<nl;
-            cout<<spnode<<" "<<extra[1]<<nl;
-        }
+	cin>>n>>m;
+    init();
+    for (int i = 1; i<=m; i++){
+        cin>>x>>y;
+        adj[x].pb(y);
+		adj[y].pb(x);
     }
-    return 0;
+    for (int i = 1; i<=n; i++) if (color[i] == 0) dfs_cycle(i,0);
+
+    //Print the cycles of the graph:
+    for (auto cy : cycles){
+        for (auto node : cy){
+            cout<<node<<" ";
+        }
+        cout<<nl;
+    }
+	return 0;
 }
