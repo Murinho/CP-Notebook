@@ -112,6 +112,51 @@ void getBigNumMulti(vector <ll> &c){
     cout<<nl;
 }
 
+void stringMatchShift(){ //All possible scalar products with strings.
+	string s;
+	cin>>s;
+	int n = s.size();
+	vector <ll> a1(n,0),a2(2*n,0),b1(n,0),b2(2*n,0),c1(n,0),c2(2*n,0);
+	vector <ll> ra,rb,rc;
+
+	//Create binary polynomial for each letter.
+	fore(i,0,n){
+		if (s[i] == 'a') a1[i] = 1;
+		else if (s[i] == 'b') b1[i] = 1;
+		else c1[i] = 1;
+	}
+	//Make the dup for each letter to multiply:
+	fore(i,0,n){
+		a2[i] = a2[i+n] = a1[i];
+		b2[i] = b2[i+n] = b1[i];
+		c2[i] = c2[i+n] = c1[i];
+	}
+	//Append the rest of the zeros (Step 1):
+	fore(i,0,n){
+		a1.pb(0), b1.pb(0), c1.pb(0);
+	}
+	//Reverse the arrays (Step 2):
+	reverse(ALL(a1));
+	reverse(ALL(b1));
+	reverse(ALL(c1));
+	//Multiply the polynomials:
+	ra = multiply(a1,a2);
+	rb = multiply(b1,b2);
+	rc = multiply(c1,c2);
+	int shif = 1;
+	//Left shift match (Step 1, then Step 2):
+	for(int i = (2*n)-2; i>=n; i--){
+		cout<<"L-shift: "<<shif<<" "<<ra[i] + rb[i] + rc[i]<<nl;
+		shif++;
+	} 
+	//Right shift match (Step 2, then Step 1):
+	shif = 1;
+	for(int i = n-2; i>=0; i--){
+		cout<<"R-shift: "<<shif<<" "<<ra[i] + rb[i] + rc[i]<<nl;
+		shif++;
+	} 
+}
+
 int main(){
     fast;
 	int tc,n;
