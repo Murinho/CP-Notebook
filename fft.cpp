@@ -167,16 +167,16 @@ vector<ll> string_matching(string &s, string &t) { //String matching with wildca
   for(int i = 0; i < m; i++) t1[i] = t[i] == '?' ? 0 : t[i] - 'a' + 1;
   for(int i = 0; i < m; i++) t2[i] = t1[i] * t1[i];
   for(int i = 0; i < m; i++) t3[i] = t1[i] * t2[i];
-  reverse(t1.begin(), t1.end());
-  reverse(t2.begin(), t2.end());
-  reverse(t3.begin(), t3.end());
+  reverse(ALL(t1));
+  reverse(ALL(t2));
+  reverse(ALL(t3));
   vector<ll> s1t3 = multiply(s1, t3);
   vector<ll> s2t2 = multiply(s2, t2);
   vector<ll> s3t1 = multiply(s3, t1);
   vector<ll> res(n);
   for(int i = 0; i < n; i++) res[i] = s1t3[i] - s2t2[i] * 2 + s3t1[i];
   vector<ll> oc;
-  for(int i = m - 1; i < n; i++) if(res[i] == 0) oc.push_back(i - m + 1);
+  for(int i = m - 1; i < n; i++) if(res[i] == 0) oc.pb(i - m + 1);
   return oc;
 }
 
@@ -195,9 +195,6 @@ int main(){
         //Resulting coefficients:
         fore(i,0,(2*n)+1) cout<<c[i]<<" ";
         cout<<nl;
-
-        //For multiplying 2 big numbers: (A and B are passed digit by digit):
-        //getBigNumMulti(c);
 	}
 	return 0;
 }
