@@ -7,12 +7,14 @@
   ios_base::sync_with_stdio(false);                                            \
   cin.tie(0);                                                                  \
   cout.tie(0);
-#define PI 3.1415926535
+#define PI acos(-1.0)
+#define ALL(u) u.begin(),u.end()
 
 using namespace std;
 
 const ld EPS = 1e-6;
 const ld pi = 3.1415926535;
+const ll INF = 1e18;
 
 struct Point {
     double x, y; //cambiar tipo de dato de acuerdo al problema
@@ -216,6 +218,35 @@ ld angleBetweenPoints(Point A, Point B, Point C) { //Angulo formado por los vect
 
 ld degreesToRadians(ld degrees) {
     return degrees * pi / 180.0;
+}
+
+ll closestPair(vector <pair<ll,ll> > pts){ //Calcula el par de puntos en 2D mas cercanos entre si, retorna su distancia euclidiana.
+	int n = pts.size();
+    sort(ALL(pts));
+    set<pair<ll,ll>> s;
+
+	ll ans = INF;
+    int pos = 0;
+    for (int i = 0; i < n; ++i) {
+        ll d = ceil(sqrt(ans));
+        while (pts[i].first - pts[pos].first >= d) {
+            s.erase({pts[pos].second, pts[pos].first});
+            pos++;
+        }
+
+        auto it1 = s.lower_bound({pts[i].second - d, pts[i].first});
+        auto it2 = s.upper_bound({pts[i].second + d, pts[i].first});
+        
+        for (auto it = it1; it != it2; it++) {
+            ll dx = pts[i].first - it->second;
+            ll dy = pts[i].second - it->first;
+			if (ans > 1LL * dx * dx + 1LL * dy * dy){
+				ans = 1LL * dx * dx + 1LL * dy * dy;
+			} 
+        } 
+        s.insert({pts[i].second, pts[i].first}); 
+    }
+	return ans;
 }
 
 signed main() {
