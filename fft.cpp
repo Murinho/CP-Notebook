@@ -19,7 +19,7 @@ typedef pair<ll,ll> ii;
 // MAXN must be power of 2 !!
 // MOD-1 needs to be a multiple of MAXN !!
 // big mod and primitive root for NTT:
-const int MOD=998244353,RT=3,MAXN=1<<20;
+const ll MOD=998244353,RT=3,MAXN=1<<20; //watch out with RTEs (increase MAXN):
 typedef vector<ll> poly;
 // FFT
 struct CD {
