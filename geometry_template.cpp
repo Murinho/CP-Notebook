@@ -101,7 +101,7 @@ vector <Point> calculateHull(vector <Point> &P, int N){ //Calculo del Convex Hul
             while((int) hull.size()-S >= 2){
                 Point P1 = hull[hull.size()-2];
                 Point P2 = hull[hull.size()-1];
-                if(P1.cross(P2, P[i]) <= 0) break; //agregar (<=) si tambien se quieren incluir los puntos colineales sino solo (<)
+                if(P1.cross(P2, P[i]) <= 0) break; //agregar (<=) si tambien se quieren incluir los puntos colineales, sino solo (<)
                 hull.pop_back();
             }
             hull.push_back(P[i]);
