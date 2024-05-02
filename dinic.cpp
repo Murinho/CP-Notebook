@@ -1,6 +1,16 @@
 #include <bits/stdc++.h>
 #define ll long long
 #define pb push_back
+#define ld long double
+#define nl '\n'
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define fore(i,a,b) for(ll i=a;i<b;++i)
+#define ALL(u) u.begin(),u.end()
+#define vi vector <ll>
+#define vvi vector<vi>
+#define sz(a) ((int)a.size())
+#define lsb(x) ((x)&(-x))
+#define PI acos(-1.0)
 
 using namespace std;
 
@@ -18,9 +28,9 @@ struct Dinic {
 	vector<int> level, ptr;
 	queue<int> q;
 	Dinic(int n, int s, int t) : n(n), s(s), t(t) {
-	adj.resize(n);
-	level.resize(n);
-	ptr.resize(n);
+		adj.resize(n);
+		level.resize(n);
+		ptr.resize(n);
 	}
 	void add_edge(int v, int u, long long cap) {
 		edges.emplace_back(v, u, cap);
@@ -72,15 +82,13 @@ struct Dinic {
 				f += pushed;
 			}
 		}
-	return f;
+		return f;
 	}
 };
 
 
 int main(){
-	cin.tie(0);
-	cout.tie(0);
-	ios_base::sync_with_stdio(false);
+	fast;
 	ll n,m,k,company;
 	cin>>n>>m; //people and companies:
 	int source = 0;
