@@ -1,68 +1,73 @@
+//Tested with: https://codeforces.com/gym/104758/problem/B
 #include <bits/stdc++.h>
-#define ll long long 
+#define ll long long
 #define pb push_back
+#define ld long double
+#define nl '\n'
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define fore(i,a,b) for(ll i=a;i<b;++i)
+#define ALL(u) u.begin(),u.end()
+#define vi vector <ll>
+#define vvi vector<vi>
+#define sz(a) ((int)a.size())
+#define lsb(x) ((x)&(-x))
+#define PI acos(-1.0)
 
 using namespace std;
 
-const ll mod = 1e18+7;
-vector < vector <ll> > a,b,mat;
-ll k,pot,ans;
-bool flag;
+const ll mod = 1e9+7;
+ll tc,n,m,k;
 
-void clean(){
-    a.resize(2);
-    b.resize(2);
-    mat.resize(2);
-    flag = false;
-    for (int i = 0; i<=1; i++) a[i].resize(2), b[i].resize(2), mat[i].resize(2);
+vvi mul(vvi a, vvi b) {
+    vvi c(sz(a), vi(sz(b[0])));
+    for (int i = 0; i < sz(a); i++) 
+        for (int j = 0; j < sz(b); j++)
+            for ( int k = 0; k < sz(a); k++) 
+                (c[i][j] += a[i][k]*b[k][j]%mod)%=mod; 
+    return c;
 }
 
-void exponentiate(){
-    //cout<<"Expo: \n";
-    b = a;
-    for (int i = 0; i<=1; i++){
-        for (int j = 0; j<=1; j++){
-            ll val = 0;
-            for (int x = 0; x<=1; x++) val = (val + ((b[i][x]*b[x][j])%mod))%mod;
-            a[i][j] = val;
-          //  cout<<a[i][j]<<" ";
+vvi exp( vvi x, ll y) {
+    vvi r(sz(x), vi(sz(x)));
+    bool flag = false;
+    while (y>0){
+        if (y&1) {
+            if (!flag) r = x, flag = true;
+            else r = mul(r,x);
         }
-        //cout<<"\n";
+        y=y>>1;
+        x = mul(x,x);
     }
-}
-
-void multiply(){
-    b = mat;
-    for (int i = 0; i<=1; i++){
-        for (int j = 0; j<=1; j++){
-            ll val = 0;
-            for (int x = 0; x<=1; x++) val = (val + ((b[i][x]*a[x][j])%mod))%mod;
-            mat[i][j] = val;
-        }
-    }
+    return r;
 }
 
 int main(){
-    cin>>k; //The index of the fibonacci sequence we want to look.
-    k--;
-    clean();
-    pot = 1;
-    a[0][0] = 1;
-    a[0][1] = 1;
-    a[1][0] = 1;
-    a[1][1] = 0;
-    for (int i = 0; i<8; i++){
-        ll aux = pot & k;
-        if (aux == pot){
-            if (!flag){
-                mat = a;
-                flag = true;
-            }
-            else multiply();
-        }
-        exponentiate();
-        pot *= 2;
+    fast;
+    cin>>k;
+    if (k < 4){
+        if (k == 0) cout<<1<<nl;
+        else if (k == 1) cout<<2<<nl;
+        else if (k == 2) cout<<3<<nl;
+        else cout<<17<<nl;
+        return 0;
     }
-    ans = mat[1][0] + mat[1][1];
-    cout<<ans<<endl;
+    k -= 2ll; // Adjusting for the additional constant term
+    vvi mat;
+    mat.resize(4);
+    //Function: F(n) = 3*F(n-1) + 2*F(n-2) + F(n-3) + 3.
+    mat[0] = {3,2,1,3}; 
+    mat[1] = {1,0,0,0}; 
+    mat[2] = {0,1,0,0}; 
+    mat[3] = {0,0,0,1}; //to keep the +3 constant.
+
+    vi iniv = {3,2,1,1}; //Initial vector.
+
+    mat = exp(mat,k);
+    ll ans = 0;
+    fore(i,0,4){
+        ll aux = (mat[0][i]*iniv[i])%mod;
+        ans = (ans + aux)%mod;
+    }
+    cout<<ans<<nl;
+    return 0;
 }
