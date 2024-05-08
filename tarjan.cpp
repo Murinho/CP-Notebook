@@ -63,7 +63,6 @@ void tarjan(ll stnode) {
 int main(){
     fast;
     cin>>n>>m; //amount of nodes and edges:
-    init();
     for (int i = 1; i<=m; i++){
         ll x,y;
         cin>>x>>y;
