@@ -212,22 +212,21 @@ int main(){
     for(int i = 0; i<q; i++){
         cin>>typ>>l>>r;
         r--;
-        if (typ == 0){
+        if (typ == 0){ //[l,r] ai = min(ai,x)
             cin>>x;
             st.update_chmin(l,r,x);
         }
-        else if (typ == 1){
+        else if (typ == 1){ //[l,r] ai = max(ai,x)
             cin>>x;
             st.update_chmax(l,r,x);
         }
-        else if (typ == 2){
+        else if (typ == 2){ //[l,r] ai += b
             cin>>x;
             st.update_add(l,r,x);
         }
-        else if (typ == 3){
+        else if (typ == 3){ //print sum [l,r]
             cout<<st.query_sum(l,r)<<nl;
         }
-        //cout<<"QS: "<<i<<" "<<st.query_sum(0,N-1)<<nl;
     }
     return 0;
 }
