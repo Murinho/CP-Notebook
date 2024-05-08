@@ -58,7 +58,7 @@ void bellman_ford(int start = 0){
 
 ll mcf(){
     ll flow = 0, cost = 0;
-    while(flow < N){
+    while(flow < N){ //set N equal to INF if wanting to compute the MCMF.
         bellman_ford();
         if(d[2*N+1] == INF) break;
 
