@@ -74,6 +74,22 @@ int check(pitem t, int val){
 int main(){
     fast;
     srand(time(0));
-    
+    ll n,q;
+    cin>>n>>q;
+    vector <ll> a(n);
+    //Having individual treaps for each number, the keys are the positions in the array.
+    fore(i,0,n){ 
+        cin>>a[i];
+        insert(mp[a[i]],new item(i));
+    }
+    while(q--){
+        int pos,nw;
+        cin>>pos>>nw;
+        erase(mp[a[pos]],pos);
+        a[pos] = nw;
+        insert(mp[a[pos]], new item(pos));
+        //check amount of items equal to a[pos] in [0,pos)
+        cout<<check(mp[a[pos]],pos)<<nl; 
+    }
     return 0;
 }
