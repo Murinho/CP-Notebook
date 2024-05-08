@@ -31,7 +31,8 @@ void push(pitem it){
 			if(it->r)it->r->rev^=true;
 			it->rev=false;
 		}
-		it->val=(it->val+it->add)%26;
+        //remove %26 when values can get bigger.
+		it->val=(it->val+it->add)%26; 
 		if(it->l)it->l->add+=it->add;
 		if(it->r)it->r->add+=it->add;
 		it->add=0;
@@ -77,6 +78,11 @@ int main(){
         n = s.size();
         pitem t = 0; //raiz de todos.
         fore(i,0,n) merge(t,t,new item(s[i]-'a'));
+        /*Cada query:
+        1. [ini,fin], [ini2,fin2] swappearlos.
+        2. [ini,fin], [ini2,fin2] revertirlos individualmente.
+        3. [ini,fin], [ini2,fin2] agregar +1 todo el segmento.
+        */
         while(q--){
             int ini,fin,ini2,fin2;
             cin>>ini>>fin>>ini2>>fin2;
