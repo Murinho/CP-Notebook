@@ -104,8 +104,8 @@ int main(){
         ll dif = max(0LL,a[i]-i);
         uni.pb(dif);
     }
-    sort(uni.begin(),uni.end());
-    uni.erase(unique(uni.begin(),uni.end()),uni.end());
+    sort(ALL(uni));
+    uni.erase(unique(ALL(uni)),uni.end());
 
     fore(i,1,n+1){
         insert(mp[max(0LL,a[i]-i)],new item(i));
@@ -113,7 +113,8 @@ int main(){
     fore(i,0,uni.size()){
         ll delay = uni[i];
         best = max(best,explore(mp[delay],k-delay));
-        if (i+1<uni.size()) unite(mp[uni[i+1]],mp[uni[i+1]],mp[delay]);
+        //join 2 treaps: {root,left,right};
+        if (i+1<uni.size()) unite(mp[uni[i+1]],mp[uni[i+1]],mp[delay]); 
     }
     cout<<best<<nl;
     return 0;
