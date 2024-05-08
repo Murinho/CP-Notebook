@@ -1,4 +1,5 @@
 //Tested with: https://www.spoj.com/problems/ADACROP/
+//Tested with: https://codeforces.com/contest/847/problem/D
 #include <bits/stdc++.h>
 #define ll long long
 #define pb push_back
@@ -55,29 +56,51 @@ void unite(pitem &t, pitem l, pitem r){
 	t=l;upd_cnt(t);
 }
 
-map <int,pitem> mp;
-
 //Explore the treap going left or right according to the target value.
-int check(pitem t, int val){ 
+ll explore(pitem t, ll key){
     if (!t) return 0;
-    int ans = 0;
-    if (t->key >= val){
-        ans += check(t->l,val);
+    ll res = 0;
+    if (t->key < key){
+        res += cnt(t->l) + 1;
+        res += explore(t->r,key);
     }
-    else{ //if t->key < val
-        ans += cnt(t->l)+1;
-        ans += check(t->r,val);
+    else{ //t->key >= key
+        res += explore(t->l,key);
     }
-    return ans;
+    return res;
 }
 
-int main(){
-    fast;
-    srand(time(0));
+void kthSmallest(pitem t, int sz, int & kth){
+    if (!t) return;
+    if (cnt(t->l) + 1 == sz){
+        kth = t->key;
+        return;
+    }
+    else if(cnt(t->l) + 1 < sz){
+        kthSmallest(t->r,sz - cnt(t->l) - 1,kth);
+    }
+    else kthSmallest(t->l,sz,kth);
+}
+
+void kthLargest(pitem t, int sz, ll & kth){
+    if (!t) return;
+    if (cnt(t->r) + 1 == sz){
+        kth = t->key;
+        return;
+    }
+    else if (cnt(t->r) + 1 < sz){
+        kthLargest(t->l,sz - cnt(t->r) - 1, kth);
+    }
+    else kthLargest(t->r,sz,kth);
+}
+
+void solveCrops(){ //Spoj prefix crops problem.
+    map <ll,pitem> mp;
     ll n,q;
     cin>>n>>q;
     vector <ll> a(n);
-    //Having individual treaps for each number, the keys are the positions in the array.
+    //Having individual treaps for each number. 
+    //The keys are the positions in the array.
     fore(i,0,n){ 
         cin>>a[i];
         insert(mp[a[i]],new item(i));
@@ -89,7 +112,39 @@ int main(){
         a[pos] = nw;
         insert(mp[a[pos]], new item(pos));
         //check amount of items equal to a[pos] in [0,pos)
-        cout<<check(mp[a[pos]],pos)<<nl; 
+        cout<<explore(mp[a[pos]],pos)<<nl; 
     }
-    return 0;
 }
+
+void solveDogs(){ //Codeforces Dogs Show problem.
+    map <ll,pitem> mp;
+    ll n,k,pos=0,best=0;
+    cin>>n>>k;
+    vector <ll> uni,a(n+1);
+    fore(i,1,n+1){
+        cin>>a[i];
+        ll dif = max(0LL,a[i]-i);
+        uni.pb(dif);
+    }
+    sort(ALL(uni));
+    uni.erase(unique(ALL(uni)),uni.end());
+
+    fore(i,1,n+1){
+        insert(mp[max(0LL,a[i]-i)],new item(i));
+    }
+    fore(i,0,uni.size()){
+        ll delay = uni[i];
+        best = max(best,explore(mp[delay],k-delay));
+        //join 2 treaps: {root,left,right};
+        if (i+1<uni.size()) unite(mp[uni[i+1]],mp[uni[i+1]],mp[delay]); 
+    }
+    cout<<best<<nl;
+}
+
+int main(){ 
+    fast;
+    srand(time(0));
+    //solveDogs();
+    solveCrops();
+    return 0;
+}   
