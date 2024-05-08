@@ -15,7 +15,9 @@ using namespace std;
 
 vector <int> phi;
 
-void euler_totient(int n) { //Amount of coprime numbers (gcd(a,b) == 1) to each number in (1 <= i <= n).
+//Amount of coprime numbers (gcd(a,b) == 1) for each number in (1 <= i <= n).
+//counting the number of integers between 1 and i, which are coprime to i.
+void euler_totient(int n) { 
     phi.resize(n+1);
     for (int i = 0; i <= n; i++) phi[i] = i;
 
@@ -27,7 +29,8 @@ void euler_totient(int n) { //Amount of coprime numbers (gcd(a,b) == 1) to each 
     }
 }
 
-int phiFunc(int a, int m) { //Amount of numbers 0 <= i < m such that gcd(a+i,m) == gcd(a,m)
+//Amount of numbers 0 <= i < m such that gcd(a+i,m) == gcd(a,m)
+int phiFunc(int a, int m) { 
     ll y = m/__gcd(a,m);
     ll ans = y;
     for(ll i = 2; i*i<=m; i++){
