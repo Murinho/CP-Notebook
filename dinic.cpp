@@ -56,7 +56,7 @@ struct Dinic {
 	long long dfs(int v, long long pushed) {
 		if (pushed == 0) return 0;
 		if (v == t) return pushed;
-		for (int& cid = ptr[v]; cid < (int)adj[v].size(); cid++) {
+		for (int& cid = ptr[v]; cid < sz(adj[v]); cid++) {
 			int id = adj[v][cid];
 			int u = edges[id].u;
 			if (level[v] + 1 != level[u] || edges[id].cap - edges[id].flow < 1) continue;
@@ -73,11 +73,11 @@ struct Dinic {
 	long long flow() {
 		long long f = 0;
 		while (true) {
-			fill(level.begin(), level.end(), -1);
+			fill(ALL(level), -1);
 			level[s] = 0;
 			q.push(s);
 			if (!bfs()) break;
-			fill(ptr.begin(), ptr.end(), 0);
+			fill(ALL(ptr), 0);
 			while (long long pushed = dfs(s, flow_inf)) {
 				f += pushed;
 			}
