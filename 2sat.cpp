@@ -1,4 +1,4 @@
-//Tested with: https://cses.fi/problemset/task/1684/
+//Tested with: https://codeforces.com/contest/776/problem/D
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -20,94 +20,100 @@
 
 using namespace std;
 
-struct TwoSatSolver {
-    int n_vars;
-    int n_vertices;
-    vector<vector<int>> adj, adj_t;
-    vector<bool> used;
-    vector<int> order, comp;
-    vector<bool> assignment;
+const ll maxn = 1e5+100;
 
-    TwoSatSolver(int _n_vars) : n_vars(_n_vars), n_vertices(2 * n_vars), adj(n_vertices), adj_t(n_vertices), used(n_vertices), order(), comp(n_vertices, -1), assignment(n_vars) {
-        order.reserve(n_vertices);
+struct Sat2 {
+    vector< vector<int> > g, rg;
+    vector<int> component;
+    vector<bool> ans;
+    int tag, n, siz;
+    stack<int> st;
+    Sat2(int n) : n(n), siz(2*n), g(vector< vector<int> >(2*n)), rg(vector< vector<int> >(2*n)) {}
+    void add_edge(int u, int v) {
+		g[u].push_back(v);
+		rg[v].push_back(u);
+	}
+	int neg(int u) {
+	    return (n+u)%siz;
     }
-    void dfs1(int v) {
-        used[v] = true;
-        for (int u : adj[v]) {
-            if (!used[u])
-                dfs1(u);
+	void implication(int u, int v) {
+		add_edge(neg(u), v);
+	}
+	void add(int u, int v) { // OR = true (u or v is true).
+		implication(u, v);
+		implication(v, u);
+	}
+	void diff(int u, int v) { //XOR = true (both u and v are different).
+        add(u, v);
+        add(neg(u), neg(v));
+	}
+	void eq(int u, int v) { //XOR = false (both u and v are equal).
+        diff(neg(u), v);
+	}
+    void dfs(int u, vector< vector<int> > &g, bool first) {
+        component[u] = tag;
+        for(int i = 0; i < g[u].size(); i++) {
+            int v = g[u][i];
+            if(component[v] == -1)
+                dfs(v, g, first);
         }
-        order.push_back(v);
+        if(first) st.push(u);
     }
-
-    void dfs2(int v, int cl) {
-        comp[v] = cl;
-        for (int u : adj_t[v]) {
-            if (comp[u] == -1)
-                dfs2(u, cl);
+    bool satisfiable() {
+        tag = 0;
+        ans = vector<bool>(n);
+        component = vector<int>(siz, -1);
+        for(int i = 0; i < siz; i++) {
+            if(component[i] == -1)
+                dfs(i, g, true);
         }
-    }
-
-    bool solve_2SAT() {
-        order.clear();
-        used.assign(n_vertices, false);
-        for (int i = 0; i < n_vertices; ++i) {
-            if (!used[i])
-                dfs1(i);
+        component = vector<int>(siz, -1);
+        tag = 0;
+        while(st.size()) {
+            int u = st.top(); st.pop();
+            if(component[u] != -1) continue;
+            ++tag;
+            dfs(u, rg, false);
         }
-
-        comp.assign(n_vertices, -1);
-        for (int i = 0, j = 0; i < n_vertices; ++i) {
-            int v = order[n_vertices - i - 1];
-            if (comp[v] == -1)
-                dfs2(v, j++);
-        }
-
-        assignment.assign(n_vars, false);
-        for (int i = 0; i < n_vertices; i += 2) {
-            if (comp[i] == comp[i + 1])
-                return false;
-            assignment[i / 2] = comp[i] > comp[i + 1];
+        for(int i = 0; i < n; i++) {
+            if(component[i] == component[neg(i)]) return false;
+            ans[i] = component[i] > component[neg(i)];
         }
         return true;
     }
-
-    void add_disjunction(int a, bool na, int b, bool nb) {
-        // na and nb signify whether a and b are to be negated 
-        a = 2 * a ^ na;
-        b = 2 * b ^ nb;
-        int neg_a = a ^ 1;
-        int neg_b = b ^ 1;
-        adj[neg_a].push_back(b);
-        adj[neg_b].push_back(a);
-        adj_t[b].push_back(neg_a);
-        adj_t[a].push_back(neg_b);
-    }
 };
 
+ll a[maxn];
+vector <ll> togs[maxn];
 
 int main(){
     fast;
 	ll n,m;
     cin>>n>>m;
-    TwoSatSolver solver(m);
-    fore(i,0,n){
-        ll x,y;
-        char c1,c2;
-        bool f1,f2;
-        cin>>c1>>x>>c2>>y;
-		x--, y--;
-        if (c1 == '+') f1 = true;
-        else f1 = false;
-        if (c2 == '+') f2 = true;
-        else f2 = false;
-        solver.add_disjunction(x,f1,y,f2);
-    }
-    bool possible = solver.solve_2SAT();
-    if (!possible) cout<<"IMPOSSIBLE"<<nl;
-    else{
-        fore(i,0,m) cout<<(solver.assignment[i] ? '-' : '+')<<" ";
-		cout<<nl;
-    }
-    return 0;
+    Sat2 sat(m);
+	//0: unlocked.
+	//1: locked.
+    fore(i,0,n) cin>>a[i];
+
+	//insert the togles for each door:
+	fore(i,0,m){
+		ll k,x;
+		cin>>k;
+		fore(j,0,k){
+			cin>>x, x--;
+			togs[x].pb(i);
+		}
+	}
+	fore(i,0,n){
+		if (a[i] == 1){ //door is unlocked: needs even amount of toggles.
+			sat.eq(togs[i][0],togs[i][1]);
+		}
+		else{ //door is locked: needs odd amount of toggles.
+			sat.diff(togs[i][0],togs[i][1]);
+		}
+	}
+	bool possible = sat.satisfiable();
+	if (possible) cout<<"YES"<<nl;
+	else cout<<"NO"<<nl;
+	return 0;
 }
