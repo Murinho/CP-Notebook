@@ -35,9 +35,9 @@ struct Point {
     ld dist (const Point & b){ return (*this - b).magnitude(); } //distancia entre 2 puntos.
     ll cross(const Point& b, const Point& c) const { //Producto cruz
         ll cruz = (b - *this) * (c - *this);
-        if (cruz < 0) return -1;
-        if (cruz > 0) return +1;
-        return 0;
+        if (cruz < 0) return -1; //Clockwise (right)
+        if (cruz > 0) return +1; //Counter-clockwise (left)
+        return 0; //Collinear.
     }
     ll determinant(const Point &b){ return (((*this).x) * b.y) - ((*this).y * b.x); } //determinante 2x2
     bool onSegment(Point p, Point r){ //checa si un punto esta en el segmento entre dos puntos (delimitado como si fuera un rectangulo)
@@ -101,6 +101,7 @@ vector <Point> calculateHull(vector <Point> &P, int N){ //Calculo del Convex Hul
             while((int) hull.size()-S >= 2){
                 Point P1 = hull[hull.size()-2];
                 Point P2 = hull[hull.size()-1];
+                //Producto cruz: P1 ---> P2 ---> P3 
                 if(P1.cross(P2, P[i]) <= 0) break; //agregar (<=) si tambien se quieren incluir los puntos colineales, sino solo (<)
                 hull.pop_back();
             }
