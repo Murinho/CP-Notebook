@@ -39,6 +39,7 @@ struct Sat2 {
 	void implication(int u, int v) {
 		add_edge(neg(u), v);
 	}
+    // AND (a&b) = add(a&a), add(b&b)
 	void add(int u, int v) { // OR = true (u or v is true).
 		implication(u, v);
 		implication(v, u);
