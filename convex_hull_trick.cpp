@@ -32,7 +32,8 @@ bool cmp(Rectangle r1, Rectangle r2){
 
 struct CHT { //For Optimizing DPs that can be modeled as y = mx + b.
     //This code is made to find the minimums. Maximums can also be found.
-    //Use When slopes are in decreasing order: m1 > m2 > ... > mk
+    //Use When slopes are in decreasing order for minimums: m1 > m2 > ... > mk
+	//Use when slopes are in increasing order for maximums: m1 < m2 < ... < mk
     struct Line {
         ll slope, yIntercept;
  
@@ -53,6 +54,8 @@ struct CHT { //For Optimizing DPs that can be modeled as y = mx + b.
         Line newLine(slope, yIntercept);
  
         //Pop lines until all lines become useful. Popping the lines that become irrelevant.
+		// For minimums >=
+		// For maximums <= 
         while (!dq.empty() && dq.back().second >= dq.back().first.intersect(newLine)) dq.pop_back();
             
  
