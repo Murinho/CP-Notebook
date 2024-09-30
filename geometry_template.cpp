@@ -31,7 +31,8 @@ struct Point {
         return false;
     }
     ld magnitude(){ return sqrt((x*x) + (y*y)); } //longitud hipotenusa
-    ld dot (const Point &b){ return (x * b.x) + (y * b.y); } //producto punto
+    ld dot (const Point &b){ return (x * b.x) + (y * b.y); } //producto punto. 
+    // Si es el producto punto es positivo, el angulo entre los vectores es menor a º90 grados, igual a 0 los vectores son perpendiculares y si es negativo el angulo es obtuso.
     ld dist (const Point & b){ return (*this - b).magnitude(); } //distancia entre 2 puntos.
     ll cross(const Point& b, const Point& c) const { //Producto cruz
         ll cruz = (b - *this) * (c - *this);
