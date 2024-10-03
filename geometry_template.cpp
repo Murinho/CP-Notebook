@@ -17,7 +17,7 @@ const ld pi = 3.1415926535;
 const ll INF = 1e18;
 
 struct Point {
-    double x, y; //cambiar tipo de dato de acuerdo al problema
+    ld x, y; //cambiar tipo de dato de acuerdo al problema
     void read(){ cin>>x>>y; }
     Point operator +(const Point& b) const { return Point{x+b.x, y+b.y}; } //suma de puntos
     Point operator -(const Point& b) const { return Point{x-b.x, y-b.y}; } //resta de puntos
@@ -30,7 +30,7 @@ struct Point {
         if (b.x == (*this).x && b.y == (*this).y) return true;
         return false;
     }
-    ld magnitude(){ return sqrt((x*x) + (y*y)); } //longitud hipotenusa
+    ld magnitude() const { return sqrt((x*x) + (y*y)); } //longitud hipotenusa
     ld dot (const Point &b){ return (x * b.x) + (y * b.y); } //producto punto. 
     // Si es el producto punto es positivo, el angulo entre los vectores es menor a º90 grados, igual a 0 los vectores son perpendiculares y si es negativo el angulo es obtuso.
     ld dist (const Point & b){ return (*this - b).magnitude(); } //distancia entre 2 puntos.
@@ -46,11 +46,8 @@ struct Point {
 
         return false;
     }
-    double calculateAngle(){ //se calcula el angulo con respecto del eje 'x' y la ubicacion del punto
-        Point pto = *this;
-        double ca = pto.x;
-        double hip = sqrt((pto.x*pto.x) + (pto.y*pto.y));
-        double ang = acos(ca/hip);
+    ld angleBetweenVectors(const Point &b){ //this: (b-a), Point b: (c-a).
+        ld ang = acos((*this).dot(b)/((*this).magnitude() * b.magnitude()));
         ang = (ang * 180.0) / PI;
         return ang; //regresa el angulo en grados.
     }
