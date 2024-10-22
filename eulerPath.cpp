@@ -20,48 +20,49 @@
 using namespace std;
 
 const int maxn = 1e5+5;
-int m, n;
-vector<int> res;
-set <int> adj[maxn];
+const int maxm = 2e5+5;
 
-void dfs(int curr)
-{
-    auto &edges = adj[curr]; 
-    while(!edges.empty())
-    {
-        auto edge = *edges.begin();
-        edges.erase(edge);
-        adj[edge].erase(curr);
-        dfs(edge);
+ll seen[maxm],n,m;
+vector<int> path;
+vector < pii > g[maxn];
+
+void dfs(int node){
+    while(!g[node].empty()){
+        auto [signode, idx] = g[node].back();
+        g[node].pop_back();
+        if (seen[idx]) continue;
+        seen[idx]=true;
+        dfs(signode);
     }
-    res.push_back(curr);
+    path.pb(node);
 }
 
-//Going from node 1, passing through all edges without repeating and come back to node 1.
+// Hierholzer's algorithm
+// Going from node 1, passing through all edges without repeating and come back to node 1.
 int main(){
-    cin >> n >> m;
+    fast;
+    cin>>n>>m;
     fore(i,0,m){
-        int x, y;
-        cin >> x >> y;
-        adj[x].insert(y);
-        adj[y].insert(x);  
+        int x,y;
+        cin>>x>>y;
+        x--, y--;
+        g[x].pb({y,i}), g[y].pb({x,i});
     }
-    
-    fore(i,1,n+1){
-        if (sz(adj[i])%2){
+    fore(i,0,n){
+        if (sz(g[i])%2){
             cout<<"IMPOSSIBLE"<<nl;
             return 0;
         }
     }
 
-    dfs(1);
-    
-    if (sz(res) != m + 1){
-        cout << "IMPOSSIBLE\n";
-        return 0;
+    dfs(0);
+
+    if (sz(path) != m+1){
+        cout<<"IMPOSSIBLE"<<nl;
     }
-    
-    for(auto au : res) cout<<au<<" ";
-    cout<<nl;
+    else{
+        for(auto node : path) cout<<node+1<<" ";
+        cout<<nl;
+    }
     return 0;
 }
