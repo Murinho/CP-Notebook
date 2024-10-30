@@ -40,6 +40,7 @@ int main()
     string s;
     int k;
     cin>>s>>k;
+	s = "$" + s; //add an extra symbol at the beginning to avoid conflicts.
     vector <int> sa = constructSA(s);
     for (auto au : sa) cout<<au<<" ";
     cout<<nl;
