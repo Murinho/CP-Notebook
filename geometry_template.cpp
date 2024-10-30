@@ -43,7 +43,6 @@ struct Point {
     ld rawCross(const Point &a, const Point &b) const { 
 		return (a - *this) * (b - *this);
 	}
-    ll determinant(const Point &b){ return (((*this).x) * b.y) - ((*this).y * b.x); } //determinante 2x2
     bool onSegment(Point p, Point r){ //checa si un punto esta en el segmento entre dos puntos (delimitado como si fuera un rectangulo)
         if ((*this).x <= max(p.x, r.x) && (*this).x >= min(p.x, r.x) && (*this).y <= max(p.y, r.y) && (*this).y >= min(p.y, r.y)) return true;
 
@@ -158,15 +157,14 @@ vector <Point> calculateHull(vector <Point> &P, int N){ //Calculo del Convex Hul
     return hull;
 }
 
-ll Area(vector <Point> poly){ //Calculo de area de poligono
+ll getPolygonArea(vector <Point> poly){ //Calculo de area de poligono
     ll ans = 0;
     poly.push_back(poly.front());
     for (int i = 1; i<poly.size(); i++){
-        ans += poly[i-1].determinant(poly[i]);
+        ans += (poly[i-1]*poly[i]);
     }
     return abs(ans);
 }
-
 
 vector <Point> circleLineIntersection(double a, double b, double c, double r){ 
 //Dados los coeficientes de la ecuacion de la recta y el radio del circulo con centro en el origen
