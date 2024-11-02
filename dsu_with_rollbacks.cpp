@@ -1,4 +1,4 @@
-//Tested with: https://codeforces.com/group/RKnuCtRnNJ/contest/552393/problem/B
+//Tested with: https://cses.fi/problemset/task/2133
 #include <bits/stdc++.h>
 #define ll long long
 #define pb push_back
@@ -136,48 +136,46 @@ struct QueryTree {
     }
 };
 
-map < pair <int,int>, int > mp;
-vector <int> ask;
+map < pii, ll > mp;
+ll n,m,q;
 
-int main(){ //Used to solve Dynamic Connectivity problems.
+int main(){
     fast;
-    freopen("connect.in", "r", stdin);
-    freopen("connect.out", "w", stdout);
-    int n,q;
-    cin>>n>>q;
-    if (q == 0) return 0;
-    QueryTree qt(q+1,n+1); //queries and nodes 0-indexed.
-    fore(i,0,q){
-        char c;
+    cin>>n>>m>>q;
+    QueryTree qt(q+2,n+1); //queries and nodes are 0-indexed.
+
+    fore(i,0,m){
         ll x,y;
-        cin>>c;
-        if (c == '?') ask.pb(i);
-        else if (c == '+'){ //add edge query.
-            cin>>x>>y;
-            if (x>y) swap(x,y);
-            x--, y--;
-            mp[{x,y}]=i; //save starting life index of the edge.
-        }
-        else{ //remove edge query.
-            cin>>x>>y;
-            if (x>y) swap(x,y);
-            x--, y--;
-            if (mp.count({x,y})){
-                query aux(x,y);
-                qt.add_query(aux,mp[{x,y}],i-1); //add range of life of an edge.
-                mp.erase({x,y});
-            }
+        cin>>x>>y;
+        x--, y--;
+        if (x>y) swap(x,y);
+        mp[{x,y}]=0; //save starting life index of the edge.
+    }
+    fore(i,1,q+1){
+        ll t,x,y;
+        cin>>t>>x>>y;
+        x--, y--;
+        if (x>y) swap(x,y);
+        if (t == 1){ //create edge.
+            mp[{x,y}]=i;
+        }   
+        else{ //delete edge.
+            query qy(x,y);
+            qt.add_query(qy,mp[{x,y}],i-1);
+            mp.erase({x,y});
         }
     }
-    for(auto au : mp){ //add non-ended ranges [start,q-1]
+
+    //add the end of the non-closed edges.
+    for(auto au : mp){
         pii p = au.fst;
-        ll l = au.snd;
-        query aux(p.fst,p.snd);
-        qt.add_query(aux,l,q-1);
+        int l = au.snd;
+        query qy(p.fst,p.snd);
+        qt.add_query(qy,l,q);
     }
+    // Answer queries: amount of CCs at each moment i.
     vector <int> ans = qt.solve();
-    for(auto id : ask){ //Answer queries: amount of CCs at the id moment.
-        cout<<ans[id]-1<<nl;
-    }
+    fore(i,0,q+1) cout<<ans[i]-1<<" ";
+    cout<<nl;
     return 0;
 }
