@@ -25,6 +25,8 @@ void init() {
     }
 }
 
+// Formula to get the nth catalan: C_n = (1/(n+1))*nck(2*n,n)
+
 /*
 Applications of Catalan Numbers, where Cn is:
     > Number of correct bracket sequence consisting of 'n'  opening and  'n'  closing brackets.
