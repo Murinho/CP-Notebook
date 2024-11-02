@@ -36,7 +36,7 @@ void dfs(int node, int antnode) {
         else if (inStack[signode] == 1){
             low[node] = min(low[node], disc[signode]);
         } 
-        //When wanting to find bridges: 
+        //When wanting to find bridges or articulation points: 
         /*
         else if (antnode != signode){
             low[node] = min(low[node], disc[signode]);
