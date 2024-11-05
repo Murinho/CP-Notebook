@@ -16,9 +16,7 @@ using namespace std;
  
 typedef pair<ll,ll> ii;
 
-// MAXN must be power of 2 !!
-// MOD-1 needs to be a multiple of MAXN !!
-const ll MOD=998244353,RT=3,MAXN=1<<20; //watch out with RTEs (increase MAXN):
+const ll MAXN=1<<20; //watch out with RTEs (increase MAXN):
 typedef vector<ll> poly;
 struct CD {
 	double r,i;

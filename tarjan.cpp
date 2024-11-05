@@ -1,19 +1,31 @@
 #include <bits/stdc++.h>
 #define ll long long
-#define pb push_back
-#define fast cin.tie(0); cout.tie(0); ios_base::sync_with_stdio(false);
+#define fore(i,a,b) for(ll i=a; i<b; i++)
 #define nl '\n'
+#define pb push_back
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define rofe(i,a,b) for(ll i=a-1; i>=b; i--)
+#define ALL(u) u.begin(),u.end()
+#define vi vector<ll>
+#define vvi vector<vi>
+#define sz(a) ((ll)a.size())
+#define lsb(x) ((x)&(-x))
+#define lsbpos(x) __builtin_ffs(x)
+#define PI acos(-1.0)
+#define pii pair <ll,ll>
+#define fst first
+#define snd second
  
 using namespace std;
  
 const ll maxn = 2e5+10;
 ll n,x,y,m,foundat;
 ll low[maxn],disc[maxn],isArt[maxn],inStack[maxn];
-vector <ll> adj[maxn];
-vector < vector <ll> > scc;
-vector < pair <ll,ll> > brid;
+vi adj[maxn];
+vvi scc;
+vector < pii > brid;
  
-void dfs(int node, int antnode) {
+void dfs(int node, int antnode){ //first call antnode should be = -1.
     static stack <int> stk;
     low[node] = disc[node] = foundat;
     stk.push(node);
@@ -43,7 +55,7 @@ void dfs(int node, int antnode) {
         } */
     }
     if (low[node] == disc[node]){
-        vector <ll> scctem;
+        vi scctem;
         while (true){
             ll topic = stk.top();
             stk.pop();
