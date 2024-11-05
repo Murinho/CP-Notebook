@@ -1,52 +1,24 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define pb push_back
-
-using namespace std;
-
-ll n,m,x,y,w;
 const ll INF = 1e18;
-vector < vector < pair <int,int> > > adj;
-vector <ll> dis;
-priority_queue< pair <ll,ll> , vector< pair <ll,ll> >, greater< pair <ll,ll> > > pq;
+const ll maxn = 2e5+5;
+ll n,m,d[maxn];
+vector <pii> adj[maxn]; //{adjacent node,cost}
 
-void init(){
-    dis.assign(n+1,INF);
-    adj.resize(n+1);
-}
-
-int main(){
-    cin.tie(0);
-    cout.tie(0);
-    ios_base::sync_with_stdio(false);
-    cin>>n>>m; //N: number of nodes, M: number of edges.
-    init();
-    for (int i = 1; i<=m; i++){
-        cin>>x>>y>>w;
-        adj[x].pb({y,w});
-    }
-    //Do Dijkstra:
-    pq.push({0,1}); //first: weight, second: node.
-    dis[1] = 0;
+void daikra(int stnode){
+    priority_queue<pii, vector<pii>, greater<pii> > pq;
+    d[stnode]=0;
+    pq.push({d[stnode],stnode});
     while(!pq.empty()){
-        ll node = pq.top().second;
-        ll w = pq.top().first;
+        ll curw = pq.top().fst;
+        ll node = pq.top().snd;
         pq.pop();
-        if (dis[node] < w) continue;
-        for (auto i : adj[node]){
-            ll signode = i.first;
-            ll weight = i.second;
-            if (dis[signode] > dis[node] + weight){
-                dis[signode] = dis[node] + weight;
-                pq.push({dis[signode],signode});
+        if (curw != d[node]) continue;
+        for(auto au : adj[node]){
+            int signode = au.fst;
+            ll sigw = au.snd;
+            if (d[signode] > d[node] + sigw){
+                d[signode] = d[node] + sigw;
+                pq.push({d[signode],signode});
             }
         }
     }
-    //Minimum distance to all nodes from the source node
-    for (int i = 1; i<=n; i++){
-        if (dis[i+n] >= INF) cout<<-1<<" ";
-        else cout<<dis[i+n]<<" ";
-    }
-    cout<<"\n";
-    return 0;
 }
