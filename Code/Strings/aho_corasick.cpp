@@ -1,36 +1,17 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define nl '\n'
-#define pb push_back
-#define ld long double
-#define fore(i,a,b) for(int i=(a);i<(b);i++)
-#define fast                                                                   \
-  ios_base::sync_with_stdio(false);                                            \
-  cin.tie(0);                                                                  \
-  cout.tie(0);
-#define PI 3.1415926535
- 
-using namespace std;
- 
-const ll mod = 1e9+7;
- 
 const int MAXN = 1e6+10;
  
-map<char, int> to[MAXN];
-vector <string> a; 
-int lnk[MAXN];
-ll que[MAXN];
-ll sz = 1;
-ll endlink[MAXN]; 
-vector<int> leaf[MAXN];  
-vector <int> ans[MAXN];
+map<char, int> to[MAXN]; // if TLE change this to normal array.
+string a[MAXN];
+int lnk[MAXN],sz=1;
+ll que[MAXN],endlink[MAXN]; 
+vi leaf[MAXN],ans[MAXN];
 void add_str(string s, int id) {
     int v = 0;
     for(char c: s) {
         if(!to[v].count(c)) to[v][c] = sz++;
         v = to[v][c];
     }
-    leaf[v].push_back(id);
+    leaf[v].pb(id); //Node in the automata where a word ends.
 }
 void push_links() {
     queue<int> q({0});
@@ -46,46 +27,25 @@ void push_links() {
         }
     }
 }
-void walk(string s) { // Dado un conjunto de patrones encuentra todas las coincidencias en una string. aka KMP con muchos patrones.
+void walk(string s){ //KMP with multiple target patterns
     int v=0;
-    fore(i,0,s.size()) {
+    fore(i,0,sz(s)) {
         char c=s[i];
         while(v && !to[v].count(c)) v=lnk[v];
         if(to[v].count(c)) v=to[v][c]; 
         for(int u=v;u;u=endlink[u]) for(int x: leaf[u]){
-            //x: indice de la palabra:
-            //i: donde termina
-            ll tami = a[x].size();
-            ans[x].pb(i); //esta es mi respuesta, pusheo el indice donde termina
+            ans[x].pb(i); //pushing the index of the main string where a pattern ends.
         }  
     }
 }
- 
- 
- 
-void init(int n){
-    a.resize(n+1);
-}
- 
-int main() {
-    fast;
+
+void doit(){
     string s;
-    int n;
-    cin>>s;
-    s = "$" + s;
-    ll len = s.size();
-    cin>>n;
-    init(n);
-    for (int i = 1; i<=n; i++){
+    cin>>s; //main string.
+    fore(i,0,n){
         cin>>a[i];
-        add_str(a[i],i);
+        add_str(a[i],i); //add target strings.
     }
     push_links();
     walk(s);
-    for (int i = 1; i<=n; i++){
-        cout<<a[i]<<" termina en: ";
-        for (auto au : ans[i]) cout<<au<<" ";
-        cout<<nl;
-    }
-    return 0;
 }
