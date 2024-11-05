@@ -5,12 +5,10 @@
 #define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
 #define fore(i,a,b) for(int i=a;i<b;++i)
 
-
 using namespace std;
 
 const ll mod = 1e9+7;
 const ll maxn = 1e5+5;
-
 int catalan[maxn+5];
 void init() {
     catalan[0] = catalan[1] = 1;
@@ -24,10 +22,8 @@ void init() {
         }
     }
 }
-
-// Formula to get the nth catalan: C_n = (1/(n+1))*nck(2*n,n)
-
 /*
+Formula to get the nth catalan: C_n = (1/(n+1))*nck(2*n,n)
 Applications of Catalan Numbers, where Cn is:
     > Number of correct bracket sequence consisting of 'n'  opening and  'n'  closing brackets.
     > The number of rooted full binary trees with  'n + 1'  leaves (vertices are not numbered). 
