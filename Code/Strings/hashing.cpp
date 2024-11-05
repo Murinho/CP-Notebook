@@ -1,54 +1,42 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define pb push_back
-
-using namespace std;
-
 const ll maxn = 1e6 + 5;
-const ll M = 1e9+9; //this one should be a prime number.
-const ll B = 131;
+const ll M = 1e9+9; // prime modulo.
+const ll B = 131; // prime number bigger than the alphabet.
 string s,t;
-ll tams,tamt,hasht,ans;
-
-vector <ll> pws,h;
+ll pws[maxn],h[maxn],tams,tamt,hasht=0,ans=0;
 
 ll conv(char c){
     return (c-'a'+1);
 }
 
-void clean(){
-    tams = s.size();
-    tamt = t.size();
-    pws.clear();
-    pws.resize(maxn);
-    h.clear();
-    h.resize(maxn);
-    pws[0] = 1;
-    h[0] = conv(s[0]);
-    hasht = ans = 0;
+bool sameHash(int l1, int len1, int l2, int len2){
+    int r1 = l1 + len1;
+    int r2 = l2 + len2;
+    ll h1 = (h[r1]-h[l1]*pws[len1]%M + M)%M;
+    ll h2 = (h[r2]-h[l2]*pws[len2]%M + M)%M;
+    return h1 == h2;
 }
 
-int main(){ //Note: to query the hashing of a substring it should be: r = start + length, l = r - length
-    cin.tie(0);
-    cout.tie(0);
-    ios_base::sync_with_stdio(false);
-    cin>>s;
-    cin>>t;
-    clean();
-    for (int i = 1; i<maxn-3; i++){
-        pws[i] = (B * pws[i-1])%M;
+void precalc(){
+    tams = sz(s), tamt = sz(t);
+    pws[0] = 1;
+    fore(i,1,maxn) pws[i] = (pws[i-1]*B)%M; 
+
+    // Main hash.
+    h[0] = conv(s[0]);
+    fore(i,0,tams) h[i+1] = ((h[i]*B)+conv(s[i]))%M;
+
+    // Target hash.
+    fore(i,0,tamt) hasht = ((hasht*B)+conv(t[i]))%M;
+}
+
+void doit(){
+    cin>>s; //main text.
+    cin>>t; //pattern.
+    precalc();
+
+    //For all substrings, check if hashings of substring 's' and 't' are equal:
+    fore(i,tamt,tams+1){
+        ll cur_hash = (h[i]-h[i-tamt]*pws[tamt]%M + M)%M;
+        if (cur_hash == hasht) ans++;
     }
-    for (int i = 0; i<tams; i++){
-        h[i+1] = ((h[i]*B)+conv(s[i]))%M;
-    }
-    //calculate the hash number for target string:
-    for (int i = 0; i<tamt; i++){
-        hasht = ((hasht*B)+conv(t[i]))%M;
-    }
-    //For all possible substrings, check if hashings of substring 's' and 't' are equal:
-    for (int i = tamt; i<=tams; i++){
-        ll aux = (h[i]-h[i-tamt]*pws[tamt]%M + M)%M;
-        if (aux == hasht) ans++;
-    }
-    cout<<ans<<"\n";
 }
