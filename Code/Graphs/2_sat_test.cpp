@@ -84,9 +84,37 @@ struct Sat2 {
     }
 };
 
-void doit(){
-    ll n;
-    Sat2 sat(n);
-    // insert clauses ...
-    sat.satisfiable(); //run 2-SAT.
+ll a[maxn];
+vector <ll> togs[maxn];
+
+int main(){
+    fast;
+	ll n,m;
+    cin>>n>>m;
+    Sat2 sat(m);
+	//0: unlocked.
+	//1: locked.
+    fore(i,0,n) cin>>a[i];
+
+	//insert the togles for each door:
+	fore(i,0,m){
+		ll k,x;
+		cin>>k;
+		fore(j,0,k){
+			cin>>x, x--;
+			togs[x].pb(i);
+		}
+	}
+	fore(i,0,n){
+		if (a[i] == 1){ //door is unlocked: needs even amount of toggles.
+			sat.eq(togs[i][0],togs[i][1]);
+		}
+		else{ //door is locked: needs odd amount of toggles.
+			sat.diff(togs[i][0],togs[i][1]);
+		}
+	}
+	bool possible = sat.satisfiable();
+	if (possible) cout<<"YES"<<nl;
+	else cout<<"NO"<<nl;
+	return 0;
 }
