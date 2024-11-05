@@ -5,7 +5,8 @@ vector <pii> adj[maxn]; //{adjacent node,cost}
 
 void daikra(int stnode){
     priority_queue<pii, vector<pii>, greater<pii> > pq;
-    d[stnode]=0;
+    fore(i,0,n+1) d[i]=INF;
+    d[stnode]=0; 
     pq.push({d[stnode],stnode});
     while(!pq.empty()){
         ll curw = pq.top().fst;
