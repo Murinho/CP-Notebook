@@ -1,9 +1,32 @@
+//Tested with: https://cses.fi/problemset/task/2134/
+#include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define ld long double
+#define nl '\n'
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define fore(i,a,b) for(ll i=a;i<b;++i)
+#define rofe(i,a,b) for(ll i=a-1;i>=b;--i)
+#define ALL(u) u.begin(),u.end()
+#define vi vector <ll>
+#define vvi vector<vi>
+#define sz(a) ((ll)a.size())
+#define lsb(x) ((x)&(-x))
+#define lsbpos(x) __builtin_ffs(x)
+#define PI acos(-1.0)
+#define pii pair<ll,ll>
+#define fst first
+#define snd second
+#define RB(x) (x<n?r[x]:0)
+ 
+using namespace std;
+ 
 const int maxn = 2e5+50;
 const int neut = 0;
 const int loga = 19;
 int n,qrys,label_cont;
 int up[maxn][loga],subt[maxn],dep[maxn],labe[maxn],arr[maxn],tp[maxn],revlabe[maxn],st[maxn*4],p[loga];
-vi adj[maxn];
+vector <int> adj[maxn];
  
 void upd(int pos, int val, int node = 1, int ini = 1, int fin = n){
     if (ini == fin){
@@ -102,17 +125,37 @@ int pathQuery(int chi, int par) {
 	return ret;
 }
 
-void doit(){ //Example querying and updating for maximum value.
+int main(){
+    fast;
+    cin>>n>>qrys;
     init();
-    // 1. Read initial values for each node.
-    // 2. Read and create adjacency list.
+    fore(i,1,n+1) cin>>arr[i];
+    fore(i,1,n){
+        int x,y;
+        cin>>x>>y;
+        adj[x].pb(y);
+        adj[y].pb(x);
+    }
     dfs_sz(1,1);
     dfs_hld(1,1,1);
     binaryLift();
-    // for updates:
-    upd(labe[node],val);
-    arr[node] = val;
-    // for queries:
-    ll lcan = lca(node,node2); 
-    ll q_ans = max({pathQuery(node,lcan),pathQuery(node2,lcan),arr[lcan]});
+    while(qrys--){
+        ll typ;
+        cin>>typ;
+        if (typ == 1){ //update a position with a new value
+            ll node,val;
+            cin>>node>>val;
+            upd(labe[node],val);
+            arr[node] = val;
+        }
+        else{ //query for max value, path node - node2
+            ll node,node2;
+            cin>>node>>node2;
+            ll lcan = lca(node,node2);
+            ll q_ans = max({pathQuery(node,lcan),pathQuery(node2,lcan),arr[lcan]});
+            cout<<q_ans<<" ";
+        }   
+    }
+    cout<<nl;
+    return 0;
 }
