@@ -4,7 +4,6 @@
 
 using namespace std;
 
-
 const ll maxn = 1e6 + 5;
 const ll M = 1e9+9; //this one should be a prime number.
 const ll B = 131;

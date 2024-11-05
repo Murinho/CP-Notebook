@@ -3,7 +3,7 @@
 #define nl '\n'
 #define pb push_back
 #define ld long double
-#define rep(i,a,b) for(int i=(a);i<(b);i++)
+#define fore(i,a,b) for(int i=(a);i<(b);i++)
 #define fast                                                                   \
   ios_base::sync_with_stdio(false);                                            \
   cin.tie(0);                                                                  \
@@ -48,7 +48,7 @@ void push_links() {
 }
 void walk(string s) { // Dado un conjunto de patrones encuentra todas las coincidencias en una string. aka KMP con muchos patrones.
     int v=0;
-    rep(i,0,s.size()) {
+    fore(i,0,s.size()) {
         char c=s[i];
         while(v && !to[v].count(c)) v=lnk[v];
         if(to[v].count(c)) v=to[v][c]; 
