@@ -1,3 +1,21 @@
+//Tested with: https://cses.fi/problemset/task/2105/
+//Tested with: https://cses.fi/problemset/task/2108
+#include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define ld long double
+#define nl '\n'
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define fore(i,a,b) for(ll i=a;i<b;++i)
+#define ALL(u) u.begin(),u.end()
+#define vi vector <ll>
+#define vvi vector<vi>
+#define sz(a) ((int)a.size())
+#define lsb(x) ((x)&(-x))
+#define PI acos(-1.0)
+
+using namespace std;
+
 const ll maxn = 1e6+5;
 struct state {int len,link;map<char,int> next;}; //clear next!!
 state st[maxn];
@@ -36,10 +54,14 @@ void sa_extend(char c) {
     }
     last = cur;
 }
+
+
 //Finds longest common substring in 2 substrings.
 string lcs (string S, string T) { 
     sa_init();
-    for (int i = 0; i < sz(S); i++) sa_extend(S[i]);
+    for (int i = 0; i < S.size(); i++)
+        sa_extend(S[i]);
+
     int v = 0, l = 0, best = 0, bestpos = 0;
     for (int i = 0; i < T.size(); i++) {
         while (v && !st[v].next.count(T[i])) {
@@ -61,10 +83,11 @@ string lcs (string S, string T) {
 ll f(ll x, vector <ll> &dp){
     if (dp[x] >= 0) return dp[x];
     ll res = 1;
-    for(auto it=st[x].next.begin(); it!=st[x].next.end(); it++) res += f(it->second,dp);
+    for(map <char,int>::iterator it=st[x].next.begin(); it!=st[x].next.end(); it++) res += f(it->second,dp);
     dp[x] = res;
     return dp[x];
 }
+
 //Finds the total length of different substrings.
 ll get_tot_len_diff_substings(){
     ll tot = 0;
@@ -78,17 +101,19 @@ ll get_tot_len_diff_substings(){
     }
     return tot;
 }
+
 //Finds the amount of distinct substrings.
 void distinctSubstrings(){
     cin>>s;
     int n = s.size();
-    vi dp(maxn+5,-1);
+    vector <ll> dp(maxn+5,-1);
     sa_init();
     fore(i,0,n) sa_extend(s[i]);
     ll ans = f(0,dp)-1;
     cout<<ans<<nl;
 }
-void dfs(int node, ll k, vi &dp, vector <char> &path){
+
+void dfs(int node, ll k, vector<ll> &dp, vector <char> &path){
     if (k < 0) return;
     for(const auto &[c,signode]: st[node].next){
         if (dp[signode] <= k) k -= dp[signode];
@@ -99,6 +124,7 @@ void dfs(int node, ll k, vi &dp, vector <char> &path){
         }   
     }
 }
+
 //Finds the Kth biggest substring.
 void substringOrder(){
     string s;
@@ -115,3 +141,9 @@ void substringOrder(){
     for(auto c : path) cout<<c;
     cout<<nl;
 }   
+
+int main(){
+    fast;
+    //distinctSubstrings();
+    //substringOrder();
+}
