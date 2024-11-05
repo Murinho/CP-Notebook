@@ -28,7 +28,7 @@ void init(){
 void bford(int stnode){ //When wanting to find the longest path, invert the signs of the costs (+ -)
     vector<ll> d(n+1, 0LL); //to find shortest paths from stnode: set to INF.
                             //to find any negative cycle in the graph, set to 0.
-    //d[stnode] = 0;   <-- when having a starting node (task: find shortest paths), uncomment this.s
+    //d[stnode] = 0;   <-- when having a starting node (task: find shortest paths), uncomment this.
     
     vector<ll> p(n+1, -1);
     int x = -1;

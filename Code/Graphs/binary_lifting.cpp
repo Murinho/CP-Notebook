@@ -21,7 +21,7 @@ void parenting(int a){
     }
 }
 
-int get_lca(int a, int b){ //Made in O(N)
+int get_lca(int a, int b){ //Made in O(logN)
     if (depth[a] < depth[b]){
         swap(a,b);
     }
@@ -62,13 +62,3 @@ int main()
     }
     
 }
-
-/*
-7
-0 1
-1 3
-1 4
-3 6
-0 2
-2 5
-*/
