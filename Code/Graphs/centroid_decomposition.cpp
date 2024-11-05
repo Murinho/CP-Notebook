@@ -26,7 +26,6 @@ bool check(ll node, ll layer, ll tam){
     }
     if (tam-sum <= tam/2) return true;
     return false;
- 
 }   
  
 void centroidBuild(ll centroid_parent, ll node, ll layer){
