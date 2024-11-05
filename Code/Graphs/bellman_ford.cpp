@@ -1,13 +1,3 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define pb push_back
-#define nl '\n'
-#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
-#define fore(i,a,b) for(ll i=a;i<b;++i)
- 
- 
-using namespace std;
- 
 const ll maxn = 5050;
 const ll mod = 1e9+7;
 const ll INF = 1e17;
@@ -17,22 +7,15 @@ struct Edge {
 };
 
 vector <Edge> edges;
-vector <ll> ncy;
-ll n,m;
-
-
-void init(){
-    ncy.clear(), ncy.resize(n+1);
-}
+ll n,m,ncy[maxn];
 
 void bford(int stnode){ //When wanting to find the longest path, invert the signs of the costs (+ -)
-    vector<ll> d(n+1, 0LL); //to find shortest paths from stnode: set to INF.
-                            //to find any negative cycle in the graph, set to 0.
+    vi d(n+1, 0LL);     //to find shortest paths from stnode: set to INF.
+                        //to find any negative cycle in the graph, set to 0.
     //d[stnode] = 0;   <-- when having a starting node (task: find shortest paths), uncomment this.
-    
-    vector<ll> p(n+1, -1);
+    vi p(n+1, -1);
     int x = -1;
-    for (int i = 0; i < n; ++i) {
+    fore(i,0,n){
         x = -1;
         for (Edge e : edges)
             if (d[e.a] < INF)
@@ -46,7 +29,7 @@ void bford(int stnode){ //When wanting to find the longest path, invert the sign
     else{
         cout<<"Negative cycle: "<<nl;
         fore(i,0,n) x = p[x];
-        vector <int> cycle;
+        vi cycle;
         ll start = x;
         cycle.pb(x);
         x = p[x];
@@ -55,22 +38,13 @@ void bford(int stnode){ //When wanting to find the longest path, invert the sign
             x = p[x];
         }
         cycle.pb(start);
-        reverse(cycle.begin(),cycle.end());
+        reverse(ALL(cycle));
         for(auto au : cycle) cout<<au<<" ";
         cout<<nl;
     }
 }
 
-
-int main(){
-    fast;
-    cin>>n>>m;
-    init();
-    fore(i,0,m){
-        ll x,y,z;
-        cin>>x>>y>>z;
-        edges.pb({x,y,z});
-    }
-    bford(0);
-    return 0;
+void doit(){
+    // insert edges first.
+    bford(0); // from start node.
 }
