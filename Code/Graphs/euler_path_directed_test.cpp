@@ -24,8 +24,6 @@ const int maxn = 1e5+5;
 ll n,m,indeg[maxn],outdeg[maxn];
 vi g[maxn],path;
 
-// Hierholzer's algorithm
-// Directed graph: going from node 1, passing through all edges without repeating and end at node n.
 void dfs(int node){
     while(!g[node].empty()){
         int signode = g[node].back();
@@ -35,19 +33,39 @@ void dfs(int node){
     path.pb(node);
 }
 
-void doit(){
-    //Have out and in degree for each node first.
+// Hierholzer's algorithm
+// Directed graph: going from node 1, passing through all edges without repeating and end at node n.
+int main(){
+    fast;
+    cin>>n>>m;
+    fore(i,0,m){
+        int x,y;
+        cin>>x>>y;
+        g[x].pb(y);
+        outdeg[x]++;
+        indeg[y]++;
+    }
     bool flag=true;
-    fore(i,2,n) if (indeg[i] != outdeg[i]) flag=false;
+    fore(i,2,n){
+        if (indeg[i] != outdeg[i]){
+            flag=false;
+            break;
+        }
+    }
     if (indeg[1]+1 != outdeg[1] || indeg[n]-1 != outdeg[n] || !flag){
         cout<<"IMPOSSIBLE"<<nl;
-        return;
+        return 0;
     }
+
     dfs(1);
+
     reverse(ALL(path));
-    if (sz(path) != m+1 || path.back() != n) cout<<"IMPOSSIBLE"<<nl;
+    if (sz(path) != m+1 || path.back() != n){
+        cout<<"IMPOSSIBLE"<<nl;
+    }
     else{
         for(auto node : path) cout<<node<<" ";
         cout<<nl;
     }
+    return 0;
 }
