@@ -1,46 +1,20 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define pb push_back
+const int maxn = 2e5+5;
+int n,m,indeg[maxn];
+vi adj[maxn];
+vi topo;
 
-using namespace std;
-
-int n,m,a,b,edges = 0;
-map <int, vector <int> > mp;
-map <int, int> indegree;
-queue <int> q;
-vector <int> topo;
-
-int main()
-{
-    cin>>n>>m; ///Amount of nodes and edges in the DAG.
-    for (int i = 0; i<m; i++){
-        cin>>a>>b; ///a --> b.
-        mp[a].pb(b);
-        indegree[b]++;
-    }
-    for (int i = 0; i<n; i++){
-        if (indegree[i] == 0){
-            q.push(i);
-        }
-    }
+void topo_sort(){
+    // 1. Create adjacency list with nodes' indegree.
+    queue <int> q;
+    fore(i,0,n) if (!indeg[i]) q.push(i);
     while (!q.empty()){
         int node = q.front();
         q.pop();
         topo.pb(node);
-        for (int i = 0; i<mp[node].size(); i++){
-            int signode = mp[node][i];
-            indegree[signode]--;
-            if (indegree[signode] == 0){
-                q.push(signode);
-            }
+        for(auto signode : adj[node]){
+            indeg[signode]--;
+            if (!indeg[signode]) q.push(signode);
         }
     }
-    if (topo.size() != n){
-        cout<<"There is a cycle in the DAG, impossible then. "<<endl;
-        return 0;
-    }
-    for (int i = 0; i<n; i++){
-        cout<<topo[i]<<" ";
-    }
-    return 0;
-}
+} // If sz(topo) != n, there is a cycle in the graph.
+

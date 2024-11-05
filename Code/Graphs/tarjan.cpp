@@ -1,25 +1,5 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define fore(i,a,b) for(ll i=a; i<b; i++)
-#define nl '\n'
-#define pb push_back
-#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
-#define rofe(i,a,b) for(ll i=a-1; i>=b; i--)
-#define ALL(u) u.begin(),u.end()
-#define vi vector<ll>
-#define vvi vector<vi>
-#define sz(a) ((ll)a.size())
-#define lsb(x) ((x)&(-x))
-#define lsbpos(x) __builtin_ffs(x)
-#define PI acos(-1.0)
-#define pii pair <ll,ll>
-#define fst first
-#define snd second
- 
-using namespace std;
- 
 const ll maxn = 2e5+10;
-ll n,x,y,m,foundat;
+ll n,x,y,m,foundat=1;
 ll low[maxn],disc[maxn],isArt[maxn],inStack[maxn];
 vi adj[maxn];
 vvi scc;
@@ -54,7 +34,7 @@ void dfs(int node, int antnode){ //first call antnode should be = -1.
             low[node] = min(low[node], disc[signode]);
         } */
     }
-    if (low[node] == disc[node]){
+    if (low[node] == disc[node]){ // for SCC's
         vi scctem;
         while (true){
             ll topic = stk.top();
@@ -65,23 +45,4 @@ void dfs(int node, int antnode){ //first call antnode should be = -1.
         }
         scc.pb(scctem);
     }
-}
- 
-void tarjan(ll stnode) {
-    foundat = 1;
-    dfs(stnode, -1);
-}
-
-int main(){
-    fast;
-    cin>>n>>m; //amount of nodes and edges:
-    for (int i = 1; i<=m; i++){
-        ll x,y;
-        cin>>x>>y;
-        adj[x].pb(y);
-    }
-    for (int i = 1; i<=n; i++){
-        if (disc[i] == 0) tarjan(i);
-    }
-    return 0;
 }
