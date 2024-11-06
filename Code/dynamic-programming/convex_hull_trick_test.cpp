@@ -1,4 +1,34 @@
-const ll maxn = 1e5+5;
+//Tested with: https://www.spoj.com/problems/ACQUIRE/
+#include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define ld long double
+#define nl '\n'
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define fore(i,a,b) for(ll i=a;i<b;++i)
+#define ALL(u) u.begin(),u.end()
+#define vi vector <ll>
+#define vvi vector<vi>
+#define sz(a) ((int)a.size())
+#define PI 3.1415926535
+#define lsb(x) ((x)&(-x))
+ 
+using namespace std;
+
+const ll maxn = 5e4+100;
+const ll INF = 1e17;
+
+struct Rectangle{
+    ll w,h;
+};
+
+ll n,dp[maxn];
+vector <Rectangle> a;
+
+bool cmp(Rectangle r1, Rectangle r2){
+    if (r1.h == r2.h) return r1.w < r2.w;
+    return r1.h < r2.h;
+}
 
 struct CHT { //For Optimizing DPs that can be modeled as y = mx + b.
     //This code is made to find the minimums. Maximums can also be found.
@@ -58,11 +88,40 @@ struct CHT { //For Optimizing DPs that can be modeled as y = mx + b.
     }
 };
 
-ll dp[maxn],a[maxn],b[maxn];
+void init(){
+    fore(i,0,n+1) dp[i] = INF;
+}
 
-void doit(){
+int main(){
+    fast;
+    cin>>n;
+    init();
+    fore(i,0,n){
+        ll w,h;
+        cin>>w>>h;
+        a.pb({w,h});
+    }
+    sort(ALL(a),cmp);
+    ll cnt = 1;
+    ll pos = n-1;
+    for(int i = n-2; i>=0; i--){
+        if (a[i].w <= a[pos].w || a[i].h >= a[pos].h){
+            a[i].w=a[i].h=0;
+        }
+        else{
+            cnt++;
+            pos = i;
+        }
+    }
     CHT cht;
-    cht.insert(b[1],dp[1]); //slope and yIntercept.
-    dp[2] = cht.query(a[2]);
-    //...
+    ll idx = 1;
+    dp[0] = 0;
+    fore(i,0,n){
+        if (a[i].h == 0) continue;
+        cht.insert(a[i].w,dp[idx-1]);
+        dp[idx] = cht.query(a[i].h);
+        idx++;
+    }   
+    cout<<dp[cnt]<<nl;
+    return 0;
 }
