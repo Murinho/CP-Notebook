@@ -1,7 +1,24 @@
+//AC --> Tested with: https://judge.yosupo.jp/problem/range_chmin_chmax_add_range_sum
+#include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define ld long double
+#define nl '\n'
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define fore(i,a,b) for(ll i=a;i<b;++i)
+#define ALL(u) u.begin(),u.end()
+#define vi vector <ll>
+#define vvi vector<vi>
+#define PI 3.1415926535
+#define lsb(x) ((x)&(-x))
+ 
+using namespace std;
+
 const ll maxn = 2e5+5;
 const ll lzneut = 0;
 const ll neut = 0;
 const ll INF = 1e18+5;
+const ll mod = 1e9+7;
 
 struct Node{
     ll sum,max1,max2,maxc,min1,min2,minc,lazy;
@@ -128,7 +145,7 @@ struct STBeats{
         build(t << 1 | 1, tm + 1, tr);
         merge(t);
     }
-    //[l,r] ai += b
+
     void update_add(int l, int r, ll v, int t = 1, int tl = 0, int tr = N - 1) {
         if (r < tl || tr < l) { return; }
         if (l <= tl && tr <= r) {
@@ -142,8 +159,8 @@ struct STBeats{
         update_add(l, r, v, t << 1 | 1, tm + 1, tr);
         merge(t);
     }
-    //[l,r] ai = min(ai,x)
-    void update_chmin(int l, int r, ll v, int t = 1, int tl = 0, int tr = N - 1){
+
+    void update_chmin(int l, int r, ll v, int t = 1, int tl = 0, int tr = N - 1) {
         if (r < tl || tr < l || v >= st[t].max1) { return; }
         if (l <= tl && tr <= r && v > st[t].max2) {
             push_max(t, v, tl == tr);
@@ -156,7 +173,7 @@ struct STBeats{
         update_chmin(l, r, v, t << 1 | 1, tm + 1, tr);
         merge(t);
     }
-    //[l,r] ai = max(ai,x)
+
     void update_chmax(int l, int r, ll v, int t = 1, int tl = 0, int tr = N - 1) {
         if (r < tl || tr < l || v <= st[t].min1) { return; }
         if (l <= tl && tr <= r && v < st[t].min2) {
@@ -170,7 +187,7 @@ struct STBeats{
         update_chmax(l, r, v, t << 1 | 1, tm + 1, tr);
         merge(t);
     }
-    //print sum [l,r]
+
     ll query_sum(int l, int r, int t = 1, int tl = 0, int tr = N - 1) {
         if (r < tl || tr < l) { return 0; }
         if (l <= tl && tr <= r) { return st[t].sum; }
@@ -181,3 +198,37 @@ struct STBeats{
             query_sum(l, r, t << 1 | 1, tm + 1, tr);
     }
 };
+
+
+
+int main(){
+    fast;
+    ll q,l,r,x,typ;
+    cin>>N>>q;
+    fore(i,0,N) cin>>a[i];
+
+    STBeats st(N);
+    st.build();
+    for(int i = 0; i<q; i++){
+        cin>>typ>>l>>r;
+        r--;
+        if (typ == 0){ //[l,r] ai = min(ai,x)
+            cin>>x;
+            st.update_chmin(l,r,x);
+        }
+        else if (typ == 1){ //[l,r] ai = max(ai,x)
+            cin>>x;
+            st.update_chmax(l,r,x);
+        }
+        else if (typ == 2){ //[l,r] ai += b
+            cin>>x;
+            st.update_add(l,r,x);
+        }
+        else if (typ == 3){ //print sum [l,r]
+            cout<<st.query_sum(l,r)<<nl;
+        }
+    }
+    return 0;
+}
+
+

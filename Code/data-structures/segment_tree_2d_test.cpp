@@ -1,6 +1,16 @@
+//Tested with: https://cses.fi/problemset/task/1739/
+#include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define nl '\n'
+#define fore(i,a,b) for(int i=a;i<b;++i)
+ 
+using namespace std;
+ 
 int n,m;
 const int MAXN = 1e3;
 int a[MAXN][MAXN],st[2*MAXN][2*MAXN];
+char forest[MAXN][MAXN];
 const int NEUT = 0;
  
 int op(int x, int y){ return x+y; }
@@ -33,3 +43,40 @@ int query(int x0, int y0, int x1, int y1){
 	return r;
 }
  
+ll q,cmd,x,y,x2,y2;
+ 
+int main(){
+    cin.tie(0);
+    cout.tie(0);
+    ios_base::sync_with_stdio(false);
+    cin>>n>>q;
+	m = n;
+    for (int i = 0; i<n; i++){
+        for (int j = 0; j<m; j++){
+			cin>>forest[i][j];
+			if (forest[i][j] == '.') a[i][j] = 0;
+			else a[i][j] = 1;
+		}
+    }
+	build();
+	while(q--){
+		cin>>cmd>>x>>y;
+		x--, y--;
+		if (cmd == 1){
+			if (forest[x][y] == '.'){
+				forest[x][y] = '*';
+				upd(x,y,1);
+			}
+			else{
+				forest[x][y] = '.';
+				upd(x,y,0);
+			}
+		}
+		else{
+			cin>>x2>>y2;
+			cout<<query(x,y,x2,y2)<<nl;
+		}
+	}
+    //cout<<query(0,0,4,4)<<"\n"; 
+    return 0;
+}

@@ -1,11 +1,28 @@
+//Tested with: https://cses.fi/problemset/task/1735/
+//Lazy Segment Tree with set and add updates with sum get query.
+#include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define ld long double
+#define nl '\n'
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define fore(i,a,b) for(int i=a;i<b;++i)
+#define ALL(u) u.begin(),u.end()
+#define vi vector <ll>
+#define vvi vector<vi>
+#define PI 3.1415926535
+#define lsb(x) ((x)&(-x))
+ 
+using namespace std;
+
 const ll maxn = 2e5+100;
 const ll lzneut = 0;
 const ll neut = 0;
 
 ll a[maxn];
 
-struct STree{ //Lazy Segment Tree with set and add updates with sum get query.
-    vi st,lzadd,lzset; int n;
+struct STree{
+    vector <ll> st,lzadd,lzset; int n;
     STree(int n): st(4*n + 5,neut),lzadd(4*n + 5,0),lzset(4*n + 5,0), n(n){}
 
     void build(int node, int ini, int fin){
@@ -83,8 +100,34 @@ struct STree{ //Lazy Segment Tree with set and add updates with sum get query.
         return lsum + rsum;
     }
 
-    void build(){ build(1,1,n);} //[1,n]
-    void setUpdate(int l, int r, ll val){ setUpdate(1,1,n,l,r,val);} //[l,r]
-    void addUpdate(int l, int r, ll val){ addUpdate(1,1,n,l,r,val);} //[l,r]
-    ll query(int l, int r){ return query(1,1,n,l,r);} //[l,r]
+    void build(){ build(1,1,n);}
+    void setUpdate(int l, int r, ll val){ setUpdate(1,1,n,l,r,val);}
+    void addUpdate(int l, int r, ll val){ addUpdate(1,1,n,l,r,val);}
+    ll query(int l, int r){ return query(1,1,n,l,r);}
 };
+
+
+int main(){
+    fast;
+    int n,q;
+    cin>>n>>q;
+    fore(i,1,n+1) cin>>a[i];
+
+    STree st(n);
+    st.build();
+    while(q--){
+        ll typ,l,r,x;
+        cin>>typ>>l>>r;
+        if (typ == 1){
+            cin>>x;
+            st.addUpdate(l,r,x);
+        }
+        else if (typ == 2){
+            cin>>x;
+            st.setUpdate(l,r,x);
+        }
+        else{
+            cout<<st.query(l,r)<<nl;
+        }
+    }
+}
