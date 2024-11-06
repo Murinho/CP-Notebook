@@ -1,3 +1,26 @@
+//Tested with: https://cses.fi/problemset/task/2129
+#include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define ld long double
+#define nl '\n'
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define fore(i,a,b) for(ll i=a;i<b;++i)
+#define rofe(i,a,b) for(ll i=a-1;i>=b;--i)
+#define ALL(u) u.begin(),u.end()
+#define vi vector <ll>
+#define vvi vector<vi>
+#define sz(a) ((ll)a.size())
+#define lsb(x) ((x)&(-x))
+#define lsbpos(x) __builtin_ffs(x)
+#define PI acos(-1.0)
+#define pii pair<ll,ll>
+#define fst first
+#define snd second
+#define RB(x) (x<n?r[x]:0)
+ 
+using namespace std;
+
 const ll maxn = 600;
 const ll maxm = 50000;
 const ll INF = 1e18;
@@ -68,7 +91,7 @@ ll mcf(){
     return (flow < n ? -1 : cost);
 }
 
-void dfs(int u = 0){ //look for all paths computed (flow matches).
+void dfs(int u = 0){ //look for all paths computed.
     if(u == sink)  return;
     if(u != 0) path.pb(u);
     for(int i : g[u]){
@@ -88,8 +111,26 @@ void add_edge(int u, int v, ll cost){ // u -> v
     edgeId++;
 }
 
-void doit(){
-    // define src and sink.
-    // edges src to node, and node to sink have cost 0.
-    // to compute flow matches, run dfs n times (amount of left side nodes).
+int main(){
+    fast;
+    cin>>n;
+    src=0, sink=2*n+1;
+    // Add normal edges.
+    fore(i,1,n+1){
+        fore(j,n+1,2*n+1){
+            int c;
+            cin>>c;
+            add_edge(i,j,c);
+        }
+    }
+    fore(i,1,n+1) add_edge(src,i,0); // from src to node.
+    fore(i,n+1,2*n+1) add_edge(i,sink,0); // from node to sink.
+
+    cout<<mcf()<<nl;
+    fore(i,0,n){
+        path.clear();
+        dfs();
+        cout<<path[0]<<" "<<path[1]-n<<nl;
+    }
+    return 0;
 }
