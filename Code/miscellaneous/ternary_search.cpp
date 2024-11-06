@@ -1,34 +1,16 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define pb push_back
-#define nl '\n'
-#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
-#define fore(i,a,b) for(ll i=a;i<b;++i)
+double f(double x){ return x; }
  
- 
-using namespace std;
-
-double f(double x){
-    return x;
-}
- 
-double ternary_search(double l, double r) { //use long doubles for more precision.
-                                            //to find the minimum of a function, invert the sign (-1) of the result of the objective function while evaluating in the while loop
-    double eps = 1e-9;              //set the error limit here
+double ternary_search(double l, double r) { //use long doubles (ld) for more precision.                         
+    double eps = 1e-9;
     while (r - l > eps) {
         double m1 = l + (r - l) / 3;
         double m2 = r - (r - l) / 3;
-        double f1 = f(m1);      //evaluates the function at m1
-        double f2 = f(m2);      //evaluates the function at m2
+        double f1 = f(m1);
+        double f2 = f(m2);     
         if (f1 < f2)
             l = m1;
         else
             r = m2;
     }
-    return f(l);                   //return the maximum of f(x) in [l, r]
-}
-
-
-int main(){ 
-    fast;
-}
+    return f(l);
+} //to find the minimum of a function, invert the sign (-1) of the result of f(x)
