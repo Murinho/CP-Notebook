@@ -1,26 +1,4 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define pb push_back
-#define ld long double
-#define nl '\n'
-#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
-#define fore(i,a,b) for(int i=a; i<b; i++)
-#define rofe(i,a,b) for(int i=a-1; i>=b; i--)
-#define ALL(u) u.begin(),u.end()
-#define vi vector <ll>
-#define vvi vector <vi>
-#define sz(a) ((ll)a.size())
-#define lsb(x) ((x)&(-x))
-#define PI acos(-1.0)
-#define pii pair <ll,ll>
-#define fst first
-#define snd second
-#pragma GCC target("popcnt")
- 
-using namespace std;
-
 const ll maxn = 2e5+10;
-
 ll a[maxn];
 
 struct STree{
@@ -60,8 +38,3 @@ struct STree{
     void upd(int pos, ll val){ upd(1,1,n,pos,val);}
     ll query(int l, int r){ return query(1,1,n,l,r);}
 };
-
-
-int main(){
-    fast;
-}
