@@ -1,23 +1,11 @@
-#include <iostream>
-#define ll long long
-
-using namespace std;
-
-ll C[32][32];
+const ll maxn = 1005;
+const ll mod = 1e9+7;
+ll c[maxn][maxn];
 
 void pascal(){
-    const int maxn = 10;
-    C[0][0] = 1;
-    for (int i = 1; i<=maxn; i++){
-        C[i][0] = 1;
-        C[i][i] = 1;
-        for (int j = 1; j<i; j++){
-            C[i][j] = C[i-1][j-1] + C[i-1][j];
-        }
+    c[0][0] = 1;
+    fore(i,1,maxn){
+        c[i][0]=c[i][i]=1;
+        fore(j,1,i) c[i][j]=(c[i-1][j-1]+c[i-1][j])%mod;
     }
-}
-
-int main()
-{
-    pascal();
 }
