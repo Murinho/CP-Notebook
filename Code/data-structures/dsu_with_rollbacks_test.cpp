@@ -122,12 +122,44 @@ struct QueryTree {
     }
 };
 
-void doit(){
-    QueryTree qt(q+2,n+1); //Queries and nodes are 0-indexed.
-    query edge(x,y); // Existing edge.
-    // Add the living interval of an edge [l,r]. Close all edges.
-    qt.add_query(edge,l,r); 
+map < pii, ll > mp;
+ll n,m,q;
+
+int main(){
+    fast;
+    cin>>n>>m>>q;
+    QueryTree qt(q+2,n+1); //queries and nodes are 0-indexed.
+    fore(i,0,m){
+        ll x,y;
+        cin>>x>>y;
+        x--, y--;
+        if (x>y) swap(x,y);
+        mp[{x,y}]=0; //save starting life index of the edge.
+    }
+    fore(i,1,q+1){
+        ll t,x,y;
+        cin>>t>>x>>y;
+        x--, y--;
+        if (x>y) swap(x,y);
+        if (t == 1){ //create edge.
+            mp[{x,y}]=i;
+        }   
+        else{ //delete edge.
+            query qy(x,y);
+            qt.add_query(qy,mp[{x,y}],i-1);
+            mp.erase({x,y});
+        }
+    }
+    //Add the end of the non-closed edges.
+    for(auto au : mp){
+        pii p = au.fst;
+        int l = au.snd;
+        query qy(p.fst,p.snd);
+        qt.add_query(qy,l,q);
+    }
     // Answer queries: amount of CCs at each moment i.
-    // Substract -1 to the each answer.
-    vi ans = qt.solve(); 
+    vi ans = qt.solve();
+    fore(i,0,q+1) cout<<ans[i]-1<<" ";
+    cout<<nl;
+    return 0;
 }
