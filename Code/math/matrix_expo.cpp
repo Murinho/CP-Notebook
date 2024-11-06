@@ -1,18 +1,3 @@
-//Tested with: https://cses.fi/problemset/task/1723/
-#include <bits/stdc++.h>
-#define ll long long
-#define pb push_back
-#define ld long double
-#define nl '\n'
-#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
-#define fore(i,a,b) for(ll i=a;i<b;++i)
-#define ALL(u) u.begin(),u.end()
-#define vi vector <ll>
-#define vvi vector<vi>
-#define sz(a) ((int)a.size())
-
-using namespace std;
-
 const ll mod = 1e9+7;
 ll tc,n,m,k;
  
@@ -26,8 +11,7 @@ vvi mul(vvi a, vvi b) {
     return c;
 }
  
- 
-vvi exp( vvi x, int y) {
+vvi exp( vvi x, int y) { // matrix and desired power.
     vvi r(sz(x), vi(sz(x),0ll)); //0ll: amount of paths. INF: shortest path
     for ( int i = 0; i < sz(x); i++) r[i][i] = 1; //1ll: amount of paths. 0ll: shortest path.
     while (y>0){
@@ -39,20 +23,8 @@ vvi exp( vvi x, int y) {
     }
     return r;
 }
- 
-int main(){
-    fast;
-    cin>>n>>m>>k;
-    vvi adj;
-    adj.resize(n,vi(n));
-    
-    for (int i = 0; i<m; i++){
-        ll x,y;
-        cin>>x>>y;
-        x--, y--;
-        adj[x][y]++;
-    }
-    adj = exp(adj,k);
-    cout<<adj[0][n-1]<<nl;
-    return 0;
+
+void doit(){
+    // build adjacency (or costs) matrix of size(n*n).
+    // after exponentiating mat[i][j] denotes the path from i to j.
 }
