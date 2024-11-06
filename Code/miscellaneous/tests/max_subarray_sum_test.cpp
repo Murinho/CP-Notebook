@@ -1,5 +1,24 @@
+//Tested with: https://cses.fi/problemset/task/1190
+//Maximum subarray sum in the array.
+#include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define ld long double
+#define nl '\n'
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define fore(i,a,b) for(int i=a;i<b;++i)
+#define ALL(u) u.begin(),u.end()
+#define vi vector <ll>
+#define vvi vector<vi>
+#define PI 3.1415926535
+#define lsb(x) ((x)&(-x))
+ 
+using namespace std;
+
 const ll maxn = 2e5+100;
-ll a[maxn];
+const ll mod = 1e9+7;
+ll n,q;
+vector <ll> a;
 
 struct Node{
     ll max_sum,sumL,sumR,sum;
@@ -41,7 +60,23 @@ struct STree{
     void update(int pos, ll val){ update(1,1,n,pos,val);}
 };
 
-void doit(){
-    // read values and build ST.
-    // queries: st.st[1].max_sum
+void init(){
+    a.clear(), a.resize(n+1);
+}
+
+int main(){
+    fast;
+    cin>>n>>q;
+    init();
+    fore(i,1,n+1) cin>>a[i];
+
+    STree st(n);
+    st.build();
+
+    while(q--){
+        ll x,y;
+        cin>>x>>y;
+        st.update(x,y);
+        cout<<st.st[1].max_sum<<nl;
+    }
 }
