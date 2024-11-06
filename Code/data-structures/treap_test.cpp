@@ -1,3 +1,20 @@
+//Tested with: https://www.spoj.com/problems/ADACROP/
+//Tested with: https://codeforces.com/contest/847/problem/D
+#include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define ld long double
+#define nl '\n'
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define fore(i,a,b) for(ll i=a;i<b;++i)
+#define ALL(u) u.begin(),u.end()
+#define vi vector <ll>
+#define vvi vector<vi>
+#define PI 3.1415926535
+#define lsb(x) ((x)&(-x))
+    
+using namespace std;
+
 typedef struct item *pitem;
 
 struct item {
@@ -124,4 +141,10 @@ void solveDogs(){ //Codeforces Dogs Show problem.
     cout<<best<<nl;
 }
 
-int main(){ srand(time(0)); }
+int main(){ 
+    fast;
+    srand(time(0));
+    //solveDogs();
+    solveCrops();
+    return 0;
+}   
