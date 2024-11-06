@@ -1,12 +1,3 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define pb push_back
-#define nl '\n'
-#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
-#define fore(i,a,b) for(int i=a;i<b;++i)
-
-using namespace std;
-
 const ll mod = 1e9+7;
 const ll maxn = 1e5+5;
 int catalan[maxn+5];

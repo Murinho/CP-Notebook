@@ -1,12 +1,5 @@
-#include <bits/stdc++.h>
-#define ll long long
-#define pb push_back
-#define nl '\n'
-#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
-#define fore(i,a,b) for(ll i=a;i<b;++i)
-
-
-int gcd(int a, int b, int& x, int& y) { //a * x + b * y = gcd(a,b)
+//a * x + b * y = gcd(a,b), where a and b are given.
+int gcd(int a, int b, int& x, int& y) { 
     if (b == 0) {
         x = 1;
         y = 0;
