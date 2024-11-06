@@ -24,7 +24,7 @@ struct MSTree{
         int mid = (ini+fin)/2;
         return (query(2*node,ini,mid,l,r,val_l,val_r)|query(2*node + 1,mid+1,fin,l,r,val_l,val_r));
     }
-    void order(){ fore( i,1,4*n + 5) st[i].order();} // after all insertions, sort all nodes.
+    void order(){ fore(i,1,4*n + 5) st[i].order();} // after all insertions, sort all nodes.
     void upd(int pos, int val){ upd(1,1,n,pos,val);}
     int query(int l, int r, int val_l, int val_r){ return query(1,1,n,l,r,val_l,val_r);}
 };
