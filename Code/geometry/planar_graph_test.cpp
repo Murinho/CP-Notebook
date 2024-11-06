@@ -1,3 +1,56 @@
+// Tested with: https://codeforces.com/gym/105431/problem/F
+#include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define ld long double
+#define nl '\n'
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define fore(i,a,b) for(ll i=a; i<b; i++)
+#define rofe(i,a,b) for(ll i=a-1; i>=b; i--)
+#define ALL(u) u.begin(),u.end()
+#define vi vector <ll>
+#define vvi vector <vi>
+#define sz(a) ((ll)a.size())
+#define lsb(x) ((x)&(-x))
+#define PI acos(-1.0)
+#define pii pair <ll,ll>
+#define fst first
+#define snd second
+#define RB(x) (x<n?r[x]:0)
+
+using namespace std;
+
+struct Point {
+    ll x, y; //cambiar tipo de dato de acuerdo al problema
+    void read(){ cin>>x>>y; }
+    Point operator +(const Point& b) const { return Point{x+b.x, y+b.y}; } //suma de puntos
+    Point operator -(const Point& b) const { return Point{x-b.x, y-b.y}; } //resta de puntos
+    ll operator *(const Point& b) const { return (ll) x * b.y - (ll) y * b.x; }
+    bool operator <(const Point& b) const { return x == b.x ? y < b.y : x < b.x; }
+    void operator +=(const Point& b) { x += b.x; y += b.y; }
+    void operator -=(const Point &b) { x -= b.x; y -= b.y; }
+    void operator *=(const int k) { x *= k; y *= k; }
+    bool operator ==(const Point &b){
+        if (b.x == (*this).x && b.y == (*this).y) return true;
+        return false;
+    }
+    ll cross(const Point& b, const Point& c) const { //Producto cruz
+        ll cruz = (b - *this) * (c - *this);
+        if (cruz < 0) return -1; //Clockwise (right)
+        if (cruz > 0) return +1; //Counter-clockwise (left)
+        return 0; //Collinear.
+    }
+};
+
+ld shoelace(vector <Point> poly){ //Calculo de area de poligono
+    ld ans = 0;
+    poly.push_back(poly.front());
+    for (int i = 1; i<poly.size(); i++){
+        ans += (poly[i-1]*poly[i]);
+    }
+    return abs(ans)/2.0;
+}
+
 // Sort the points counterclockwise around a reference point
 bool sort_ccw(const Point& p, const Point& a, const Point& b) {
     return atan2(a.y - p.y, a.x - p.x) < atan2(b.y - p.y, b.x - p.x);
@@ -38,8 +91,11 @@ pair<Point, Point> find_outer_edge(map<Point, vector<Point>>& mp) {
     return {leftmost, u};
 }
 
-void doit(){
-    int n; // n points.
+int main(){ //Computes the faces of the planar graph and then calculates its area.
+    fast;
+    int n;
+    cin>>n;
+
     map<Point, vector<Point>> mp; //adjacency list.
     set<pair<Point, Point>> seen; //seen edges.
 
@@ -58,17 +114,22 @@ void doit(){
         });
     }
 
-    auto [p, q] = find_outer_edge(mp); 
+    auto [p, q] = find_outer_edge(mp);
     vector<Point> outer = find_face(mp, p, q);
 
     fore(i,0,sz(outer)-1) seen.insert({outer[i], outer[(i+1)%sz(outer)]});
 
-    for (const auto& p : mp) { // find inner faces of the planar graph:
+    ld total_area = 0.0;
+    for (const auto& p : mp) {
         for (const auto& q : p.second) {
             if (seen.count({p.first, q})) continue;
             seen.insert({p.first, q});
             vector<Point> face = find_face(mp, p.first, q);
+            ld face_area = shoelace(face);
+            total_area += (face_area*face_area);
             fore(i,0,sz(face)-1) seen.insert({face[i], face[(i+1)%sz(face)]});
         }
     }
+    cout<<fixed<<setprecision(18)<<total_area<<nl;
+    return 0;
 }
