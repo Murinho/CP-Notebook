@@ -1,3 +1,19 @@
+//Tested with: https://www.spoj.com/problems/POLYMUL/
+#include <bits/stdc++.h>
+#define ll long long
+#define pb push_back
+#define ld long double
+#define nl '\n'
+#define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
+#define fore(i,a,b) for(ll i=a;i<b;++i)
+#define ALL(u) u.begin(),u.end()
+#define vi vector <ll>
+#define vvi vector<vi>
+#define sz(a) ((int)a.size())
+#define lsb(x) ((x)&(-x))
+ 
+using namespace std;
+ 
 typedef pair<ll,ll> ii;
 
 const ll MAXN=1<<20; //watch out with RTEs (increase MAXN):
@@ -47,7 +63,7 @@ poly multiply(poly& p1, poly& p2){
 	return res;
 }
 
-void getBigNumMulti(vector <ll> &c){ //Big numbers multiplication.
+void getBigNumMulti(vector <ll> &c){
     vector <char> r;
     while(!c.empty()&&!c.back()) c.pop_back(); //quitar todos los 0 extras.
 	if(c.empty()){
@@ -115,27 +131,44 @@ void stringMatchShift(){ //All possible scalar products with strings.
 	} 
 }
 
-//String matching with wildcards ('?')
-vector<ll> string_matching(string &s, string &t) { 
-    int n = s.size(), m = t.size();
-    vector<ll> s1(n), s2(n), s3(n);
-    //assign any non zero number for non '?'s
-    for(int i = 0; i < n; i++) s1[i] = s[i] == '?' ? 0 : s[i] - 'a' + 1; 
-    for(int i = 0; i < n; i++) s2[i] = s1[i] * s1[i];
-    for(int i = 0; i < n; i++) s3[i] = s1[i] * s2[i];
-    vector<ll> t1(m), t2(m), t3(m);
-    for(int i = 0; i < m; i++) t1[i] = t[i] == '?' ? 0 : t[i] - 'a' + 1;
-    for(int i = 0; i < m; i++) t2[i] = t1[i] * t1[i];
-    for(int i = 0; i < m; i++) t3[i] = t1[i] * t2[i];
-    reverse(ALL(t1));
-    reverse(ALL(t2));
-    reverse(ALL(t3));
-    vector<ll> s1t3 = multiply(s1, t3);
-    vector<ll> s2t2 = multiply(s2, t2);
-    vector<ll> s3t1 = multiply(s3, t1);
-    vector<ll> res(n);
-    for(int i = 0; i < n; i++) res[i] = s1t3[i] - s2t2[i] * 2 + s3t1[i];
-    vector<ll> oc;
-    for(int i = m - 1; i < n; i++) if(res[i] == 0) oc.pb(i - m + 1);
-    return oc;
+vector<ll> string_matching(string &s, string &t) { //String matching with wildcards ('?')
+  int n = s.size(), m = t.size();
+  vector<ll> s1(n), s2(n), s3(n);
+  for(int i = 0; i < n; i++) s1[i] = s[i] == '?' ? 0 : s[i] - 'a' + 1; //assign any non zero number for non '?'s
+  for(int i = 0; i < n; i++) s2[i] = s1[i] * s1[i];
+  for(int i = 0; i < n; i++) s3[i] = s1[i] * s2[i];
+  vector<ll> t1(m), t2(m), t3(m);
+  for(int i = 0; i < m; i++) t1[i] = t[i] == '?' ? 0 : t[i] - 'a' + 1;
+  for(int i = 0; i < m; i++) t2[i] = t1[i] * t1[i];
+  for(int i = 0; i < m; i++) t3[i] = t1[i] * t2[i];
+  reverse(ALL(t1));
+  reverse(ALL(t2));
+  reverse(ALL(t3));
+  vector<ll> s1t3 = multiply(s1, t3);
+  vector<ll> s2t2 = multiply(s2, t2);
+  vector<ll> s3t1 = multiply(s3, t1);
+  vector<ll> res(n);
+  for(int i = 0; i < n; i++) res[i] = s1t3[i] - s2t2[i] * 2 + s3t1[i];
+  vector<ll> oc;
+  for(int i = m - 1; i < n; i++) if(res[i] == 0) oc.pb(i - m + 1);
+  return oc;
+}
+
+int main(){
+    fast;
+	int tc,n;
+	cin>>tc;
+	while(tc--){
+		cin>>n;
+        vector <ll> a(n+1),b(n+1),c;
+        fore(i,0,n+1) cin>>a[i];
+        fore(i,0,n+1) cin>>b[i];
+
+        c = multiply(a,b);
+
+        //Resulting coefficients:
+        fore(i,0,(2*n)+1) cout<<c[i]<<" ";
+        cout<<nl;
+	}
+	return 0;
 }
