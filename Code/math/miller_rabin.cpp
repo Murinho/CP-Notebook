@@ -1,8 +1,3 @@
-#include <bits/stdc++.h>
-#define ll long long
-
-using namespace std;
-
 ll mulmod(ll a, ll b, ll m){
    ll x = 0,y = a % m;
    while (b > 0) {
@@ -27,7 +22,7 @@ ll modulo(ll base, ll e, ll m) {
    return x % m;
 }
 
-bool Miller(ll p, int iteration) {
+bool Miller(ll p, int iteration) { //number and amount of iterations.
    if (p < 2) {
       return false;
    }
@@ -50,17 +45,4 @@ bool Miller(ll p, int iteration) {
       }
    }
    return true;
-}
-
-int main() {
-    //Complexity:  O(k*(ln(n))^3).
-    int iteration = 10;
-    ll num;
-    cout<<"Enter integer to test primality: ";
-    cin>>num;
-    if (Miller(num, iteration))
-        cout<<num<<" is prime"<<endl;
-    else
-      cout<<num<<" is not prime"<<endl;
-   return 0;
 }
