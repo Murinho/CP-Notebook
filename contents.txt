@@ -1,0 +1,111 @@
+[C++]
+code/c++/template.cpp	C++ Template
+code/c++/bits.cpp	Bits Manipulation
+code/c++/random.cpp	Random
+code/c++/other.cpp	Other
+
+[Strings]
+code/strings/aho_corasick.cpp	Aho Corasick
+code/strings/hashing.cpp	Hashing
+code/strings/kmp.cpp	KMP
+code/strings/lyndon_factorization.cpp	Lyndon Factorization
+code/strings/manacher.cpp	Manacher
+code/strings/suffix_array.cpp	Suffix Array
+code/strings/suffix_automaton.cpp	Suffix Automaton
+code/strings/trie.cpp	Trie
+code/strings/z_function.cpp	Z-Function
+
+[Graph algorithms]
+code/graphs/2_sat.cpp	2-SAT
+code/graphs/bellman_ford.cpp	Bellman Ford
+code/graphs/binary_lifting.cpp	Binary Lifting
+code/graphs/centroid_decomposition.cpp	Centroid Decomposition
+code/graphs/cycle_detection.cpp	Cycle Detection
+code/graphs/dijkstra.cpp	Dijkstra
+code/graphs/euler_path_directed.cpp	Euler Path Directed
+code/graphs/euler_path_undirected.cpp	Euler Path Undirected
+code/graphs/floyd_warshall.cpp	Floyd Warshall	
+code/graphs/heavy_light_decomposition.cpp	Heavy Light Decomposition
+code/graphs/kruskal.cpp	Kruskal
+code/graphs/tarjan.cpp	Tarjan
+code/graphs/topo_sort.cpp	Topo Sort
+
+[Flows]
+code/flows/dinic.cpp	Dinic
+code/flows/min_cost_max_flow.cpp	Min-Cost Max-Flow Algorithm
+
+[Data Structures]
+code/data-structures/dsu.cpp	Disjoint Set Union
+code/data-structures/dsu_with_rollbacks.cpp	DSU with Rollbacks
+code/data-structures/fenwick.cpp	Fenwick Tree
+code/data-structures/merge_sort_tree.cpp	Merge Sort Tree
+code/data-structures/monotonic_deque.cpp	Monotonic Deque
+code/data-structures/mos.cpp	Mo's Algorithm
+code/data-structures/ordered_set.cpp	Ordered Set
+code/data-structures/segment_tree_2d.cpp	Segment Tree 2D
+code/data-structures/segment_tree_beats.cpp	Segment Tree Beats
+code/data-structures/segment_tree_lazy.cpp	Segment Tree Lazy
+code/data-structures/segment_tree.cpp	Segment Tree
+code/data-structures/sparse_table.cpp	Sparse Table
+code/data-structures/sqrt_decomposition.cpp	Sqrt Decomposition
+code/data-structures/treap_implicit.cpp	Treap Implicit
+code/data-structures/treap.cpp	Treap
+
+[Math]
+code/math/binary_exponentiation.cpp	Binary Exponentiation
+code/math/binomial_coefficient.cpp	Binomial Coefficient
+code/math/bitwise_and_convolution.cpp	Bitwise AND Convolution
+code/math/bitwise_or_convolution.cpp	Bitwise OR Convolution
+code/math/bitwise_xor_convolution.cpp	Bitwise XOR Convolution
+code/math/catalan_nums.cpp	Catalan Numbers
+code/math/euler_totient.cpp	Euler Totient
+code/math/extended_euclidean.cpp	Extended Euclidean
+code/math/fft.cpp	FFT
+code/math/fractions.cpp	Fractions
+code/math/gcd_convolution.cpp	GCD Convolution
+code/math/lcm_convolution.cpp	LCM Convolution
+code/math/matrix_expo_kth_term.cpp	Matrix Exponentiation Kth Term
+code/math/matrix_expo.cpp	Matrix Exponentiation
+code/math/miller_rabin.cpp	Miller Rabin
+code/math/mobius_function.cpp	Mobius Function
+code/math/mod_int.cpp	Modular Int
+code/math/ntt.cpp	NTT
+code/math/pascal_triangle.cpp	Pascal Triangle
+code/math/sieve_linear.cpp	Sieve Linear
+code/math/sieve.cpp	Sieve
+code/math/sieve_segmented.cpp	Sieve Segmented
+
+[Dynamic Programming]
+code/dynamic-programming/convex_hull_trick.cpp	Convex Hull Trick
+code/dynamic-programming/edit_distance.cpp	Edit Distance
+code/dynamic-programming/knapsack_01_optimization.cpp	Knapsack 01 Optimization
+code/dynamic-programming/lcs.cpp	Longest Common Subsequence
+code/dynamic-programming/lis.cpp	Longest Increasing Subsequence
+code/dynamic-programming/sos.cpp	Sum Over Subsets
+
+[Geometry]
+code/geometry/geometry_template.cpp	Template
+code/geometry/formulas.cpp	Formulas
+code/geometry/angular_sweep.cpp	Angular Sweep
+code/geometry/check_parallelism.cpp	Check Parallelism
+code/geometry/check_perpendicularity.cpp	Check Perpendicularity
+code/geometry/circle_line_intersection.cpp	Circle-Line Intersection
+code/geometry/closest_pair.cpp	Closest Pair
+code/geometry/convex_hull.cpp	Convex Hull
+code/geometry/equation_of_line.cpp	Equation of Line
+code/geometry/line_intersection.cpp	Line Intersection
+code/geometry/planar_graph.cpp	Planar Graph
+code/geometry/point_inside_polygon_linear.cpp	Point Inside Polygon Linear
+code/geometry/point_inside_polygon.cpp	Point Inside Polygon Optimized
+code/geometry/polygon_area.cpp	Polygon Area
+
+[Miscellaneous]
+code/miscellaneous/coordinate_compression.cpp	Coordinate Compression
+code/miscellaneous/isomorphism_rooted.cpp	Isomorphism Rooted
+code/miscellaneous/isomorphism_unrooted.cpp	Isomorphism Unrooted
+code/miscellaneous/max_subarray_sum.cpp	Max Subarray Sum
+code/miscellaneous/small_to_large.cpp	Small to Large
+code/miscellaneous/ternary_search_2d.cpp	Ternary Search 2D
+code/miscellaneous/ternary_search.cpp	Ternary Search
+
+[Fin]
