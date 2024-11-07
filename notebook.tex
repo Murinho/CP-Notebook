@@ -18,14 +18,6 @@
 \renewcommand\cftsecafterpnum{\vspace{-.5ex}}
 \renewcommand\cftsubsecafterpnum{\vspace{0ex}}
 
-\newcommand{\Section}[1]{
-    \section*{#1}
-    \addcontentsline{toc}{subsection}{#1}
-    \vspace{-3mm}
-}
-
-\newcommand{\Topic}[1]{\textbf{#1}}
-
 \lstdefinestyle{shared}{
     belowcaptionskip=1\baselineskip,
     breaklines=true,
@@ -34,7 +26,7 @@
     basicstyle=\fontsize{10}{6}\ttfamily,
 }
 \lstdefinestyle{cpp}{
-	style=shared,
+    style=shared,
     language=C++,
     keywordstyle=\bfseries\color{green!40!black},
     commentstyle=\itshape\color{blue!90!black},
@@ -74,7 +66,7 @@
 \begin{multicols}{2}
 \maketitle
 \vspace{-13ex}
-\tableofcontents
+\tableofcontents  % Automatically generates the TOC with page numbers
 \pagestyle{fancy}
 
 \input contents.tex
@@ -87,8 +79,6 @@
 \end{multicols}
 
 \pagebreak
-
-
 
 \end{landscape}
 \end{document}

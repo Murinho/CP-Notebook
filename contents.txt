@@ -107,5 +107,3 @@ code/miscellaneous/max_subarray_sum.cpp	Max Subarray Sum
 code/miscellaneous/small_to_large.cpp	Small to Large
 code/miscellaneous/ternary_search_2d.cpp	Ternary Search 2D
 code/miscellaneous/ternary_search.cpp	Ternary Search
-
-[Fin]
