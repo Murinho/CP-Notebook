@@ -29,7 +29,7 @@ void unir(int u ,int v){
 
 void init(){
     fore(i,0,n){
-        uf[i].dad = i;
+        uf[i].pad = i;
         uf[i].ran = 0;
         uf[i].tam = 1;
     }
