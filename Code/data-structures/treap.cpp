@@ -83,7 +83,7 @@ void solveCrops(){ //Spoj prefix crops problem.
     cin>>n>>q;
     vector <ll> a(n);
     //Having individual treaps for each number. 
-    //The keys are the positions in the array.
+    //The values are the positions in the array.
     fore(i,0,n){ 
         cin>>a[i];
         insert(mp[a[i]],new item(i));
