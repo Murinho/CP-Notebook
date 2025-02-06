@@ -8,7 +8,7 @@ void add(int x, int v){
         x += lsb(x);
     }
 }
-// Getting to whole prefix.
+// Getting to whole prefix [1,x]
 int get(int x){ 
     int freq = 0;
     while (x > 0){
@@ -17,3 +17,6 @@ int get(int x){
     }
     return freq;
 }
+
+// To simulate add range updates [l,r,x], add +x in position l, and -x in position r+1
+
