@@ -7,6 +7,7 @@ struct Point {
     Point operator +(const Point& b) const { return Point{x+b.x, y+b.y}; } //suma de puntos
     Point operator -(const Point& b) const { return Point{x-b.x, y-b.y}; } //resta de puntos
     ll operator *(const Point& b) const { return (ll) x * b.y - (ll) y * b.x; }
+    Point operator *(const ld k) const { return Point{x*k,y*k}; }
     bool operator <(const Point& b) const { return x == b.x ? y < b.y : x < b.x; }
     void operator +=(const Point& b) { x += b.x; y += b.y; }
     void operator -=(const Point &b) { x -= b.x; y -= b.y; }
