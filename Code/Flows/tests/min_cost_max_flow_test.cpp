@@ -1,5 +1,10 @@
-//Tested with: https://cses.fi/problemset/task/2129
+// AC. Tested with: https://cses.fi/problemset/task/2129/
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#pragma GCC optimize("Ofast")
+#pragma GCC optimize ("unroll-loops")
+#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 #define ll long long
 #define pb push_back
 #define ld long double
@@ -17,120 +22,159 @@
 #define pii pair<ll,ll>
 #define fst first
 #define snd second
-#define RB(x) (x<n?r[x]:0)
+#define eb emplace_back
+#define ppb pop_back
+#define i128 __int128_t
  
+using namespace __gnu_pbds;
 using namespace std;
 
-const ll maxn = 600;
-const ll maxm = 50000;
-const ll INF = 1e18;
+typedef tree<pair<int, int>, null_type, less<pair<int, int>>, rb_tree_tag, tree_order_statistics_node_update> ordered_multiset;
+typedef tree<int,null_type, less<int>, rb_tree_tag,tree_order_statistics_node_update> ordered_set;
 
-int n,p[maxn],edgeId=1,src,sink;
-ll d[maxn], cap[maxn][maxn], cost[maxn][maxn];
-bool inq[maxn], vis[maxm];
-vi path, g[maxn];
+const ll inf = 1e18+7;
 
-struct Edge {
-    int u, v;
-    ll r, c;
-} edges[maxm], redges[maxm];
-
-void bellman_ford(int start = 0){
-    fill(inq, inq+maxn, false);
-    fill(d, d+maxn, INF);
-    fill(p, p+maxn, 0);
-    queue<int> Q;
-    Q.push(start);
-    d[start] = 0;
-    inq[start] = true;
-    while(!Q.empty()){
-        int u = Q.front(); Q.pop();
-        inq[u] = false;
-        for(int i : g[u]){
-            Edge e = (i < 0 ? redges[-i] : edges[i]);
-            if(e.r > 0 && d[e.v] > d[u] + e.c){
-                d[e.v] = d[u] + e.c;
-                p[e.v] = i;
-                if(!inq[e.v]){
-                    inq[e.v] = true;
-                    Q.push(e.v);
+struct FlowGraph {
+ 
+    struct Edge {
+        ll to, flow, cap, cost;
+        Edge *res;
+ 
+        Edge () : to(0), flow(0), cap(0), cost(0), res(0) {}
+        Edge (ll to, ll flow, ll cap, ll cost) : to(to), flow(flow), cap(cap), cost(cost), res(0) {}
+    
+        void addFlow (ll f) {
+            flow += f;
+            res->flow -= f;
+        }
+    };
+ 
+ 	ll n;
+    vector<vector<Edge*>> adj;
+    vi dis, pos;
+    
+ 
+    FlowGraph (int n) : n(n), adj(n), dis(n), pos(n) {} 
+ 
+    void add (int u, int v, ll cap, ll cost) {
+        Edge *x = new Edge(v, 0, cap, cost);
+        Edge *y = new Edge(u, cap, cap, -cost);
+        x->res = y;
+        y->res = x;
+        adj[u].pb(x);
+        adj[v].pb(y);
+    }
+ 
+    pii mcmf(int s, int t, ll tope) {
+        vector<bool> inq(n);
+        vi dis(n), cap(n);
+        vector<Edge*> par(n);
+        ll maxFlow = 0, minCost = 0;
+ 
+        while (maxFlow < tope) { //  compute MCF: maxflow < tope, compute MCMF maxflow < inf 
+            fill(ALL(dis), inf);
+            fill(ALL(par), nullptr);
+            fill(ALL(cap), 0);
+            dis[s] = 0;
+            cap[s] = inf;
+            queue<int> q;
+            q.push(s);
+ 
+            while (sz(q)) {
+                int u = q.front();
+                q.pop();
+                inq[u] = 0;
+ 
+                for (Edge *v : adj[u]) {
+                    if (v->cap > v->flow && dis[v->to] > dis[u] + v->cost) {
+                        dis[v->to] = dis[u] + v->cost;
+                        par[v->to] = v;
+                        cap[v->to] = min(cap[u], v->cap - v->flow);
+                        
+                        if (!inq[v->to]) {
+                            q.push(v->to);
+                            inq[v->to] = 1;
+                        }
+                    }
                 }
             }
+ 
+            if (!par[t]) break;
+ 
+            maxFlow += cap[t];
+            minCost += cap[t] * dis[t];
+            for (int u = t; u != s; u = par[u]->res->to)
+                par[u]->addFlow(cap[t]);
         }
+ 
+        return {maxFlow, minCost};
     }
+};
+
+vvi paths;
+int n,source,sink;
+
+void find_paths(int node, vi &path, FlowGraph &g){
+	if (node == sink){
+		paths.pb(path);
+		return;
+	}
+	
+	for(auto e : g.adj[node]){
+		if (e->flow > 0 && e->to != source){ //Follow edges where there was a flow
+			if (sz(path) == 0 && e->to < n){
+				path.pb(e->to);
+				e->flow--;
+				find_paths(e->to,path,g);
+				path.pop_back();
+			}
+			else if (sz(path) == 1 && e->to >= n){
+				path.pb(e->to);
+				e->flow--;
+				find_paths(e->to,path,g);
+				path.pop_back();
+			}
+			else if (sz(path) == 2 && e->to == sink){
+				path.pb(e->to);
+				e->flow--;
+				find_paths(e->to,path,g);
+				path.pop_back();
+			}
+		}
+	}
 }
 
-ll mcf(){
-    ll flow = 0, cost = 0;
-    while(flow < n){ //set N equal to INF if wanting to compute the MCMF.
-        bellman_ford();
-        if(d[sink] == INF) break;
-
-        ll aug = n-flow;
-        int u = sink;
-        while(u != 0){
-            Edge e = (p[u] < 0 ? redges[-p[u]] : edges[p[u]]);
-            aug = min(aug, e.r);
-            u = e.u;
-        }
-
-        flow += aug;
-        cost += aug * d[sink];
-        u = sink;
-        while(u != 0){
-            if(p[u] < 0){
-                redges[-p[u]].r -= aug;
-                edges[-p[u]].r += aug;
-            } else {
-                redges[p[u]].r += aug;
-                edges[p[u]].r -= aug;
-            }
-            u = (p[u] < 0 ? redges[-p[u]].u : edges[p[u]].u);
-        }
-    }
-    return (flow < n ? -1 : cost);
-}
-
-void dfs(int u = 0){ //look for all paths computed.
-    if(u == sink)  return;
-    if(u != 0) path.pb(u);
-    for(int i : g[u]){
-        if(i > 0 && edges[i].r == 0 && !vis[i]){
-            vis[i] = true;
-            dfs(edges[i].v);
-            return;
-        }
-    }
-}
-
-void add_edge(int u, int v, ll cost){ // u -> v
-    g[u].pb(edgeId);
-    g[v].pb(-edgeId);
-    edges[edgeId] = {u, v, 1, cost};
-    redges[edgeId] = {v, u, 0, -cost};
-    edgeId++;
+void solve(){
+	cin>>n;
+	FlowGraph g(n + n + 2);
+	source = n + n;
+	sink = source + 1;
+	fore(i,0,n){
+		fore(j,n,n+n){
+			ll x;
+			cin>>x;
+			g.add(i,j,1,x);
+		}
+		
+		g.add(source,i,1,0); // from source to person.
+		g.add(i + n,sink,1,0); // from task to sink.
+	}
+	
+	ll ans = g.mcmf(source,sink,n).snd;
+	
+	vi path;
+	find_paths(source,path,g);
+	cout<<ans<<nl;
+	for(auto &p : paths){
+		cout<<p[0]+1<<" "<<p[1]-n+1<<nl;
+	}
+	return;
 }
 
 int main(){
     fast;
-    cin>>n;
-    src=0, sink=2*n+1;
-    // Add normal edges.
-    fore(i,1,n+1){
-        fore(j,n+1,2*n+1){
-            int c;
-            cin>>c;
-            add_edge(i,j,c);
-        }
+    ll tc = 1;
+    while(tc--){
+        solve();
     }
-    fore(i,1,n+1) add_edge(src,i,0); // from src to node.
-    fore(i,n+1,2*n+1) add_edge(i,sink,0); // from node to sink.
-
-    cout<<mcf()<<nl;
-    fore(i,0,n){
-        path.clear();
-        dfs();
-        cout<<path[0]<<" "<<path[1]-n<<nl;
-    }
-    return 0;
 }
