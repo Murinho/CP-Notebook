@@ -1,95 +1,84 @@
-const ll maxn = 600;
-const ll maxm = 50000;
-const ll INF = 1e18;
+const ll inf = 1e18+7;
 
-int n,p[maxn],edgeId=1,src,sink;
-ll d[maxn], cap[maxn][maxn], cost[maxn][maxn];
-bool inq[maxn], vis[maxm];
-vi path, g[maxn];
-
-struct Edge {
-    int u, v;
-    ll r, c;
-} edges[maxm], redges[maxm];
-
-void bellman_ford(int start = 0){
-    fill(inq, inq+maxn, false);
-    fill(d, d+maxn, INF);
-    fill(p, p+maxn, 0);
-    queue<int> Q;
-    Q.push(start);
-    d[start] = 0;
-    inq[start] = true;
-    while(!Q.empty()){
-        int u = Q.front(); Q.pop();
-        inq[u] = false;
-        for(int i : g[u]){
-            Edge e = (i < 0 ? redges[-i] : edges[i]);
-            if(e.r > 0 && d[e.v] > d[u] + e.c){
-                d[e.v] = d[u] + e.c;
-                p[e.v] = i;
-                if(!inq[e.v]){
-                    inq[e.v] = true;
-                    Q.push(e.v);
+struct FlowGraph {
+ 
+    struct Edge {
+        ll to, flow, cap, cost;
+        Edge *res;
+ 
+        Edge () : to(0), flow(0), cap(0), cost(0), res(0) {}
+        Edge (ll to, ll flow, ll cap, ll cost) : to(to), flow(flow), cap(cap), cost(cost), res(0) {}
+    
+        void addFlow (ll f) {
+            flow += f;
+            res->flow -= f;
+        }
+    };
+ 
+ 	ll n;
+    vector<vector<Edge*>> adj;
+    vi dis, pos;
+    
+ 
+    FlowGraph (int n) : n(n), adj(n), dis(n), pos(n) {} 
+ 
+    void add (int u, int v, ll cap, ll cost) {
+        Edge *x = new Edge(v, 0, cap, cost);
+        Edge *y = new Edge(u, cap, cap, -cost);
+        x->res = y;
+        y->res = x;
+        adj[u].pb(x);
+        adj[v].pb(y);
+    }
+ 
+    pii mcmf(int s, int t, ll tope) {
+        vector<bool> inq(n);
+        vi dis(n), cap(n);
+        vector<Edge*> par(n);
+        ll maxFlow = 0, minCost = 0;
+ 
+        while (maxFlow < tope) { //  compute MCF: maxflow < tope, compute MCMF maxflow < inf 
+            fill(ALL(dis), inf);
+            fill(ALL(par), nullptr);
+            fill(ALL(cap), 0);
+            dis[s] = 0;
+            cap[s] = inf;
+            queue<int> q;
+            q.push(s);
+ 
+            while (sz(q)) {
+                int u = q.front();
+                q.pop();
+                inq[u] = 0;
+ 
+                for (Edge *v : adj[u]) {
+                    if (v->cap > v->flow && dis[v->to] > dis[u] + v->cost) {
+                        dis[v->to] = dis[u] + v->cost;
+                        par[v->to] = v;
+                        cap[v->to] = min(cap[u], v->cap - v->flow);
+                        
+                        if (!inq[v->to]) {
+                            q.push(v->to);
+                            inq[v->to] = 1;
+                        }
+                    }
                 }
             }
+ 
+            if (!par[t]) break;
+ 
+            maxFlow += cap[t];
+            minCost += cap[t] * dis[t];
+            for (int u = t; u != s; u = par[u]->res->to)
+                par[u]->addFlow(cap[t]);
         }
+ 
+        return {maxFlow, minCost};
     }
-}
-
-ll mcf(){
-    ll flow = 0, cost = 0;
-    while(flow < n){ //set N equal to INF if wanting to compute the MCMF.
-        bellman_ford();
-        if(d[sink] == INF) break;
-
-        ll aug = n-flow;
-        int u = sink;
-        while(u != 0){
-            Edge e = (p[u] < 0 ? redges[-p[u]] : edges[p[u]]);
-            aug = min(aug, e.r);
-            u = e.u;
-        }
-
-        flow += aug;
-        cost += aug * d[sink];
-        u = sink;
-        while(u != 0){
-            if(p[u] < 0){
-                redges[-p[u]].r -= aug;
-                edges[-p[u]].r += aug;
-            } else {
-                redges[p[u]].r += aug;
-                edges[p[u]].r -= aug;
-            }
-            u = (p[u] < 0 ? redges[-p[u]].u : edges[p[u]].u);
-        }
-    }
-    return (flow < n ? -1 : cost);
-}
-
-void dfs(int u = 0){ //look for all paths computed (flow matches).
-    if(u == sink)  return;
-    if(u != 0) path.pb(u);
-    for(int i : g[u]){
-        if(i > 0 && edges[i].r == 0 && !vis[i]){
-            vis[i] = true;
-            dfs(edges[i].v);
-            return;
-        }
-    }
-}
-
-void add_edge(int u, int v, ll cost){ // u -> v
-    g[u].pb(edgeId);
-    g[v].pb(-edgeId);
-    edges[edgeId] = {u, v, 1, cost};
-    redges[edgeId] = {v, u, 0, -cost};
-    edgeId++;
-}
+};
 
 void doit(){
     // define src and sink.
     // edges src to node, and node to sink have cost 0.
-    // to compute flow matches, run dfs n times (amount of left side nodes).
+    // to compute flow matches (e.g assignment problems), run dfs over the flow graph, keep the path and substract one unit of flow every time.
 }
