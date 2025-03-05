@@ -47,7 +47,7 @@ struct Dinic {
 		m += 2;
 	}
 	bool bfs(){
-		while (!q.empty()) {
+		while (sz(q)) {
 			int v = q.front();
 			q.pop();
 			for (int id : adj[v]) {
