@@ -33,7 +33,7 @@ void init(){
 bool kuhn(int v){
 	if (used[v]) return false;
 	used[v]=true;
-	for(int to : g[v]){
+	for(int to : g[v]){ //simple adjacency list.
 		if (mt[to] == -1 || kuhn(mt[to])){
 			mt[to]=v;
 			return true;
@@ -42,10 +42,10 @@ bool kuhn(int v){
 	return false;
 }
 
-ll do_kuhn(){
-	mt.assign(sn,-1);
+ll do_kuhn(){  //Complexity: O(n*m)
+	mt.assign(sn,-1); //sn is the size of the second (right) part size of the graph.
 	ll mm = 0;
-	fore(v,0,fn){
+	fore(v,0,fn){ //fn is the size of the first(left) part size of the graph.
 		used.assign(fn,false);
 		if(kuhn(v)) mm++;
 	}
@@ -55,8 +55,8 @@ ll do_kuhn(){
 	/*
 	fore(i,0,sn){
 		if (mt[i] != -1) cout<<"Connection: "<<mt[i] + 1<<" (left part) -- > "<<i + 1<<" (right part)"<<nl;	
-	}
-	*/
+	} */
+	
 	return mm; //maximum matching.
 }
 
