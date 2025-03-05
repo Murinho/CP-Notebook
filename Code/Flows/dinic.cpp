@@ -69,3 +69,48 @@ struct Dinic {
 		return f;
 	}
 }; // initialize dinic(size,source_index,sink_index).
+
+vector <FlowEdge> fe[maxn];
+bool ok;
+ 
+void dfs(int node, vi &path){
+	if (node == n-1){ //when reaching the last node.
+		ok=true;
+		cout<<sz(path)<<nl;
+		fore(i,0,sz(path)){
+			cout<<path[i]+1<<" ";
+		}
+		cout<<nl;
+		return;
+	}
+	
+	for(auto &e : fe[node]){
+		// Conditions of the next node that should be explored:
+		if (!ok && e.flow > 0 && e.u < n){ 
+			path.pb(e.u);
+			e.flow--;
+			dfs(e.u,path);
+			path.ppb();
+		}
+	}
+}
+
+void doit(){
+	// Initialize and build the flow graph.
+
+	// To recover the paths of the flow:
+	ll mf = dinic.flow();
+	cout<<mf<<nl;
+	
+	for(FlowEdge e : dinic.edges){
+		if (e.flow > 0){
+			fe[e.v].pb(e);
+		}
+	}
+	
+	vi path;
+	fore(i,0,mf){
+		ok=false;
+		dfs(source,path);
+	}
+}
