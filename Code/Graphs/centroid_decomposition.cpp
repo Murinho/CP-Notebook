@@ -30,16 +30,15 @@ bool check(ll node, ll layer, ll tam){
  
 void centroidBuild(ll centroid_parent, ll node, ll layer){
     vi elms;
-    ll tam = dfsExplore(0,node,1,layer,elms);
+    ll tam = dfsExplore(0,node,1,layer,elms); // change anode to -1 if nodes [0,n-1]
     for(auto elm : elms){
         if (check(elm,layer,tam)){
             vis[elm] = 1;
             // Save each node's centroid parent.
             if (centroid_parent == -1){
                 centroids_root = elm;
-                cenpar[centroids_root] = 0;
             }
-            else cenpar[elm] = centroid_parent; 
+            cenpar[elm] = centroid_parent; 
             for(auto signode : adj[elm]){ //expand to the children.
                 if (vis[signode] == 0){
                     centroidBuild(elm,signode,layer+1);
