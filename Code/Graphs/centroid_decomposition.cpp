@@ -18,7 +18,7 @@ ll dfsExplore(ll anode, ll node, ll depth, ll layer, vi &elms){
  
 bool check(ll node, ll layer, ll tam){
     ll sum = 1;
-    for (auto au : adj[node]){
+    for (auto &au : adj[node]){
         if (dep[au][layer] > dep[node][layer]){
             sum += subt[au][layer];
             if (subt[au][layer] > tam/2) return false;
@@ -31,7 +31,7 @@ bool check(ll node, ll layer, ll tam){
 void centroidBuild(ll centroid_parent, ll node, ll layer){
     vi elms;
     ll tam = dfsExplore(0,node,1,layer,elms); // change anode to -1 if nodes [0,n-1]
-    for(auto elm : elms){
+    for(auto &elm : elms){
         if (check(elm,layer,tam)){
             vis[elm] = 1;
             // Save each node's centroid parent.
@@ -39,7 +39,7 @@ void centroidBuild(ll centroid_parent, ll node, ll layer){
                 centroids_root = elm;
             }
             cenpar[elm] = centroid_parent; 
-            for(auto signode : adj[elm]){ //expand to the children.
+            for(auto &signode : adj[elm]){ //expand to the children.
                 if (vis[signode] == 0){
                     centroidBuild(elm,signode,layer+1);
                 }
