@@ -17,7 +17,7 @@ def get_sections():
                 if section_name is not None:
                     sections.append((section_name, subsections))
             else:
-                tmp = line.split('\t', 1)
+                tmp = line.split(maxsplit=1)
                 if len(tmp) == 1:
                     raise ValueError('Subsection parse error: %s' % line)
                 filename = tmp[0]
