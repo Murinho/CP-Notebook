@@ -59,7 +59,7 @@ struct PushRelabel {
 
 void doit(){
     ll source=0, sink=1, source_prime = 2, sink_prime = 3;
-	PushRelabel flow(graph_size + 4,source,sink,source_prime,sink_prime);
+		PushRelabel flow(graph_size + 4,source,sink,source_prime,sink_prime);
 
     // Only source and sink will be used in the manual connections, do not use source_prime or sink_prime
 }
