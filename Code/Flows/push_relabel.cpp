@@ -1,5 +1,5 @@
-struct PushRelabel {
-	struct Edge {
+struct PushRelabel{
+	struct Edge{
 		int dest, back;
 		ll f, c;
 		Edge(int dest, int back, ll f, ll c) : dest(dest), back(back), f(f), c(c) {}
@@ -37,20 +37,39 @@ struct PushRelabel {
 		for (Edge& e : g[S]) addFlow(e, e.c);
  
 		for (int hi = 0;;) {
-			while (hs[hi].empty()) if (!hi--) return -ec[s];
-			int u = hs[hi].back(); hs[hi].pop_back();
-			while (ec[u] > 0)  // discharge u
+			while (hs[hi].empty()){
+				if (!hi--){
+					return -ec[s];
+				}
+			}
+			int u = hs[hi].back(); 
+			hs[hi].ppb();
+			while (ec[u] > 0){
 				if (cur[u] == g[u].data() + sz(g[u])) {
 					H[u] = 1e9;
-					for (Edge& e : g[u]) if (e.c && H[u] > H[e.dest]+1)
-						H[u] = H[e.dest]+1, cur[u] = &e;
-					if (++co[H[u]], !--co[hi] && hi < v)
-						fore(i,0,v) if (hi < H[i] && H[i] < v)
-							--co[H[i]], H[i] = v + 1;
+					for (Edge& e : g[u]){
+						if (e.c && H[u] > H[e.dest]+1){
+							H[u] = H[e.dest]+1, cur[u] = &e;
+						}
+					}
+					if (++co[H[u]], !--co[hi] && hi < v){
+						fore(i,0,v){
+							if (hi < H[i] && H[i] < v){
+								--co[H[i]], H[i] = v + 1;
+							}
+							
+						}
+					}
 					hi = H[u];
-				} else if (cur[u]->c && H[u] == H[cur[u]->dest]+1)
+				} 
+				else if (cur[u]->c && H[u] == H[cur[u]->dest]+1){
 					addFlow(*cur[u], min(ec[u], cur[u]->c));
-				else ++cur[u];
+				}
+				else{
+					++cur[u];
+				}
+			}
+				
 		}
 	}
 	bool leftOfMinCut(int a) { return H[a] >= sz(g); }
