@@ -32,7 +32,9 @@ code/graphs/topo_sort.cpp	Topo Sort
 
 [Flows]
 code/flows/dinic.cpp	Dinic
-code/flows/min_cost_max_flow.cpp	Min-Cost Max-Flow Algorithm
+code/flows/min_cost_max_flow.cpp    Min-Cost Max-Flow Algorithm
+code/flows/kuhn.cpp Kuhn
+code/flows/push_relabel.cpp Push Relabel
 
 [Data Structures]
 code/data-structures/dsu.cpp	Disjoint Set Union
@@ -41,10 +43,12 @@ code/data-structures/fenwick.cpp	Fenwick Tree
 code/data-structures/merge_sort_tree.cpp	Merge Sort Tree
 code/data-structures/monotonic_deque.cpp	Monotonic Deque
 code/data-structures/mos.cpp	Mo's Algorithm
+code/data-structures/mos_with_updates.cpp   Mo's with Updates
 code/data-structures/ordered_set.cpp	Ordered Set
 code/data-structures/segment_tree_2d.cpp	Segment Tree 2D
 code/data-structures/segment_tree_beats.cpp	Segment Tree Beats
 code/data-structures/segment_tree_lazy.cpp	Segment Tree Lazy
+code/data-structures/segment_tree_persistent.cpp    Segment Tree Persistent
 code/data-structures/segment_tree.cpp	Segment Tree
 code/data-structures/sparse_table.cpp	Sparse Table
 code/data-structures/sqrt_decomposition.cpp	Sqrt Decomposition
@@ -84,7 +88,8 @@ code/dynamic-programming/lis.cpp	Longest Increasing Subsequence
 code/dynamic-programming/sos.cpp	Sum Over Subsets
 
 [Geometry]
-code/geometry/geometry_template.cpp	Template
+code/geometry/geometry_template_2d.cpp	Template 2D
+code/geometry/geometry_template_3d.cpp  Template 3D
 code/geometry/formulas.cpp	Formulas
 code/geometry/angular_sweep.cpp	Angular Sweep
 code/geometry/check_parallelism.cpp	Check Parallelism
@@ -93,6 +98,7 @@ code/geometry/circle_line_intersection.cpp	Circle-Line Intersection
 code/geometry/closest_pair.cpp	Closest Pair
 code/geometry/convex_hull.cpp	Convex Hull
 code/geometry/equation_of_line.cpp	Equation of Line
+code/geometry/half_plane_intersection.cpp   Half Plane Intersection
 code/geometry/line_intersection.cpp	Line Intersection
 code/geometry/planar_graph.cpp	Planar Graph
 code/geometry/point_inside_polygon_linear.cpp	Point Inside Polygon Linear
@@ -104,6 +110,7 @@ code/miscellaneous/coordinate_compression.cpp	Coordinate Compression
 code/miscellaneous/isomorphism_rooted.cpp	Isomorphism Rooted
 code/miscellaneous/isomorphism_unrooted.cpp	Isomorphism Unrooted
 code/miscellaneous/max_subarray_sum.cpp	Max Subarray Sum
+code/miscellaneous/parallel_binary_search.cpp   Parallel Binary Search
 code/miscellaneous/small_to_large.cpp	Small to Large
 code/miscellaneous/ternary_search_2d.cpp	Ternary Search 2D
 code/miscellaneous/ternary_search.cpp	Ternary Search
