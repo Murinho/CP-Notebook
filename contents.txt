@@ -31,9 +31,9 @@ code/graphs/tarjan.cpp	Tarjan
 code/graphs/topo_sort.cpp	Topo Sort
 
 [Flows]
-code/flows/dinic.cpp	Dinic
-code/flows/min_cost_max_flow.cpp    Min-Cost Max-Flow Algorithm
+code/flows/dinic.cpp    Dinic
 code/flows/kuhn.cpp Kuhn
+code/flows/min_cost_max_flow.cpp    Min-Cost Max-Flow
 code/flows/push_relabel.cpp Push Relabel
 
 [Data Structures]
