@@ -1,6 +1,9 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
+#pragma GCC optimize("Ofast")
+#pragma GCC optimize ("unroll-loops")
+#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 #define ll long long
 #define pb push_back
 #define ld long double
@@ -18,7 +21,9 @@
 #define pii pair<ll,ll>
 #define fst first
 #define snd second
-#define RB(x) (x<n?r[x]:0)
+#define eb emplace_back
+#define ppb pop_back
+#define i128 __int128_t
  
 using namespace __gnu_pbds;
 using namespace std;
