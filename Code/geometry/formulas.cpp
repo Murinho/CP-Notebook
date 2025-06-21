@@ -67,6 +67,12 @@ ld surfaceAreaSphere(ld radius) {
     return 4 * PI * radius * radius;
 }
 
+// Surface area of the cap of a sphare
+// Note: the radius is the radius of the whole sphere.
+ld capSurfaceAreaSphere(ld height, ld radius){
+    return 2 * PI * height * radius;
+}
+
 // Surface area of a cylinder
 ld surfaceAreaCylinder(ld radius, ld height) {
     return 2 * PI * radius * (radius + height);
