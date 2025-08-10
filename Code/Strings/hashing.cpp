@@ -1,5 +1,5 @@
 const ll maxn = 1e6 + 5;
-const ll M = 1e9+9; // prime modulo.
+const ll M = 1e9+9; // prime modulo (alternative: 10000000000000061)
 const ll B = 131; // prime number bigger than the alphabet.
 string s,t;
 ll pws[maxn],h[maxn],tams,tamt,hasht=0,ans=0;
