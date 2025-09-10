@@ -56,4 +56,12 @@ ld radiansToDegrees(ld radians){
     return radians * (180.0 / PI);
 }
 
+Point rotate45(Point p){
+    return {p.x+p.y, p.y-p.x};
+}
+
+Point undorotate45(Point p){
+    return {(p.x-p.y)/2, (p.y+p.x)/2};
+}
+
 signed main(){}
