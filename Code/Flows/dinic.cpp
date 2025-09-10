@@ -95,6 +95,17 @@ void dfs(int node, vi &path){
 	}
 }
 
+// visits the nodes on the source side of the min-cut
+void dfs_reachable(Dinic &dinic, vi &vis, int v) { 
+    vis[v] = 1;
+    for (int id : dinic.adj[v]) {
+        auto &e = dinic.edges[id];
+        if (e.cap - e.flow > 0 && !vis[e.u]) {
+            dfs_reachable(dinic, vis, e.u);
+        }
+    }
+}
+
 void doit(){
 	// Initialize and build the flow graph.
 
