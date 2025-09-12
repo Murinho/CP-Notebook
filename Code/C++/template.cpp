@@ -24,6 +24,7 @@
 #define eb emplace_back
 #define ppb pop_back
 #define i128 __int128_t
+#define ull unsigned long long
  
 using namespace __gnu_pbds;
 using namespace std;
