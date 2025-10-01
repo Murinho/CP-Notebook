@@ -42,6 +42,7 @@ int dfs_sz(int cur, int par) {
 void dfs_hld(int cur, int par, int top) {
 	labe[cur] = label_cont++;
 	tp[cur] = top;
+	// if assigning value here do: arr[labe[cur]] = val
 	upd(labe[cur], arr[cur]); //updating the STree using the labeling.
 	int h_chi = -1, h_sz = -1;
 	for (int chi : adj[cur]) {
@@ -89,7 +90,7 @@ int pathQuery(int chi, int par) {
 	int ret = 0;
 	while (chi != par) {
 		if (tp[chi] == chi) { //querying for the top of the chain, no STree needed.
-			ret = max(ret, arr[chi]);
+			ret = max(ret, query(labe[chi], labe[chi])); // or do max(ret, arr[chi]) if arr[chi] is kept updated.
 			chi = up[chi][0];
 		} else if (dep[tp[chi]] > dep[par]) { //queyring for the whole chain.
 			ret = max(ret, query(labe[tp[chi]], labe[chi]));
@@ -112,6 +113,8 @@ void doit(){ //Example querying and updating for maximum value.
     // for updates:
     upd(labe[node],val);
     arr[node] = val;
+	// or do the same as pathQuery but updating.
+
     // for queries:
     ll lcan = lca(node,node2); 
     ll q_ans = max({pathQuery(node,lcan),pathQuery(node2,lcan),arr[lcan]});
