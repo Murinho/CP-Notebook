@@ -1,3 +1,5 @@
+// To hash a multiset: Sum of elements of (B^num) * freq[num]
+
 const ll maxn = 1e6 + 5;
 const ll M = 1e9+9; // prime modulo (alternative: 10000000000000061 or 10000000000061)
 const ll B = 131; // prime number bigger than the alphabet.
