@@ -1,7 +1,5 @@
-const ll MAXN = 1e6+5;
-int d1[MAXN];//d1[i] = max odd palindrome centered on i
-int d2[MAXN];//d2[i] = max even palindrome centered on i
-
+int d1[maxn];//d1[i] = max odd palindrome centered on i
+int d2[maxn];//d2[i] = max even palindrome centered on i
 //s  aabbaacaabbaa
 //d1 1111117111111
 //d2 0103010010301
