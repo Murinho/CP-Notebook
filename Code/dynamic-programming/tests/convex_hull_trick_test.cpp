@@ -1,127 +1,82 @@
-//Tested with: https://www.spoj.com/problems/ACQUIRE/
+//Tested with: https://codeforces.com/problemset/problem/319/C
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#pragma GCC optimize("Ofast")
+#pragma GCC optimize ("unroll-loops")
+#pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
 #define ll long long
 #define pb push_back
 #define ld long double
 #define nl '\n'
 #define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
 #define fore(i,a,b) for(ll i=a;i<b;++i)
+#define rofe(i,a,b) for(ll i=a-1;i>=b;--i)
 #define ALL(u) u.begin(),u.end()
 #define vi vector <ll>
 #define vvi vector<vi>
-#define sz(a) ((int)a.size())
-#define PI 3.1415926535
+#define sz(a) ((ll)a.size())
 #define lsb(x) ((x)&(-x))
+#define lsbpos(x) __builtin_ffs(x)
+#define PI acos(-1.0)
+#define pii pair<ll,ll>
+#define fst first
+#define snd second
+#define eb emplace_back
+#define ppb pop_back
+#define i128 __int128_t
  
 using namespace std;
-
-const ll maxn = 5e4+100;
-const ll INF = 1e17;
-
-struct Rectangle{
-    ll w,h;
+ 
+const ll maxn = 1e5+100;
+ 
+struct Line{
+	mutable ll k, m, p;
+	bool operator<(const Line& o) const { return k < o.k; }
+	bool operator<(ll x) const { return p < x; }
 };
-
-ll n,dp[maxn];
-vector <Rectangle> a;
-
-bool cmp(Rectangle r1, Rectangle r2){
-    if (r1.h == r2.h) return r1.w < r2.w;
-    return r1.h < r2.h;
-}
-
-struct CHT { //For Optimizing DPs that can be modeled as y = mx + b.
-    //This code is made to find the minimums. Maximums can also be found.
-    //Use When slopes are in decreasing order for minimums: m1 > m2 > ... > mk
-	//Use when slopes are in increasing order for maximums: m1 < m2 < ... < mk
-    struct Line {
-        ll slope, yIntercept;
  
-        Line(ll slope, ll yIntercept) : slope(slope), yIntercept(yIntercept) {}
+struct LineContainer : multiset<Line, less<>>{ // For Max values
+	// (for doubles, use inf = 1/.0, div(a,b) = a/b)
+	// For Min values use: cht.add(-k,-m) and -cht.query(x);
+	static const ll inf = LLONG_MAX;
+	ll div(ll a, ll b) { // floored division
+		return a / b - ((a ^ b) < 0 && a % b); }
+	bool isect(iterator x, iterator y) {
+		if (y == end()) return x->p = inf, 0;
+		if (x->k == y->k) x->p = x->m < y->m ? inf : -inf;
+		else x->p = div(y->m - x->m, x->k - y->k);
+		return x->p >= y->p;
+	}
+	void add(ll k, ll m) {
+		auto z = insert({k, m, 0}), y = z++, x = y;
+		while (isect(y, z)) z = erase(z);
+		if (x != begin() && isect(--x, y)) isect(x, y = erase(y));
+		while ((y = x) != begin() && (--x)->p > y->p)
+			isect(x, erase(y));
+	}
+	ll query(ll x) {
+		assert(!empty());
+		auto l = *lower_bound(x);
+		return l.k * x + l.m;
+	}
+} cht;
  
-        ll val(ll x) {
-            return slope * x + yIntercept;
-        }
+ll n,dp[maxn],a[maxn],b[maxn];
  
-        ll intersect(Line y) {
-            return (y.yIntercept - yIntercept + slope - y.slope - 1) / (slope - y.slope);
-        }
-    };
- 
-    deque<pair<Line, ll>> dq;
- 
-    void insert(ll slope, ll yIntercept) {
-        Line newLine(slope, yIntercept);
- 
-        //Pop lines until all lines become useful. Popping the lines that become irrelevant.
-		// For minimums >=
-		// For maximums <= 
-        while (!dq.empty() && dq.back().second >= dq.back().first.intersect(newLine)) dq.pop_back();
-            
- 
-        if (dq.empty()) {
-            dq.emplace_back(newLine, 0);
-            return;
-        }
- 
-        dq.emplace_back(newLine, dq.back().first.intersect(newLine));
-    }
- 
-    ll query(ll x) { //When x values are given in ascending order: x1 < x2 < .. xk.
-        //Just need to use a deque, no need to use Binary Search.
-        while (sz(dq) > 1) {
-            if (dq[1].second <= x) dq.pop_front();
-            else break;
-        }
- 
-        return dq[0].first.val(x);
-    }
- 
-    ll query2(ll x) { //Use Binary Search when x values are given without a specific order.
-        auto qry = *lower_bound(dq.rbegin(), dq.rend(),
-                                make_pair(Line(0, 0), x),
-                                [&](const pair<Line, ll> &a, const pair<Line, ll> &b) {
-                                    return a.second > b.second;
-                                });
- 
-        return qry.first.val(x);
-    }
-};
-
-void init(){
-    fore(i,0,n+1) dp[i] = INF;
-}
-
 int main(){
     fast;
-    cin>>n;
-    init();
-    fore(i,0,n){
-        ll w,h;
-        cin>>w>>h;
-        a.pb({w,h});
+    cin >> n;
+    fore(i,1,n+1) cin >> a[i];
+    fore(i,1,n+1) cin >> b[i];
+    
+    dp[1] = 0;
+    cht.add(-b[1],-dp[1]);
+    
+    fore(i,2,n+1){
+    	dp[i] = -cht.query(a[i]);
+    	if (i < n) cht.add(-b[i],-dp[i]);
     }
-    sort(ALL(a),cmp);
-    ll cnt = 1;
-    ll pos = n-1;
-    for(int i = n-2; i>=0; i--){
-        if (a[i].w <= a[pos].w || a[i].h >= a[pos].h){
-            a[i].w=a[i].h=0;
-        }
-        else{
-            cnt++;
-            pos = i;
-        }
-    }
-    CHT cht;
-    ll idx = 1;
-    dp[0] = 0;
-    fore(i,0,n){
-        if (a[i].h == 0) continue;
-        cht.insert(a[i].w,dp[idx-1]);
-        dp[idx] = cht.query(a[i].h);
-        idx++;
-    }   
-    cout<<dp[cnt]<<nl;
+    cout << dp[n] << nl;
     return 0;
 }
