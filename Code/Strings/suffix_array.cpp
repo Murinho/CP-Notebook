@@ -23,10 +23,9 @@ vi constructSA(string& s){
 	}
 	return sa;
 }
-
 void doit(){
 	string s;
 	cin>>s;
-	s = "$" + s; //add an extra symbol at the beginning to avoid conflicts.
+	s = "$" + s; // just in case, to avoid conflicts
 	vi sa = constructSA(s);
 }
