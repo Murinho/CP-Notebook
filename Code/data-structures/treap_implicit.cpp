@@ -4,11 +4,11 @@ const ll maxn = 1e6+10;
 
 struct Node {
 	Node(ll val) : val(val), weight(rand()), size(1), lazy_tag(0) {}
-    ll val, sum;  // val -> a[i], sum = sum of all a[i] in subtree
+	ll val, sum;  // val -> a[i], sum = sum of all a[i] in subtree
 	ll weight, size;
 	bool rev = false;  // whether this range is reversed
 	pnode l = nullptr;
-    pnode r = nullptr;
+	pnode r = nullptr;
 	ll lazy_tag; // neutral value is 0.
 };
  
@@ -26,7 +26,7 @@ void push(pnode node) {
 	}
 	if (node->lazy_tag){ // need to update the sum of this range.
 		node->sum += node->lazy_tag * size(node);
-        node->val += node->lazy_tag; 
+		node->val += node->lazy_tag; 
 		if (node->l) { node->l->lazy_tag += node->lazy_tag;}
 		if (node->r) { node->r->lazy_tag += node->lazy_tag;}
 		node->lazy_tag = 0;
@@ -84,24 +84,24 @@ struct Treap {
 		merge(root, l, r);
 	}
  
-    void swap_intervals(int l1, int r1, int l2, int r2) {
-        if (l1 > l2) {
+	void swap_intervals(int l1, int r1, int l2, int r2) {
+		if (l1 > l2) {
 			swap(l1, l2);
 			swap(r1, r2);
 		}
-        assert(r1 <= l2);
+		assert(r1 <= l2);
 
-        pnode a, b, c, d, e;
-        split(root, a, b, l1);
-        split(b, b, c, r1 - l1);
-        split(c, c, d, l2 - r1);
-        split(d, d, e, r2 - l2);
+		pnode a, b, c, d, e;
+		split(root, a, b, l1);
+		split(b, b, c, r1 - l1);
+		split(c, c, d, l2 - r1);
+		split(d, d, e, r2 - l2);
  
-        merge(root, a, d);
-        merge(root, root, c);
-        merge(root, root, b);
-        merge(root, root, e);
-    }
+		merge(root, a, d);
+		merge(root, root, c);
+		merge(root, root, b);
+		merge(root, root, e);
+	}
  
 	// updates the range [l, r)
 	void upd(int l, int r, function<void(Node *)> f) {
@@ -140,18 +140,18 @@ struct Treap {
 };
  
 void doit() {
-    int pos, val, l, r, x;
-    Treap treap;
-    // insert:
-    treap.insert(pos, val);
-    // delete:
-    treap.del(pos);
-    // update [l, r) reverse:
-    treap.upd(l, r, [](Node *node) { node->rev ^= true; });
-    // update [l, r) adding a value x:
-    treap.upd(l, r, [x](Node *node) { node->lazy_tag += x; });
-    // query for the sum in [l, r)
-    ll range_sum = treap.query<ll>(l, r, [](Node *node) { return node->sum; });
+	int pos, val, l, r, x;
+	Treap treap;
+	// insert:
+	treap.insert(pos, val);
+	// delete:
+	treap.del(pos);
+	// update [l, r) reverse:
+	treap.upd(l, r, [](Node *node) { node->rev ^= true; });
+	// update [l, r) adding a value x:
+	treap.upd(l, r, [x](Node *node) { node->lazy_tag += x; });
+	// query for the sum in [l, r)
+	ll range_sum = treap.query<ll>(l, r, [](Node *node) { return node->sum; });
 }
 
 int main(){ srand(time(0)); }

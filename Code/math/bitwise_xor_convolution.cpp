@@ -30,13 +30,13 @@ void xormul(vi a, vi b, vi &c){
 				c[i + j + n] = (x - y + mod) % mod;
 			}
 	int mrev = inverse(m, mod);
-    fore(i,0,m) c[i] = c[i] * mrev % mod;
+	fore(i,0,m) c[i] = c[i] * mrev % mod;
 }
 
 // Given two arrays of size 2^N, find:
 // c_k = Total_Sum of (i,j) where (i [XOR] j) == k, a_i*b_j
 
 void doit(){
-    int n;
-    vi a(1<<n),b(1<<n),c; //c is answer vector of size (1<<n).
+	int n;
+	vi a(1<<n),b(1<<n),c; //c is answer vector of size (1<<n).
 }

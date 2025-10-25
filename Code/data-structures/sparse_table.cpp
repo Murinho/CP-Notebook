@@ -7,7 +7,7 @@ ll query(int l, int r){
 	//Check in steps of powers of 2.
 	int tam = (r-l+1);
 	ll res = INF;
-    rofe(i,loga,0){
+	rofe(i,loga,0){
 		if (tam & (1ll<<i)){
 			res = min(res,sp[l][i]);
 			l += (1ll<<i);
@@ -17,12 +17,12 @@ ll query(int l, int r){
 }
 
 void build(){ // Minimums sparse table.
-    fore(i,1,n+1) sp[i][0]=a[i];
-    fore(i,1,loga){
-        fore(j,1,n+1){
-            if (j + (1ll<<i) - 1 <= n){ // 
-                sp[j][i] = min(sp[j][i-1], sp[j + (1ll<<(i-1))][i-1]);
-            }
-        }
-    }
+	fore(i,1,n+1) sp[i][0]=a[i];
+	fore(i,1,loga){
+		fore(j,1,n+1){
+			if (j + (1ll<<i) - 1 <= n){ // 
+				sp[j][i] = min(sp[j][i-1], sp[j + (1ll<<(i-1))][i-1]);
+			}
+		}
+	}
 }

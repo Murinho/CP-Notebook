@@ -17,9 +17,9 @@ struct plane{
 	plane(point3 n, ld d): n(n), d(d) {}
 	plane(point3 p1, point3 p2, point3 p3): plane((p2-p1).cross(p3-p1), p1.dot((p2-p1).cross(p3-p1))) {} // Initialize by giving 3 points in the plane.
 	ld side(const point3 &p) const { return ((*this).n).dot(p) - (*this).d;}
-    /*
-    If side(p) > 0: The point p is on the positive side of the plane (in the direction of the normal).
-    If side(p) < 0: The point p is on the negative side of the plane.
-    If side(p) == 0: The point p lies on the plane.
-    */
+	/*
+	If side(p) > 0: The point p is on the positive side of the plane (in the direction of the normal).
+	If side(p) < 0: The point p is on the negative side of the plane.
+	If side(p) == 0: The point p lies on the plane.
+	*/
 };

@@ -48,17 +48,17 @@ poly multiply(poly& p1, poly& p2){
 }
 
 void getBigNumMulti(vector <ll> &c){ //Big numbers multiplication.
-    vector <char> r;
-    while(!c.empty()&&!c.back()) c.pop_back(); //quitar todos los 0 extras.
+	vector <char> r;
+	while(!c.empty()&&!c.back()) c.pop_back(); //quitar todos los 0 extras.
 	if(c.empty()){
-        cout<<0<<nl;
-        return;
-    }
+		cout<<0<<nl;
+		return;
+	}
 	ll x=0;
-    //Normalizar los coeficientes para representarlos como digitos.
+	//Normalizar los coeficientes para representarlos como digitos.
 	fore(i,0,c.size()){
 		x+=c[i];
-        r.pb((char)(x%10) + '0');
+		r.pb((char)(x%10) + '0');
 		x/=10;
 	}
 	while(x){ //carry que sobra.
@@ -66,8 +66,8 @@ void getBigNumMulti(vector <ll> &c){ //Big numbers multiplication.
 		x/=10;
 	}
 	reverse(ALL(r));
-    fore(i,0,r.size()) cout<<r[i];
-    cout<<nl;
+	fore(i,0,r.size()) cout<<r[i];
+	cout<<nl;
 }
 
 void stringMatchShift(){ //All possible scalar products with strings.
@@ -117,25 +117,25 @@ void stringMatchShift(){ //All possible scalar products with strings.
 
 //String matching with wildcards ('?')
 vector<ll> string_matching(string &s, string &t) { 
-    int n = s.size(), m = t.size();
-    vector<ll> s1(n), s2(n), s3(n);
-    //assign any non zero number for non '?'s
-    for(int i = 0; i < n; i++) s1[i] = s[i] == '?' ? 0 : s[i] - 'a' + 1; 
-    for(int i = 0; i < n; i++) s2[i] = s1[i] * s1[i];
-    for(int i = 0; i < n; i++) s3[i] = s1[i] * s2[i];
-    vector<ll> t1(m), t2(m), t3(m);
-    for(int i = 0; i < m; i++) t1[i] = t[i] == '?' ? 0 : t[i] - 'a' + 1;
-    for(int i = 0; i < m; i++) t2[i] = t1[i] * t1[i];
-    for(int i = 0; i < m; i++) t3[i] = t1[i] * t2[i];
-    reverse(ALL(t1));
-    reverse(ALL(t2));
-    reverse(ALL(t3));
-    vector<ll> s1t3 = multiply(s1, t3);
-    vector<ll> s2t2 = multiply(s2, t2);
-    vector<ll> s3t1 = multiply(s3, t1);
-    vector<ll> res(n);
-    for(int i = 0; i < n; i++) res[i] = s1t3[i] - s2t2[i] * 2 + s3t1[i];
-    vector<ll> oc;
-    for(int i = m - 1; i < n; i++) if(res[i] == 0) oc.pb(i - m + 1);
-    return oc;
+	int n = s.size(), m = t.size();
+	vector<ll> s1(n), s2(n), s3(n);
+	//assign any non zero number for non '?'s
+	for(int i = 0; i < n; i++) s1[i] = s[i] == '?' ? 0 : s[i] - 'a' + 1; 
+	for(int i = 0; i < n; i++) s2[i] = s1[i] * s1[i];
+	for(int i = 0; i < n; i++) s3[i] = s1[i] * s2[i];
+	vector<ll> t1(m), t2(m), t3(m);
+	for(int i = 0; i < m; i++) t1[i] = t[i] == '?' ? 0 : t[i] - 'a' + 1;
+	for(int i = 0; i < m; i++) t2[i] = t1[i] * t1[i];
+	for(int i = 0; i < m; i++) t3[i] = t1[i] * t2[i];
+	reverse(ALL(t1));
+	reverse(ALL(t2));
+	reverse(ALL(t3));
+	vector<ll> s1t3 = multiply(s1, t3);
+	vector<ll> s2t2 = multiply(s2, t2);
+	vector<ll> s3t1 = multiply(s3, t1);
+	vector<ll> res(n);
+	for(int i = 0; i < n; i++) res[i] = s1t3[i] - s2t2[i] * 2 + s3t1[i];
+	vector<ll> oc;
+	for(int i = m - 1; i < n; i++) if(res[i] == 0) oc.pb(i - m + 1);
+	return oc;
 }
