@@ -102,11 +102,10 @@ struct QueryTree {
 };
 
 void doit(){
-	QueryTree qt(q+2,n+1); //Queries and nodes are 0-indexed.
-	query edge(x,y); // Existing edge.
+	QueryTree qt(total_time,amount_nodes); // Time and nodes are 0-indexed.
+	query edge(x,y); // Existing edge (bidirectional edge)
 	// Add the living interval of an edge [l,r]. Close all edges.
 	qt.add_query(edge,l,r); 
 	// Answer queries: amount of CCs at each moment i.
-	// Substract -1 to the each answer.
 	vi ans = qt.solve(); 
 }
