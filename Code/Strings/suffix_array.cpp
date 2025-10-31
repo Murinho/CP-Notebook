@@ -1,3 +1,4 @@
+#define RB(x) (x<n?r[x]:0)
 void csort(vi& sa, vi& r, int k){
 	int n=sa.size();
 	vi f(max(255,n),0),t(n);
@@ -7,7 +8,7 @@ void csort(vi& sa, vi& r, int k){
 	fore(i,0,n)t[f[RB(sa[i]+k)]++]=sa[i];
 	sa=t;
 }
-vi constructSA(string& s){
+vi constructSA(string& s){ // O(nlogn)
 	int n=s.size(),rank;
 	vi sa(n),r(n),t(n);
 	fore(i,0,n)sa[i]=i,r[i]=s[i];
@@ -23,7 +24,7 @@ vi constructSA(string& s){
 	}
 	return sa;
 }
-void doit(){
+void doit(){ // Returns starting indices of all suffixes of the original string, sorted in lexicographical order.
 	string s;
 	cin>>s;
 	s = "$" + s; // just in case, to avoid conflicts
