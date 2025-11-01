@@ -34,6 +34,11 @@ struct Point {
 		ang = (ang * 180.0) / PI;
 		return ang; //return angle in degrees.
 	}
+	int half() const { // for angular sorting, to know in which half is this
+		if ((*this).y > 0) return 0;
+		if ((*this).y < 0) return 1;
+		return (*this).x >= 0 ? 0 : 1;
+	}
 };
 struct LineToPoint{
 	Point p1,p2;
@@ -48,5 +53,14 @@ Point rotate45(Point p){ // Rotates a point 45 degrees
 }
 Point undorotate45(Point p){ // Undo 45 degrees rotation of a point
 	return {(p.x-p.y)/2, (p.y+p.x)/2};
+}
+bool angleCmp(const Point& a, const Point& b) { // for angular sorting
+    int ha = a.half();
+    int hb = b.half();
+    if (ha != hb) return ha < hb;              // upper half first
+    ll cr = a*b;
+    if (cr != 0) return cr > 0;                // CCW order
+    // Collinear: tie-break by distance from origin (shorter first, optional)
+    return a.magnitude() < b.magnitude();
 }
 signed main(){}
