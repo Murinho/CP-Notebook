@@ -48,7 +48,7 @@ struct WaveletTree {
 struct WaveletIndex {
 	vi a;
 	vi compVals;  // sorted unique original values
-	vi a_comp;    // 1..σ
+	vi a_comp;    // 1.. sigma
 	unique_ptr<WaveletTree> root;
 
 	// Pass the array of size n [0,n-1], without trailing unused spaces, then it'll be 1-indexed
@@ -81,8 +81,8 @@ struct WaveletIndex {
 		if (x > y) swap(x, y);
 		l = max(l, 1); r = min(r, (int)a.size());
 		if (l > r) return 0;
-		int cy = compress_floor_idx(y);      // last comp id <= y   (0..σ)
-		int cx = compress_ceil_idx(x);       // first comp id >= x  (1..σ+1)
+		int cy = compress_floor_idx(y);      // last comp id <= y   (0..sigma)
+		int cx = compress_ceil_idx(x);       // first comp id >= x  (1..sigma+1)
 		if (cx > cy) return 0;
 		return root->count_comp(l, r, cx, cy);
 	}

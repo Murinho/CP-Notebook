@@ -38,7 +38,6 @@ void doit(){
 		if (!matchedL[v] && !visAlt[v]) dfs_alt(v);
 	}
 
-	// C = (L \ Z) ∪ (R ∩ Z)
 	vi cover;
 	for (int v = 1; v <= 2*n; v++) {
 		if (v <= n) {
