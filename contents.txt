@@ -21,6 +21,7 @@ code/graphs/bellman_ford.cpp	Bellman Ford
 code/graphs/binary_lifting.cpp	Binary Lifting
 code/graphs/centroid_decomposition.cpp	Centroid Decomposition
 code/graphs/cycle_detection.cpp	Cycle Detection
+code/graphs/debruijn.cpp    Debruijn
 code/graphs/dijkstra.cpp	Dijkstra
 code/graphs/euler_path_directed.cpp	Euler Path Directed
 code/graphs/euler_path_undirected.cpp	Euler Path Undirected
@@ -34,6 +35,7 @@ code/graphs/topo_sort.cpp	Topo Sort
 code/flows/dinic.cpp    Dinic
 code/flows/kuhn.cpp Kuhn
 code/flows/min_cost_max_flow.cpp    Min-Cost Max-Flow
+code/flows/min_vertex_cover.cpp Min Vertex Cover
 code/flows/push_relabel.cpp Push Relabel
 
 [Data Structures]
@@ -54,8 +56,10 @@ code/data-structures/sparse_table.cpp	Sparse Table
 code/data-structures/sqrt_decomposition.cpp	Sqrt Decomposition
 code/data-structures/treap_implicit.cpp	Treap Implicit
 code/data-structures/treap.cpp	Treap
+code/data-structures/wavelet_tree.cpp   Wavelet Tree
 
 [Math]
+code/math/big_int.cpp   Big Integer
 code/math/binary_exponentiation.cpp	Binary Exponentiation
 code/math/binomial_coefficient.cpp	Binomial Coefficient
 code/math/bitwise_and_convolution.cpp	Bitwise AND Convolution
@@ -81,8 +85,10 @@ code/math/sieve_segmented.cpp	Sieve Segmented
 
 [Dynamic Programming]
 code/dynamic-programming/convex_hull_trick.cpp	Convex Hull Trick
+code/dynamic-programming/dnc.cpp    Divide and Conquer
 code/dynamic-programming/edit_distance.cpp	Edit Distance
 code/dynamic-programming/knapsack_01_optimization.cpp	Knapsack 01 Optimization
+code/dynamic-programming/knuth_optimization.cpp Knuth Optimization
 code/dynamic-programming/lcs.cpp	Longest Common Subsequence
 code/dynamic-programming/lis.cpp	Longest Increasing Subsequence
 code/dynamic-programming/sos.cpp	Sum Over Subsets
@@ -114,3 +120,4 @@ code/miscellaneous/parallel_binary_search.cpp   Parallel Binary Search
 code/miscellaneous/small_to_large.cpp	Small to Large
 code/miscellaneous/ternary_search_2d.cpp	Ternary Search 2D
 code/miscellaneous/ternary_search.cpp	Ternary Search
+code/miscellaneous/xor_basis.cpp    XOR Basis

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import subprocess
 code_dir = "code"
-title = "UPgraded ICPC Team Notebook"
+title = "Igloo Zone ICPC Team Notebook"
 
 def get_sections():
     sections = []
