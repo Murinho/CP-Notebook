@@ -1,3 +1,4 @@
+// Tell if 2 rooted trees are isomorphically equal
 const ll maxn = 2e5+100;
 map <vector <ll>, ll> mp;
 ll idx=1;

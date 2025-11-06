@@ -1,3 +1,4 @@
+// Tell if 2 unrooted trees are isomorphically equal
 vi center(int n, vvi &adj) {
 	int deg[n+1] = {0};
 	virtual v;
