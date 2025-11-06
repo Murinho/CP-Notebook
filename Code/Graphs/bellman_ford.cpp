@@ -2,6 +2,8 @@ const ll maxn = 5050;
 const ll mod = 1e9+7;
 const ll INF = 1e17;
 
+// COMPLEXITY: O(V*E)
+
 struct Edge {
 	ll a, b, cost;
 };
