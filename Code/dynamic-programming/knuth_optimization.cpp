@@ -1,3 +1,18 @@
+/*
+Optimization:
+Special case of DP on ranges, that optimizes the time
+complexity of solutions by a linear factor, from O(n^3)
+to O(n^2).
+
+Recurrence:
+dp(i,j) = fore(k,i,j) min[dp(i,k) + dp(k+1,j) + C(i,j)]
+
+We can apply this optimization when the cost function C
+satisfies the following conditions for a <= b <= c <= d:
+	1. C(b,c) <= C(a,d)
+	2. C(a,c) + C(b,d) <= C(a,d) + C(b,c) (quad. ineq.)
+*/
+
 int solve() {
 	int N;
 	... // read N and input

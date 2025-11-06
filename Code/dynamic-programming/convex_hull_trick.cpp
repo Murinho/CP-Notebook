@@ -1,3 +1,23 @@
+/*
+Classic problem:
+Consider the following problem. There are  n  cities. You want 
+to travel from city 1 to city n by car. To do this you have to buy 
+some gasoline. It is known that a liter of gasoline costs  cost[k] 
+in the k-th city. Initially your fuel tank is empty and you spend 
+one liter of gasoline per kilometer. Cities are located on the 
+same line in ascending order with k-th city having coordinate x[k].
+Also you have to pay toll[k] to enter k-th city. 
+
+Recurrence:
+dp[i] = toll[i] + fore(j,0,i) min(cost[j]*(x[i]-x[j]) + dp[j])
+
+Model problem as lines: M = Ax + B
+
+For constant B group all constants or variables that depend
+only on themselves.
+*/
+
+
 struct Line{
 	mutable ll k, m, p;
 	bool operator<(const Line& o) const { return k < o.k; }
