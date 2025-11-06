@@ -1,5 +1,5 @@
 const ll maxn = 2e5+100;
-const ll lzneut = 0;
+const ll lzneut = 0; // be aware of the value of lzneut!!
 const ll neut = 0;
 
 ll a[maxn];
