@@ -9,6 +9,6 @@ shuffle(all(vec), rng);
 uniform_int_distribution<T> / uniform_real_distribution<T> dis(l, r);
 dis(rng); // generate a random number in [l, r]
 
-int rd(int l, int r) { return uniform_int_distribution<int>(l, r)(rng);}
+int rd(int l, int r) { return uniform_int_distribution<int>(l, r)(rng);} // [l,r] inclusive
 
 srand(time(0)); //include this in main.
