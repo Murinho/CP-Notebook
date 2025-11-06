@@ -38,7 +38,7 @@ struct Sat2 {
 	}
 	bool satisfiable() {
 		tag = 0;
-		ans = vector<bool>(n);
+		ans = vector<bool>(n); // selection of node whether true or false
 		component = vector<int>(siz, -1);
 		for(int i = 0; i < siz; i++) {
 			if(component[i] == -1)
