@@ -1,6 +1,6 @@
-PWD c:\Users\adria\Documents\CP\CP-Notebook
+PWD C:\Users\adria\Documents\CP\CP-Notebook
 INPUT C:\Users\adria\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\adria\Documents\CP\CP-Notebook\notebook.tex
+INPUT notebook.tex
 OUTPUT notebook.log
 INPUT C:\Program Files\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Program Files\MiKTeX\tex\latex\base\article.cls

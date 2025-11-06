@@ -81,36 +81,36 @@
 \contentsline {subsection}{\numberline {7.1}Convex Hull Trick}{39}{subsection.7.1}%
 \contentsline {subsection}{\numberline {7.2}Divide and Conquer}{40}{subsection.7.2}%
 \contentsline {subsection}{\numberline {7.3}Edit Distance}{40}{subsection.7.3}%
-\contentsline {subsection}{\numberline {7.4}Knapsack 01 Optimization}{40}{subsection.7.4}%
-\contentsline {subsection}{\numberline {7.5}Knuth Optimization}{40}{subsection.7.5}%
-\contentsline {subsection}{\numberline {7.6}Longest Common Subsequence}{40}{subsection.7.6}%
+\contentsline {subsection}{\numberline {7.4}Knapsack 01 Optimization}{41}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Knuth Optimization}{41}{subsection.7.5}%
+\contentsline {subsection}{\numberline {7.6}Longest Common Subsequence}{41}{subsection.7.6}%
 \contentsline {subsection}{\numberline {7.7}Longest Increasing Subsequence}{41}{subsection.7.7}%
-\contentsline {subsection}{\numberline {7.8}Sum Over Subsets}{41}{subsection.7.8}%
-\contentsline {section}{\numberline {8}Geometry}{41}{section.8}%
-\contentsline {subsection}{\numberline {8.1}Template 2D}{41}{subsection.8.1}%
-\contentsline {subsection}{\numberline {8.2}Template 3D}{42}{subsection.8.2}%
-\contentsline {subsection}{\numberline {8.3}Formulas}{42}{subsection.8.3}%
-\contentsline {subsection}{\numberline {8.4}Angular Sweep}{43}{subsection.8.4}%
-\contentsline {subsection}{\numberline {8.5}Check Parallelism}{43}{subsection.8.5}%
-\contentsline {subsection}{\numberline {8.6}Check Perpendicularity}{43}{subsection.8.6}%
+\contentsline {subsection}{\numberline {7.8}Sum Over Subsets}{42}{subsection.7.8}%
+\contentsline {section}{\numberline {8}Geometry}{42}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Template 2D}{42}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Template 3D}{43}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Formulas}{43}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Angular Sweep}{44}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}Check Parallelism}{44}{subsection.8.5}%
+\contentsline {subsection}{\numberline {8.6}Check Perpendicularity}{44}{subsection.8.6}%
 \contentsline {subsection}{\numberline {8.7}Circle-Line Intersection}{44}{subsection.8.7}%
-\contentsline {subsection}{\numberline {8.8}Closest Pair}{44}{subsection.8.8}%
-\contentsline {subsection}{\numberline {8.9}Convex Hull}{44}{subsection.8.9}%
-\contentsline {subsection}{\numberline {8.10}Equation of Line}{44}{subsection.8.10}%
-\contentsline {subsection}{\numberline {8.11}Half Plane Intersection}{44}{subsection.8.11}%
-\contentsline {subsection}{\numberline {8.12}Line Intersection}{45}{subsection.8.12}%
+\contentsline {subsection}{\numberline {8.8}Closest Pair}{45}{subsection.8.8}%
+\contentsline {subsection}{\numberline {8.9}Convex Hull}{45}{subsection.8.9}%
+\contentsline {subsection}{\numberline {8.10}Equation of Line}{45}{subsection.8.10}%
+\contentsline {subsection}{\numberline {8.11}Half Plane Intersection}{45}{subsection.8.11}%
+\contentsline {subsection}{\numberline {8.12}Line Intersection}{46}{subsection.8.12}%
 \contentsline {subsection}{\numberline {8.13}Planar Graph}{46}{subsection.8.13}%
-\contentsline {subsection}{\numberline {8.14}Point Inside Polygon Linear}{46}{subsection.8.14}%
-\contentsline {subsection}{\numberline {8.15}Point Inside Polygon Optimized}{47}{subsection.8.15}%
-\contentsline {subsection}{\numberline {8.16}Polygon Area}{47}{subsection.8.16}%
-\contentsline {section}{\numberline {9}Miscellaneous}{47}{section.9}%
-\contentsline {subsection}{\numberline {9.1}Coordinate Compression}{47}{subsection.9.1}%
+\contentsline {subsection}{\numberline {8.14}Point Inside Polygon Linear}{47}{subsection.8.14}%
+\contentsline {subsection}{\numberline {8.15}Point Inside Polygon Optimized}{48}{subsection.8.15}%
+\contentsline {subsection}{\numberline {8.16}Polygon Area}{48}{subsection.8.16}%
+\contentsline {section}{\numberline {9}Miscellaneous}{48}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Coordinate Compression}{48}{subsection.9.1}%
 \contentsline {subsection}{\numberline {9.2}Isomorphism Rooted}{48}{subsection.9.2}%
-\contentsline {subsection}{\numberline {9.3}Isomorphism Unrooted}{48}{subsection.9.3}%
-\contentsline {subsection}{\numberline {9.4}Max Subarray Sum}{48}{subsection.9.4}%
-\contentsline {subsection}{\numberline {9.5}Parallel Binary Search}{49}{subsection.9.5}%
-\contentsline {subsection}{\numberline {9.6}Small to Large}{49}{subsection.9.6}%
-\contentsline {subsection}{\numberline {9.7}Ternary Search 2D}{49}{subsection.9.7}%
+\contentsline {subsection}{\numberline {9.3}Isomorphism Unrooted}{49}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Max Subarray Sum}{49}{subsection.9.4}%
+\contentsline {subsection}{\numberline {9.5}Parallel Binary Search}{50}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.6}Small to Large}{50}{subsection.9.6}%
+\contentsline {subsection}{\numberline {9.7}Ternary Search 2D}{50}{subsection.9.7}%
 \contentsline {subsection}{\numberline {9.8}Ternary Search}{50}{subsection.9.8}%
-\contentsline {subsection}{\numberline {9.9}XOR Basis}{50}{subsection.9.9}%
-\contentsline {section}{\numberline {10}Theory}{52}{section.10}%
+\contentsline {subsection}{\numberline {9.9}XOR Basis}{51}{subsection.9.9}%
+\contentsline {section}{\numberline {10}Theory}{53}{section.10}%
