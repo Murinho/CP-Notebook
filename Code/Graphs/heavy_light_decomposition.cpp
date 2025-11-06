@@ -42,7 +42,7 @@ int dfs_sz(int cur, int par) {
 void dfs_hld(int cur, int par, int top) {
 	labe[cur] = label_cont++;
 	tp[cur] = top;
-	// if assigning value here do: arr[labe[cur]] = val
+	// if assigning value here do: arr[labe[cur]] = val and after doing Euler Tour build the SegTree
 	upd(labe[cur], arr[cur]); //updating the STree using the labeling.
 	int h_chi = -1, h_sz = -1;
 	for (int chi : adj[cur]) {
