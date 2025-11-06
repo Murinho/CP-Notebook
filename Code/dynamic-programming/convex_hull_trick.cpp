@@ -1,8 +1,8 @@
 /*
 Classic problem:
-Consider the following problem. There are  n  cities. You want 
+Consider the following problem. There are n cities. You want 
 to travel from city 1 to city n by car. To do this you have to buy 
-some gasoline. It is known that a liter of gasoline costs  cost[k] 
+some gasoline. It is known that a liter of gasoline costs cost[k] 
 in the k-th city. Initially your fuel tank is empty and you spend 
 one liter of gasoline per kilometer. Cities are located on the 
 same line in ascending order with k-th city having coordinate x[k].
