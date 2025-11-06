@@ -1,4 +1,4 @@
-const ll B = 64;
+const ll B = 64; // maximum bit
 
 struct XorBasis{
 	vector <ull> xb,src; // change to bitset if handling big numbers
@@ -100,3 +100,10 @@ struct XorBasis{
 		return get_kth_smallest_xor_value(get_distinct_xor_subsequences() - k - 1);
 	}
 };
+
+void doit(){
+	XorBasis xb;
+
+	// to insert:
+	xb.insert(a[i],i); // value and index
+}
