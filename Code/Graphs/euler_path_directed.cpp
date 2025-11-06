@@ -15,7 +15,7 @@ void dfs(int node){
 }
 
 void doit(){
-	//Have out and in degree for each node first.
+	//First, get outdegree and indegree for each node.
 	bool flag=true;
 	fore(i,2,n) if (indeg[i] != outdeg[i]) flag=false;
 	if (indeg[1]+1 != outdeg[1] || indeg[n]-1 != outdeg[n] || !flag){
