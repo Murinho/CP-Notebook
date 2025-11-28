@@ -17,6 +17,7 @@ For constant B group all constants or variables that depend
 only on themselves.
 */
 
+// This is Li-Chao Tree, no restrictions on insertions of lines.
 
 struct Line{
 	mutable ll k, m, p;
