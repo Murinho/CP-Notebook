@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.11.6)  6 NOV 2025 08:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.11.6)  6 NOV 2025 16:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -594,9 +594,9 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <10> not available
 (Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 1.
  [2{C:/Program Files/MiKTeX/fonts/enc/dvips/base/8r.enc}])
-(code/c++/random.cpp) (code/c++/other.cpp) (code/strings/aho_corasick.cpp)
-[3] (code/strings/hashing.cpp) (code/strings/kmp.cpp)
-(code/strings/lyndon_factorization.cpp) (code/strings/manacher.cpp [4])
+(code/c++/random.cpp) (code/c++/other.cpp) (code/strings/aho_corasick.cpp
+[3]) (code/strings/hashing.cpp) (code/strings/kmp.cpp)
+(code/strings/lyndon_factorization.cpp [4]) (code/strings/manacher.cpp)
 (code/strings/suffix_array.cpp
 LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 3
 0.
@@ -605,65 +605,67 @@ LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 3
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 ))
 (code/strings/suffix_automaton.cpp [5]) (code/strings/trie.cpp [6])
-(code/strings/z_function.cpp) (code/graphs/2_sat.cpp)
-(code/graphs/bellman_ford.cpp [7]) (code/graphs/binary_lifting.cpp)
+(code/strings/z_function.cpp) (code/graphs/2_sat.cpp [7])
+(code/graphs/bellman_ford.cpp) (code/graphs/binary_lifting.cpp)
 (code/graphs/centroid_decomposition.cpp [8]) (code/graphs/cycle_detection.cpp)
-(code/graphs/debruijn.cpp) (code/graphs/dijkstra.cpp [9])
-(code/graphs/euler_path_directed.cpp) (code/graphs/euler_path_undirected.cpp)
-(code/graphs/floyd_warshall.cpp [10])
+(code/graphs/debruijn.cpp [9]) (code/graphs/dijkstra.cpp)
+(code/graphs/euler_path_directed.cpp) (code/graphs/euler_path_undirected.cpp
+[10]) (code/graphs/floyd_warshall.cpp)
 (code/graphs/heavy_light_decomposition.cpp [11]) (code/graphs/kruskal.cpp)
 (code/graphs/tarjan.cpp [12]) (code/graphs/topo_sort.cpp) (code/flows/dinic.cpp
-[13]) (code/flows/kuhn.cpp) (code/flows/min_cost_max_flow.cpp [14])
-(code/flows/min_vertex_cover.cpp [15]) (code/flows/push_relabel.cpp) [16]
+[13]) (code/flows/kuhn.cpp [14]) (code/flows/min_cost_max_flow.cpp)
+(code/flows/min_vertex_cover.cpp [15]) (code/flows/push_relabel.cpp [16])
 (code/data-structures/dsu.cpp) (code/data-structures/dsu_with_rollbacks.cpp
 [17]) (code/data-structures/fenwick.cpp)
-(code/data-structures/merge_sort_tree.cpp) [18]
+(code/data-structures/merge_sort_tree.cpp [18])
 (code/data-structures/monotonic_deque.cpp) (code/data-structures/mos.cpp)
 (code/data-structures/mos_with_updates.cpp [19])
-(code/data-structures/ordered_set.cpp)
-(code/data-structures/segment_tree_2d.cpp [20])
+(code/data-structures/ordered_set.cpp [20])
+(code/data-structures/segment_tree_2d.cpp)
 (code/data-structures/segment_tree_beats.cpp [21] [22])
-(code/data-structures/segment_tree_lazy.cpp)
-(code/data-structures/segment_tree_persistent.cpp [23])
-(code/data-structures/segment_tree.cpp) (code/data-structures/sparse_table.cpp
-[24]) (code/data-structures/sqrt_decomposition.cpp)
+(code/data-structures/segment_tree_lazy.cpp [23])
+(code/data-structures/segment_tree_persistent.cpp)
+(code/data-structures/segment_tree.cpp [24])
+(code/data-structures/sparse_table.cpp)
+(code/data-structures/sqrt_decomposition.cpp)
 (code/data-structures/treap_implicit.cpp [25] [26])
 (code/data-structures/treap.cpp [27]) (code/data-structures/wavelet_tree.cpp
 [28]) (code/math/big_int.cpp [29] [30]) (code/math/binary_exponentiation.cpp)
-(code/math/binomial_coefficient.cpp) (code/math/bitwise_and_convolution.cpp)
-[31] (code/math/bitwise_or_convolution.cpp)
-(code/math/bitwise_xor_convolution.cpp) (code/math/catalan_nums.cpp [32])
-(code/math/euler_totient.cpp) (code/math/extended_euclidean.cpp)
-(code/math/fft.cpp [33] [34]) (code/math/fractions.cpp)
-(code/math/gcd_convolution.cpp) (code/math/lcm_convolution.cpp [35])
-(code/math/matrix_expo_kth_term.cpp) (code/math/matrix_expo.cpp [36])
-(code/math/miller_rabin.cpp) (code/math/mobius_function.cpp)
-(code/math/mod_int.cpp [37]) (code/math/ntt.cpp) (code/math/pascal_triangle.cpp
-) [38] (code/math/sieve_linear.cpp) (code/math/sieve.cpp)
-(code/math/sieve_segmented.cpp) (code/dynamic-programming/convex_hull_trick.cpp
-[39]) (code/dynamic-programming/dnc.cpp)
-(code/dynamic-programming/edit_distance.cpp) [40]
+(code/math/binomial_coefficient.cpp) [31]
+(code/math/bitwise_and_convolution.cpp) (code/math/bitwise_or_convolution.cpp)
+(code/math/bitwise_xor_convolution.cpp [32]) (code/math/catalan_nums.cpp)
+(code/math/euler_totient.cpp) (code/math/extended_euclidean.cpp [33])
+(code/math/fft.cpp [34]) (code/math/fractions.cpp)
+(code/math/gcd_convolution.cpp [35]) (code/math/lcm_convolution.cpp)
+(code/math/matrix_expo_kth_term.cpp [36]) (code/math/matrix_expo.cpp)
+(code/math/miller_rabin.cpp) (code/math/mobius_function.cpp [37])
+(code/math/mod_int.cpp) (code/math/ntt.cpp [38]) (code/math/pascal_triangle.cpp
+) (code/math/sieve_linear.cpp) (code/math/sieve.cpp)
+(code/math/sieve_segmented.cpp) [39]
+(code/dynamic-programming/convex_hull_trick.cpp)
+(code/dynamic-programming/dnc.cpp [40])
+(code/dynamic-programming/edit_distance.cpp)
 (code/dynamic-programming/knapsack_01_optimization.cpp)
-(code/dynamic-programming/knuth_optimization.cpp)
-(code/dynamic-programming/lcs.cpp) (code/dynamic-programming/lis.cpp [41])
+(code/dynamic-programming/knuth_optimization.cpp [41])
+(code/dynamic-programming/lcs.cpp) (code/dynamic-programming/lis.cpp)
 (code/dynamic-programming/sos.cpp) (code/geometry/geometry_template_2d.cpp
 [42]) (code/geometry/geometry_template_3d.cpp) (code/geometry/formulas.cpp
 [43]) (code/geometry/angular_sweep.cpp) (code/geometry/check_parallelism.cpp)
-(code/geometry/check_perpendicularity.cpp)
-(code/geometry/circle_line_intersection.cpp) [44]
-(code/geometry/closest_pair.cpp) (code/geometry/convex_hull.cpp)
-(code/geometry/equation_of_line.cpp) (code/geometry/half_plane_intersection.cpp
-[45]) (code/geometry/line_intersection.cpp) (code/geometry/planar_graph.cpp
-[46]) (code/geometry/point_inside_polygon_linear.cpp) [47]
-(code/geometry/point_inside_polygon.cpp) (code/geometry/polygon_area.cpp)
-(code/miscellaneous/coordinate_compression.cpp)
-(code/miscellaneous/isomorphism_rooted.cpp [48])
+[44] (code/geometry/check_perpendicularity.cpp)
+(code/geometry/circle_line_intersection.cpp) (code/geometry/closest_pair.cpp)
+(code/geometry/convex_hull.cpp) (code/geometry/equation_of_line.cpp [45])
+(code/geometry/half_plane_intersection.cpp [46])
+(code/geometry/line_intersection.cpp) (code/geometry/planar_graph.cpp [47])
+(code/geometry/point_inside_polygon_linear.cpp)
+(code/geometry/point_inside_polygon.cpp) (code/geometry/polygon_area.cpp
+[48]) (code/miscellaneous/coordinate_compression.cpp)
+(code/miscellaneous/isomorphism_rooted.cpp)
 (code/miscellaneous/isomorphism_unrooted.cpp)
 (code/miscellaneous/max_subarray_sum.cpp [49])
 (code/miscellaneous/parallel_binary_search.cpp)
 (code/miscellaneous/small_to_large.cpp)
-(code/miscellaneous/ternary_search_2d.cpp)
-(code/miscellaneous/ternary_search.cpp [50]) (code/miscellaneous/xor_basis.cpp
+(code/miscellaneous/ternary_search_2d.cpp [50])
+(code/miscellaneous/ternary_search.cpp) (code/miscellaneous/xor_basis.cpp
 [51])) [52] (Theory.tex
 Overfull \hbox (2.51555pt too wide) in paragraph at lines 12--12
 []\OT1/cmr/m/n/10 Name| 
@@ -852,13 +854,13 @@ Package rerunfilecheck Info: File `notebook.out' has not changed.
 (rerunfilecheck)             Checksum: 30D59C0C469E16381A029454CA663B35;15298.
  ) 
 Here is how much of TeX's memory you used:
- 20621 strings out of 474486
- 320395 string characters out of 5753570
- 2735542 words of memory out of 5000000
- 37424 multiletter control sequences out of 15000+600000
+ 20684 strings out of 474486
+ 321262 string characters out of 5753570
+ 2720542 words of memory out of 5000000
+ 37444 multiletter control sequences out of 15000+600000
  569604 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 89i,12n,95p,555b,2345s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 89i,12n,95p,555b,2290s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\adria\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1000.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/
 Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program File
@@ -876,9 +878,9 @@ Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX
 /fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Program Files/MiKTeX/fonts/
 type1/urw/courier/ucrb8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/courier/u
 crr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/courier/ucrro8a.pfb>
-Output written on notebook.pdf (60 pages, 1216194 bytes).
+Output written on notebook.pdf (60 pages, 1223343 bytes).
 PDF statistics:
- 6710 PDF objects out of 7423 (max. 8388607)
- 4955 named destinations out of 5155 (max. 500000)
+ 6762 PDF objects out of 7423 (max. 8388607)
+ 4998 named destinations out of 5155 (max. 500000)
  929 words of extra memory for PDF output out of 10000 (max. 10000000)
 
