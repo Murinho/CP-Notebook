@@ -1,48 +1,43 @@
-ll mulmod(ll a, ll b, ll m){
-	ll x = 0,y = a % m;
-	while (b > 0) {
-		if (b % 2 == 1) {
-			x = (x + y) % m;
-		}
-		y = (y * 2) % m;
-		b /= 2;
-	}
-	return x % m;
+using u64 = uint64_t;
+using u128 = __uint128_t;
+
+static inline u64 binpower(u64 base, u64 e, u64 mod) {
+    u64 result = 1;
+    base %= mod;
+    while (e) {
+        if (e & 1)
+            result = (u128)result * base % mod;
+        base = (u128)base * base % mod;
+        e >>= 1;
+    }
+    return result;
 }
 
-ll modulo(ll base, ll e, ll m) {
-	ll x = 1;
-	ll y = base;
-	while (e > 0) {
-		if (e % 2 == 1)
-			x = (x * y) % m;
-			y = (y * y) % m;
-			e = e / 2;
-	}
-	return x % m;
-}
+static inline bool check_composite(u64 n, u64 a, u64 d, int s) {
+    u64 x = binpower(a, d, n);
+    if (x == 1 || x == n - 1)
+        return false;
+    for (int r = 1; r < s; r++) {
+        x = (u128)x * x % n;
+        if (x == n - 1)
+            return false;
+    }
+    return true;
+};
 
-bool Miller(ll p, int iteration) { //number and amount of iterations.
-	if (p < 2) {
-		return false;
-	}
-	if (p != 2 && p % 2==0) {
-		return false;
-	}
-	ll s = p - 1;
-	while (s % 2 == 0) {
-		s /= 2;
-	}
-	for (int i = 0; i < iteration; i++) {
-		ll a = rand() % (p - 1) + 1, temp = s;
-		ll mod = modulo(a, temp, p);
-		while (temp != p - 1 && mod != 1 && mod != p - 1) {
-			mod = mulmod(mod, mod, p);
-			temp *= 2;
-		}
-		if (mod != p - 1 && temp % 2 == 0) {
-			return false;
-		}
-	}
-	return true;
+static inline bool is_prime(u64 n) { // returns true if n is probably prime, else returns false.
+    if (n < 2) return false;
+
+    ll r = 0;
+    u64 d = n - 1;
+    while ((d & 1) == 0) {
+        d >>= 1;
+        r++;
+    }
+
+    for (u64 a : {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}) {
+        if (n == a) return true;
+        if (check_composite(n, a, d, r)) return false;
+    }
+    return true;
 }
