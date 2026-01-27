@@ -1,7 +1,13 @@
 /* Computes minimum spanning arborescence (directed MST) rooted at a give node.
   Nodes are 0..n-1.
   Returns {ok, cost}. ok=false if not all nodes reachable from root.
-  Complexity: O(n*m) */
+  Complexity: O(n*m) 
+
+  For unrooted problems, one can create a mock node and connect it to every
+  other node with weight = infinity (be careful with having a big enough
+  infinity value but not super big as one has to avoid overflow)
+  
+  */
 struct Edge { ll u,v,w; };
 pair<bool, ll> mst_arborescence(ll n, ll root, vector<Edge> &edges) {
     ll ans = 0;
