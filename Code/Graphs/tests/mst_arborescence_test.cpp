@@ -1,144 +1,138 @@
-// Tested with AC: https://vjudge.net/problem/UVA-11183
+// Tested with AC: https://codeforces.com/contest/240/problem/E
 #include <bits/stdc++.h>
-#define ll long long
+#define ll int
 #define pb push_back
-#define ld long double
-#define nl '\n'
 #define fast cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
-#define fore(i,a,b) for(ll i=a;i<b;++i)
-#define rofe(i,a,b) for(ll i=a-1;i>=b;--i)
-#define ALL(u) u.begin(),u.end()
-#define vi vector <ll>
-#define vvi vector<vi>
+#define vi vector<int>
+#define fore(i,a,b) for(ll i=a; i<b; i++)
 #define sz(a) ((ll)a.size())
-#define lsb(x) ((x)&(-x))
-#define lsbpos(x) __builtin_ffs(x)
-#define PI acos(-1.0)
+#define ALL(a) a.begin(),a.end()
+#define vvi vector<vi>
+#define f first
+#define s second
 #define pii pair<ll,ll>
-#define fst first
-#define snd second
-#define eb emplace_back
-#define ppb pop_back
-#define i128 __int128_t
- 
+#define nl '\n'
+
 using namespace std;
 
-static const ll INF = 1e18;
-
-struct Edge {
-    ll u,v,w;
+map <ll,ll> mp;
+ 
+struct RollbackUF {
+	vi e; vector<pii> st;
+	RollbackUF(int n) : e(n, -1) {}
+	int size(int x) { return -e[find(x)]; }
+	int find(int x) { return e[x] < 0 ? x : find(e[x]); }
+	int time() { return sz(st); }
+	void rollback(int t) {
+		for (int i = time(); i --> t;)
+			e[st[i].first] = st[i].second;
+		st.resize(t);
+	}
+	bool join(int a, int b) {
+		a = find(a), b = find(b);
+		if (a == b) return false;
+		if (e[a] > e[b]) swap(a, b);
+		st.push_back({a, e[a]});
+		st.push_back({b, e[b]});
+		e[a] += e[b]; e[b] = a;
+		return true;
+	}
 };
 
-/*
-  Computes minimum spanning arborescence (directed MST) rooted at a give node.
-  Nodes are 0..n-1.
-  Returns {ok, cost}. ok=false if not all nodes reachable from root.
+struct Edge { int a, b; ll w; ll id;};
+struct Node { /// lazy skew heap node
+	Edge key;
+	Node *l, *r;
+	ll delta;
+	void prop() {
+		key.w += delta;
+		if (l) l->delta += delta;
+		if (r) r->delta += delta;
+		delta = 0;
+	}
+	Edge top() { prop(); return key; }
+};
+Node *merge(Node *a, Node *b) {
+	if (!a || !b) return a ?: b;
+	a->prop(), b->prop();
+	if (a->key.w > b->key.w) swap(a, b);
+	swap(a->l, (a->r = merge(b, a->r)));
+	return a;
+}
+void pop(Node*& a) { a->prop(); a = merge(a->l, a->r); }
 
-  Complexity: O(n*m)
-*/
-pair<bool, ll> mst_arborescence(ll n, ll root, vector<Edge> &edges) {
-    ll ans = 0;
-    while (1){
-        // For each node, pick minimum incoming edge weight
-        vi in(n, INF), pre(n, -1);
+pair<ll, vector<pii> > dmst(int n, int r, vector<Edge>& g) {
+	RollbackUF uf(n);
+	vector<Node*> heap(n);
+	for (Edge e : g) heap[e.b] = merge(heap[e.b], new Node{e});
+	ll res = 0;
+	vi seen(n, -1), path(n);
+	vector <pii> par(n);
+	seen[r] = r;
+	vector<Edge> Q(n), in(n, {-1,-1}), comp;
+	deque<tuple<int, int, vector<Edge>>> cycs;
+	fore(s,0,n) {
+		int u = s, qi = 0, w;
+		while (seen[u] < 0) {
+			if (!heap[u]) return {-1,{}};
+			Edge e = heap[u]->top();
+			heap[u]->delta -= e.w, pop(heap[u]);
+			Q[qi] = e, path[qi++] = u, seen[u] = s;
+			res += e.w, u = uf.find(e.a);
+			if (seen[u] == s) { /// found cycle, contract
+				Node* cyc = 0;
+				int end = qi, time = uf.time();
+				do cyc = merge(cyc, heap[w = path[--qi]]);
+				while (uf.join(u, w));
+				u = uf.find(u), heap[u] = cyc, seen[u] = -1;
+				cycs.push_front({u, time, {&Q[qi], &Q[end]}});
+			}
+		}
+		fore(i,0,qi) in[uf.find(Q[i].b)] = Q[i];
+	}
 
-        for (auto &e : edges) {
-            if (e.u != e.v && e.w < in[e.v]) {
-                in[e.v] = e.w;
-                pre[e.v] = e.u;
-            }
-        }
-
-        in[root] = 0; // root has no incoming edge in the arborescence
-
-        // If any node (except root) has no incoming edge, arborescence impossible
-        fore(v,0,n){
-            if (v == root) continue;
-            if (in[v] == INF) return {false, 0LL};
-        }
-
-        // Detect cycles among chosen incoming edges
-        int cntCycles = 0;
-        vi id(n, -1), vis(n, -1);
-
-        fore(i,0,n){
-            ans += in[i];
-
-			// Walk predecessors until we reaching root or a visited node
-            int v = i;
-            while (vis[v] != i && id[v] == -1 && v != root) {
-                vis[v] = i;
-                v = pre[v];
-            }
-
-            // Found a cycle (not involving root)
-            if (v != root && id[v] == -1) {
-                for (int x = pre[v]; x != v; x = pre[x]) {
-                    id[x] = cntCycles;
-                }
-                id[v] = cntCycles;
-                cntCycles++;
-            }
-        }
-
-    
-        if (cntCycles == 0) break; // no cycles, done.
-
-        // Assign IDs to non-cycle nodes
-        fore(i,0,n){
-            if (id[i] == -1) id[i] = cntCycles++;
-        }
-
-        // Build contracted graph with adjusted weights
-        vector<Edge> newEdges;
-        newEdges.reserve(sz(edges));
-
-        for(auto &e : edges) {
-            int u2 = id[e.u], v2 = id[e.v];
-            if (u2 == v2) continue;
-
-            // Adjust entering-edge weights: w2 = w - in[v]
-            ll w2 = e.w - in[e.v];
-            newEdges.pb({u2, v2, w2});
-        }
-
-        // Update root and n (amount of nodes in the compressed graph)
-        root = id[root];
-        n = cntCycles;
-        edges = newEdges;
+	for (auto& [u,t,comp] : cycs) { // restore sol (optional)
+		uf.rollback(t);
+		Edge inEdge = in[u];
+		for (auto& e : comp) in[uf.find(e.b)] = e;
+		in[uf.find(inEdge.b)] = inEdge;
+	}
+	fore(i,0,n){
+        // Predecessor of a node and id of the used edge
+        // If there was no predecessor then par[i].f = -1
+        par[i] = {in[i].a,in[i].id}; 
     }
-
-    return {true, ans};
+	return {res, par};
 }
 
-void solve(ll &tc){
-	ll n, m, root=0;
-    cin >> n >> m;
-
-    vector<Edge> edges;
-    edges.reserve(m);
-    fore(i,0,m){
-        ll u,v,w;
-        cin >> u >> v >> w;
-        edges.pb({u, v, w});
-    }
-
-    auto [ok, ans] = mst_arborescence(n, root, edges);
-    cout << "Case #" << tc << ": ";
-    if (!ok) {
-        cout << "Possums!" << nl;
-    } 
-    else {
-        cout << ans << nl;
-    }
-}
-
+int n,m;
 
 int main(){
     fast;
-    ll tc;
-    cin>>tc;
-    fore(i,1,tc+1){
-        solve(i);
+	freopen("input.txt","r",stdin);
+	freopen("output.txt","w",stdout);
+    cin >> n >> m;
+    vector <Edge> e;
+    e.reserve(m);
+    int x,y,w;
+    fore(i,0,m){
+        cin >> x >> y >> w; 
+        x--, y--;
+        e.pb({x,y,w,i+1});
+        mp[i+1]=w;
     }
+
+    auto [res,par] = dmst(n,0,e);
+
+    cout << res << nl;
+    if (res != -1){
+        fore(i,0,n){
+        	if (par[i].f != -1){
+        		if (mp[par[i].s] > 0) cout << par[i].s << " ";
+        	}
+        }
+        cout << nl;
+    }
+
+    return 0;
 }
